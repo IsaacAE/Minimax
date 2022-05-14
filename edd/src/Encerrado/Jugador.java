@@ -39,7 +39,7 @@ public class Jugador {
 
     @Override
     public String toString(){
-        return this.nombre + ficha1 + ficha2;
+        return this.nombre + " Ficha 1 " +ficha1 +" Ficha 2 "+ ficha2;
     }
 
 
