@@ -31,7 +31,7 @@ public class Juego {
         this.jugador = jugador;
     }
     public void setIA(Jugador jugador){
-        this.jugador = jugador;
+        this.IA = jugador;
     }
 }
 

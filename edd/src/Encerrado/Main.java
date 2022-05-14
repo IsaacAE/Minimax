@@ -6,7 +6,7 @@ public class Main {
   public static void main(String[] args) {
     Juego juego = new Juego();
     juego.moverFicha(0,2, juego.jugador);
-    //juego.moverFicha(0,0, juego.IA);
+    juego.moverFicha(0,0, juego.IA);
     System.out.println(juego);
     /*Ficha roja = new Ficha(1);
     System.out.println("Posicion de la ficha "+roja);
