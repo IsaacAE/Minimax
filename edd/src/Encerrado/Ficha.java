@@ -1,4 +1,4 @@
-
+package edd.src.Encerrado;
 /**
  *Clase que representa una ficha en el tablero
  *@author Alcantara Estrada Kevin Isaac
