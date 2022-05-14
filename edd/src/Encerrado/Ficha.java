@@ -9,8 +9,8 @@ public class Ficha{
 
     private int color;//El color de la ficha: 1 para rojo, 0 para azul y -1 para ficha vacia
     private String figura;// ñas fichas se representan con un * del color correspondiente o como " " si es ficha vacia
-    private int fila = 1;
-    private int columna = 1;
+    private int fila = 0;
+    private int columna = 0;
 
 
     //Para pintar de rojo
