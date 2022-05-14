@@ -5,10 +5,11 @@ public class Main {
 
   public static void main(String[] args) {
     Ficha roja = new Ficha(1);
+    System.out.println("Posicion de la ficha "+roja);
     Jugador jugador = new Jugador("Mau", roja);
     Tablero tab = new Tablero();
     tab.pintarTablero();
-    jugador.ficha = tab.moverFicha(2,0, jugador.ficha);
+    jugador.ficha = tab.moverFicha(2,2, jugador.ficha);
     tab.pintarTablero();
     //tab.moverFicha();
     /*tab.disposicion(1);

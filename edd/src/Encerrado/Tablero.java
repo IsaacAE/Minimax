@@ -53,7 +53,7 @@ public class Tablero {
     int asciiValue = 92; //Valor en codigo ASCII del simbolo \
 
     char linea = (char) asciiValue; // Para poder imprimir en pantalla el simbolo \
-
+    System.out.println();
     System.out.println(
       "[" +
       this.tablero[0][0] +
@@ -80,6 +80,7 @@ public class Tablero {
       blanco +
       "]"
     );
+    System.out.println();
   }
 
   /**
@@ -151,6 +152,7 @@ public class Tablero {
     }
 
     //SI la casilla dada no corresponde a ninguna de las anteriores, regresa falso
+    System.out.println("Error en validarPos");
     return false;
   }
 
