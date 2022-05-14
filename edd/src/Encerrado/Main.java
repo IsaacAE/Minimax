@@ -4,9 +4,14 @@ package edd.src.Encerrado;
 public class Main {
 
   public static void main(String[] args) {
-    Tab tab = new Tab();
-    //tab.pintarTablero();
-    tab.disposicion(1);
+    Ficha roja = new Ficha(1);
+    Jugador jugador = new Jugador("Mau", roja);
+    Tablero tab = new Tablero();
+    tab.pintarTablero();
+    jugador.ficha = tab.moverFicha(2,0, jugador.ficha);
+    tab.pintarTablero();
+    //tab.moverFicha();
+    /*tab.disposicion(1);
     tab.setTablero(tab.moverFicha(0, 0, 1, 1, 0));
     tab.pintarTablero();
     tab.setTablero(tab.moverFicha(0, 0, 1, 1, 0));
@@ -40,7 +45,7 @@ public class Main {
     tab.pintarTablero();
 
     tab.setTablero(tab.moverFicha(0, 2, 2, 2, 1));
-    tab.pintarTablero();
+    tab.pintarTablero();*/
     //tab.disposicion(2);
   }
 }

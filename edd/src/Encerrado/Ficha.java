@@ -9,6 +9,9 @@ public class Ficha{
 
     private int color;//El color de la ficha: 1 para rojo, 0 para azul y -1 para ficha vacia
     private String figura;// ñas fichas se representan con un * del color correspondiente o como " " si es ficha vacia
+    private int fila;
+    private int columna;
+
 
     //Para pintar de rojo
 public static final String rojo = "\u001B[31m";
@@ -43,6 +46,21 @@ public int getColor(){
     return this.color;
 }
 
+public int getFila(){
+    return this.fila;
+}
+
+public void setFila(int fila){
+    this.fila = fila;
+}
+
+public void setColumna(int columna){
+    this.columna = columna;
+}
+
+public int getColumna(){
+    return this.columna;
+}
 /**
  * Representacion en cadena de la ficha
  * @return String
