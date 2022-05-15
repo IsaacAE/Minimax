@@ -24,6 +24,20 @@ public class Sistema {
       comenzarJuego();
     } else {
       asignarTablero();
+      if (juego.perdedor() == null) {
+        comenzarJuego();
+      } else {
+        reiniciarJuego();
+      }
+    }
+  }
+
+  public void reiniciarJuego() {
+    System.out.println("Desea reiniciar el juego? S/N");
+    if(validarSioNo()){
+      iniciarJuego();
+    }else{
+      System.out.println("FIN");
     }
   }
 
@@ -34,38 +48,38 @@ public class Sistema {
   public void asignarTablero() {
     int[] arr;
     juego.setTablero(new Tablero());
-    juego.setJugador(new Jugador("User", new Ficha(0), 2));
-    juego.setIA(new Jugador("IA", new Ficha(1), 2));
-    //juego.jugador.ficha1 = new Ficha(1, 1);
-    juego.jugador.ficha1 = new Ficha(1, 1, juego.jugador.ficha1.getColor());
-    juego.IA.ficha1 = new Ficha(1, 1, juego.IA.ficha1.getColor());
-
-    System.out.println(juego);
-    Ficha [] f = new Ficha [2];
-    f[0] = juego.getIA().ficha1;
-    f[1] = juego.getIA().ficha2;
+    juego.setJugador(new Jugador("User", new Ficha(0)));
+    juego.setIA(new Jugador("IA", new Ficha(1)));
+    System.out.println(juego.tablero);
     for (int i = 0; i < 2; i++) {
-      arr = validarCoordenada("Escoge una coordenada para la IA   ej: 2,0 ",juego.getJugador());
-      if(arr[0] == 0 && arr[1] == 2 && i == 0){
-        juego.moverFicha(arr[0], arr[1], juego.getIA(),f[i+1]);
-        f[i+1] = f[i];
-        System.out.println("--X"+f[i+1]);
-      }
-      juego.moverFicha(arr[0], arr[1], juego.getIA(),f[i]);
-      System.out.println(juego.getTablero());
-    }
-    for (int i = 0; i < 2; i++) {
+      System.out.println("i-->" + (i + 1));
       arr =
-        validarCoordenada("Escoge una coordenada para la jugador   ej: 2,0 ",juego.getIA());
-      /*if(arr[0] == 2 && arr[1] == 2){
-            juego.setJugador(new Jugador("User", new Ficha(1,1,0)));
-        }*/
-      juego.moverFicha(arr[0], arr[1], juego.getJugador());
-      System.out.println(juego.getTablero());
+        validarCoordenada(
+          "Escoge una coordenada para la IA, ficha " + (i + 1) + "  ej: 2,0 "
+        );
+      if (!juego.asignarFicha(arr[0], arr[1], juego.getIA(), (i + 1))) {
+        System.out.println("Movimiento invalido");
+        i--;
+      }
+      System.out.println(juego);
     }
+    for (int i = 0; i < 2; i++) {
+      System.out.println("i-->" + (i + 1));
+      arr =
+        validarCoordenada(
+          "Escoge una coordenada para la User, ficha " + (i + 1) + "  ej: 2,0 "
+        );
+      if (!juego.asignarFicha(arr[0], arr[1], juego.getJugador(), (i + 1))) {
+        System.out.println("Movimiento invalido");
+        i--;
+      }
+      System.out.println(juego);
+    }
+
     System.out.println(juego);
   }
 
+  //Valida al recibir una cadena y revisa si es posible moverla
   public int[] validarCoordenada(String mensaje, Jugador jugador) {
     String str;
     boolean condicion = false;
@@ -82,7 +96,6 @@ public class Sistema {
         int coordenadas[] = new int[2];
         coordenadas[0] = Character.getNumericValue(str.charAt(0));
         coordenadas[1] = Character.getNumericValue(str.charAt(2));
-        System.out.println("Salimos de aqui");
         if (
           coordenadas[0] >= 0 &&
           coordenadas[0] <= 2 &&
@@ -102,26 +115,69 @@ public class Sistema {
               );
 
           if (aux != null) {
-            System.out.println("Opcion valida");
+            
             condicion = true;
             return coordenadas;
           } else {
             aux =
-            juego
-              .getTablero()
-              .SimularMoverFicha(
-                coordenadas[0],
-                coordenadas[1],
-                jugador.ficha2
-              );
-            if(aux != null){
-              System.out.println("Opcion 2");
+              juego
+                .getTablero()
+                .SimularMoverFicha(
+                  coordenadas[0],
+                  coordenadas[1],
+                  jugador.ficha2
+                );
+            if (aux != null) {
               condicion = true;
               return coordenadas;
             }
             condicion = false;
           }
           condicion = false;
+        }
+        condicion = false;
+      } catch (Exception e) {
+        condicion = false;
+        System.out.println("Ingresa una opcion valida");
+      }
+    } while (!condicion);
+    return null;
+  }
+
+  //Valida la entretrada de un valor tipo coordenada, valores entre 0 y 2: (0,2)
+  public int[] validarCoordenada(String mensaje) {
+    String str;
+    boolean condicion = false;
+    do {
+      try {
+        System.out.println(mensaje);
+        sc = new Scanner(System.in);
+        str = sc.nextLine();
+        if (str.charAt(1) != ',') {
+          condicion = false;
+          continue;
+        }
+        int coordenadas[] = new int[2];
+        coordenadas[0] = Character.getNumericValue(str.charAt(0));
+        coordenadas[1] = Character.getNumericValue(str.charAt(2));
+        //System.out.println("Salimos de aqui");
+        if (
+          coordenadas[0] >= 0 &&
+          coordenadas[0] <= 2 &&
+          coordenadas[1] >= 0 &&
+          coordenadas[1] <= 2
+        ) {
+          if (
+            (
+              coordenadas[0] == 1 &&
+              (coordenadas[1] == 2 || coordenadas[1] == 0)
+            ) ||
+            (coordenadas[0] != 1 && coordenadas[1] == 1)
+          ) {
+            condicion = false;
+          } else {
+            return coordenadas;
+          }
         }
         condicion = false;
       } catch (Exception e) {

@@ -50,7 +50,7 @@ public class Tablero {
    * Metodo para pintar en consola al tablero
    */
   @Override
-   public String toString() {
+  public String toString() {
     int asciiValue = 92; //Valor en codigo ASCII del simbolo \
 
     char linea = (char) asciiValue; // Para poder imprimir en pantalla el simbolo \
@@ -279,6 +279,7 @@ public class Tablero {
     return null;
   }
 
+
   public Ficha buscarPosicion(int numero){
     Ficha ficha=null;
     switch(numero){
@@ -304,7 +305,23 @@ public class Tablero {
     }
     return ficha;
   }
-  
+
+  public Ficha asignarFicha(int fila, int columna, Ficha ficha) {
+    //System.out.println("Tablero -->"+this);
+    //System.out.println("Esto es lo que hay "+tablero[fila][columna]);
+    if (tablero[fila][columna] == null) {
+      //System.out.println("Entro al if");
+      tablero[fila][columna] = ficha;
+      ficha.setFila(fila);
+      ficha.setColumna(columna);
+      //System.out.println("--> Tablero "+this);
+      return ficha;
+    }
+    return null;
+  }
+
+ 
+
   public Ficha SimularMoverFicha(int fila, int columna, Ficha ficha) {
     if (
       validarPos(fila, columna) &&
@@ -318,6 +335,7 @@ public class Tablero {
         System.out.println("Fila "+ficha.getFila()+" columna "+ ficha.getColumna());
         //System.out.println("-->"+validarMov(ficha.getFila(), ficha.getColumna(), fila, columna));
         System.out.println(ficha);*/
+
     }
     return null;
   }
