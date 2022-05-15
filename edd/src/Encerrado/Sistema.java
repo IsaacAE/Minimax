@@ -21,16 +21,61 @@ public class Sistema {
       "\n Este es el tablero inicial ¿Deseas mantenerlo asi? (S/N)"
     );
     if (validarSioNo()) {
-        comenzarJuego();
-    }else{
-        asignarTablero();
+      comenzarJuego();
+    } else {
+      asignarTablero();
     }
   }
 
-  public void comenzarJuego(){
+  public void comenzarJuego() {}
 
+  public void asignarTablero() {
+    int[] arr;
+    
+    do{
+        arr = validarCoordenada();
+        for (int i : arr) {
+          System.out.println(i);
+        }
+    }while(arr == null);
+    
   }
 
+  public int[] validarCoordenada() {
+    String str;
+    boolean condicion = false;
+    do {
+      try {
+        System.out.println("Escoge una coordenada para la IA   ej: 2,0 )");
+        sc = new Scanner(System.in);
+        str = sc.nextLine();
+        if (str.charAt(1) != ',') {
+          System.out.println("Entro aqui");
+          condicion = false;
+          continue;
+        }
+        int coordenadas[] = new int[2];
+        coordenadas[0] = Character.getNumericValue(str.charAt(0));
+        coordenadas[1] = Character.getNumericValue(str.charAt(2));
+        System.out.println("Salimos de aqui");
+        if (
+          coordenadas[0] >= 0 &&
+          coordenadas[0] <= 2 &&
+          coordenadas[1] >= 0 &&
+          coordenadas[1] <= 2
+        ) {
+          
+          condicion = true;
+          return coordenadas;
+        }
+        condicion = false;
+      } catch (Exception e) {
+        condicion = false;
+        System.out.println("Ingresa una opcion valida");
+      }
+    } while (!condicion);
+    return null;
+  }
 
   public boolean validarSioNo() {
     char aux;
