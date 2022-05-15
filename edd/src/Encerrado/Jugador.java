@@ -1,7 +1,8 @@
 package edd.src.Encerrado;
 public class Jugador {
     public String nombre;
-    //public String fichas;
+    
+    //De forma predeterminada, todas las fichas comienzan en 0,0.
     public Ficha ficha1;
     public Ficha ficha2;
 

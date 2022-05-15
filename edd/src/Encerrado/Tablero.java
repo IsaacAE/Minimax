@@ -282,8 +282,6 @@ public class Tablero {
       tablero[fila][columna] == null
     ) {
       return ficha;
-    } else {
-      //System.out.println("Error al mover ficha");
     }
     return null;
   }

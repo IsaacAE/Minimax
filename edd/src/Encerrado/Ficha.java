@@ -11,6 +11,7 @@ public class Ficha {
 
   private int color; //El color de la ficha: 1 para rojo, 0 para azul y -1 para ficha vacia
   private String figura; // ñas fichas se representan con un * del color correspondiente o como " " si es ficha vacia
+  //De forma predeterminada, todas las fichas comienzan en 0,0.
   private int fila = 0;
   private int columna = 0;
 
