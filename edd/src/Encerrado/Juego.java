@@ -25,10 +25,14 @@ public class Juego {
   }
 
   public boolean moverFichaRandom(Jugador jugador){
-    //int fila = numeroaletorio;
-    //int columna = numeroaletorio;
-    //moverFicha(fila, columna, jugador);
-    return false;
+    boolean ok = false;
+    ok = moverFicha(1, 1, jugador);
+    while(!ok){
+    int fila = (int) (Math.random()*3);
+    int columna = (int) (Math.random()*3);
+    ok = moverFicha(fila, columna, jugador);
+   }
+    return ok;
   }
 
     //Mover una ficha especifica

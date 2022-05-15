@@ -75,7 +75,7 @@ public class Tablero {
       blanco +
       this.tablero[2][0] +
       blanco +
-      "]------[" +
+      "]      [" +
       blanco +
       this.tablero[2][2] +
       blanco +
@@ -280,7 +280,29 @@ public class Tablero {
   }
 
   public Ficha buscarPosicion(int numero){
-    return null;
+    Ficha ficha=null;
+    switch(numero){
+      case 1: 
+      ficha= this.tablero[0][0];
+      break;
+
+      case 2: 
+      ficha=this.tablero[0][2];
+      break;
+
+      case 3: 
+      ficha= this.tablero[1][1];
+      break;
+
+      case 4: 
+      ficha= this.tablero[2][0];
+      break;
+
+      case 5: 
+      ficha= this.tablero[2][2];
+      break;
+    }
+    return ficha;
   }
   
   public Ficha SimularMoverFicha(int fila, int columna, Ficha ficha) {
@@ -291,11 +313,11 @@ public class Tablero {
     ) {
       return ficha;
     }else{
-        System.out.println("No puedes mover la ficha");
+        /*System.out.println("No puedes mover la ficha");
         System.out.println(this);
         System.out.println("Fila "+ficha.getFila()+" columna "+ ficha.getColumna());
         //System.out.println("-->"+validarMov(ficha.getFila(), ficha.getColumna(), fila, columna));
-        System.out.println(ficha);
+        System.out.println(ficha);*/
     }
     return null;
   }
@@ -312,4 +334,49 @@ public class Tablero {
     }
     return aux;
   }
+
+  public int[][] movimientosDisponiblesCord(Ficha ficha){
+    int[][] coord = new int[2][2];
+    int k=0;
+
+    for (int i = 0; i < coord.length; i++) {
+      for (int j = 0; j < coord[i].length; j++) {
+       coord[i][j]=-1;
+      }
+    }
+
+  
+    if(SimularMoverFicha(0, 0, ficha)!=null){
+      coord[k][0]= 0;
+      coord[k][1]= 0;
+      k++;
+    }
+
+    if(SimularMoverFicha(0, 2, ficha)!=null){
+      coord[k][0]= 0;
+      coord[k][1]= 2;
+      k++;
+    }
+
+    if(SimularMoverFicha(1, 1, ficha)!=null){
+      coord[k][0]= 1;
+      coord[k][1]= 1;
+      k++;
+    }
+
+    if(SimularMoverFicha(2, 0, ficha)!=null){
+      coord[k][0]= 2;
+      coord[k][1]= 0;
+      k++;
+    }
+
+    if(SimularMoverFicha(2, 2, ficha)!=null){
+      coord[k][0]= 2;
+      coord[k][1]= 1;
+      k++;
+    }
+
+    return coord;    
+}
+
 }

@@ -9,7 +9,31 @@ public class Main {
     //new Sistema();
     Juego juego = new Juego();
     System.out.println(juego);
-    juego.tablero.cambiarFichas(0, 0, 2, 0);
+   /* System.out.println(  juego.getTablero().buscarPosicion(1));
+    juego.moverFicha(1,1, juego.getIA(),  juego.getTablero().buscarPosicion(1));
+    System.out.println(juego);
+
+    juego.moverFicha(2,2, juego.getJugador(), juego.getJugador().ficha2);
+    System.out.println(juego);
+
+    /*juego.moverFicha(1,1, juego.getJugador(), juego.getJugador().ficha1);
+    System.out.println(juego);*/
+  juego.getJugador().movimientosDisponiblesCord(juego.getTablero());
+   // juego.tablero.cambiarFichas(0, 0, 2, 0);
+   /// System.out.println(juego);
+    /*juego.moverFichaRandom(juego.getIA());
+    System.out.println(juego);
+    juego.moverFichaRandom(juego.getJugador());
+    System.out.println(juego);
+    juego.moverFichaRandom(juego.getIA());
+    System.out.println(juego);
+    juego.moverFichaRandom(juego.getJugador());
+    System.out.println(juego);
+    juego.moverFichaRandom(juego.getIA());
+    System.out.println(juego);
+   /* juego.moverFichaRandom(juego.getIA());
+    System.out.println(juego);
+    juego.moverFichaRandom(juego.getIA());
     System.out.println(juego);
     //juego.getTablero(juego.getTablero().cambiarFichas(0, 0, 2, 0));
     //juego.moverFicha(1,1, juego.getJugador(), juego.getJugador().ficha1);
