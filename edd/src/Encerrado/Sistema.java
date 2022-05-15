@@ -35,11 +35,19 @@ public class Sistema {
     System.out.println(juego.getTablero());
     for (int i = 0; i < 2; i++) {
         arr = validarCoordenada("Escoge una coordenada para la IA   ej: 2,0 ");
+        String aux = "";
+        for (int j : arr) {
+            aux += String.valueOf(j);
+        }
         juego.moverFicha(arr[0], arr[1], juego.getIA());
         System.out.println(juego.getTablero());
     }
     for (int i = 0; i < 2; i++) {
-        arr = validarCoordenada("Escoge una coordenada para la jugador   ej: 2,0 ");    
+        arr = validarCoordenada("Escoge una coordenada para la jugador   ej: 2,0 ");
+        String aux = "";
+        for (int j : arr) {
+            aux += String.valueOf(j);
+        } 
         juego.moverFicha(arr[0], arr[1], juego.getJugador());
         System.out.println(juego.getTablero());
     }
