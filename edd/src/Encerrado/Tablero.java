@@ -268,6 +268,7 @@ public class Tablero {
       validarMov(ficha.getFila(), ficha.getColumna(), fila, columna) &&
       tablero[fila][columna] == null
     ) {
+      tablero[ficha.getFila()][ficha.getColumna()] = null;
       tablero[fila][columna] = ficha;
       ficha.setFila(fila);
       ficha.setColumna(columna);
@@ -278,6 +279,10 @@ public class Tablero {
     return null;
   }
 
+  public Ficha buscarPosicion(int numero){
+    return null;
+  }
+  
   public Ficha SimularMoverFicha(int fila, int columna, Ficha ficha) {
     if (
       validarPos(fila, columna) &&
