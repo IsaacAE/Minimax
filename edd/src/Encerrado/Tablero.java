@@ -279,7 +279,10 @@ public class Tablero {
     return null;
   }
 
-
+  public Ficha buscarPosicion(int numero){
+    return null;
+  }
+  
   public Ficha SimularMoverFicha(int fila, int columna, Ficha ficha) {
     if (
       validarPos(fila, columna) &&

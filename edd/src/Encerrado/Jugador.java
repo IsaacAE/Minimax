@@ -36,6 +36,10 @@ public class Jugador {
         return tablero;
     }
 
+
+    public boolean fichaPertenece(Ficha ficha){
+        return false;
+    }
     //Mover una ficha en especifico
     public Tablero moverFicha(Tablero tablero, int fila, int columna, Ficha ficha){
         if(ficha != null && (ficha.equals(this.ficha1) || ficha.equals(this.ficha2))){
@@ -75,6 +79,11 @@ public class Jugador {
         System.out.println("Ficha 1 -> "+aux1);
         System.out.println("Ficha 2 -> "+aux2);
         return aux1+aux2;
+    }
+
+    public int[][] movimientosDisponiblesCord(Tablero tablero){
+        return null;
+        //return aux1+aux2;
     }
 
     public void setFicha1(Ficha ficha){

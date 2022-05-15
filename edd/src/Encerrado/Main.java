@@ -1,4 +1,5 @@
 package edd.src.Encerrado;
+
 //import java.util.*;
 
 //CLASE PAR HACER PRUEBAS DE LOS METODOS
@@ -8,9 +9,13 @@ public class Main {
     //new Sistema();
     Juego juego = new Juego();
     System.out.println(juego);
-    juego.moverFicha(1,1, juego.getJugador(), juego.getJugador().ficha1);
-    //juego.moverFicha(2,2, juego.getJugador(), juego.getJugador().ficha1);
+    juego.tablero.cambiarFichas(0, 0, 2, 0);
     System.out.println(juego);
+    //juego.getTablero(juego.getTablero().cambiarFichas(0, 0, 2, 0));
+    //juego.moverFicha(1,1, juego.getJugador(), juego.getJugador().ficha1);
+    //juego.moverFicha(0,2, juego.getJugador(), juego.getJugador().ficha2);
+    //juego.moverFicha(2,2, juego.getJugador(), juego.getJugador().ficha1);
+    //System.out.println(juego);
     /*Juego juego = new Juego();
     juego.setTablero(new Tablero());
     System.out.println(juego);
