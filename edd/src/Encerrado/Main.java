@@ -6,5 +6,8 @@ public class Main {
   public static void main(String[] args) {
     Juego juego = new Juego();
     System.out.println(juego);
+    System.out.println(juego.getJugador().movimientosDisponibles(juego.getTablero()));
+    System.out.println(juego);
+    //System.out.println("Movimientos disponibles jugador "+juego.getJugador().movimientosDisponibles(juego.getTablero()));
   }
 }

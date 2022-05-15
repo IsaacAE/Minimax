@@ -29,10 +29,20 @@ public class Juego {
         IA.ficha1.setFila(0);
         IA.ficha1.setColumna(2);
         moverFicha(2, 2, IA);
-        //moverFicha(2, 2, IA);
-        //moverFicha(0, 0, IA);
     }
 
+
+    public Jugador getJugador(){
+        return this.jugador;
+    }
+
+    public Tablero getTablero(){
+        return this.tablero;
+    }
+
+    public Jugador getIA(){
+        return this.IA;
+    }
 
     @Override
     public String toString(){

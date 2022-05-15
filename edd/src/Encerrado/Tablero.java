@@ -152,7 +152,7 @@ public class Tablero {
     }
 
     //SI la casilla dada no corresponde a ninguna de las anteriores, regresa falso
-    System.out.println("Error en validarPos");
+    //System.out.println("Error en validarPos");
     return false;
   }
 
@@ -265,13 +265,39 @@ public class Tablero {
       validarMov(ficha.getFila(), ficha.getColumna(), fila, columna) &&
       tablero[fila][columna] == null
     ) {
-        tablero[fila][columna] = ficha;
-        ficha.setFila(fila);
-        ficha.setColumna(columna);
-        return ficha;
-    }else{
-        System.out.println("Error al mover ficha");
+      tablero[fila][columna] = ficha;
+      ficha.setFila(fila);
+      ficha.setColumna(columna);
+      return ficha;
+    } else {
+      //System.out.println("Error al mover ficha");
     }
     return null;
+  }
+
+  public Ficha SimularMoverFicha(int fila, int columna, Ficha ficha) {
+    if (
+      validarPos(fila, columna) &&
+      validarMov(ficha.getFila(), ficha.getColumna(), fila, columna) &&
+      tablero[fila][columna] == null
+    ) {
+      return ficha;
+    } else {
+      //System.out.println("Error al mover ficha");
+    }
+    return null;
+  }
+
+  public int movimientosDisponibles(Ficha ficha) {
+    int aux = 0;
+    //System.out.println("Calculando opciones de la ficha " + ficha);
+    for (int i = 0; i < tablero.length; i++) {
+      for (int j = 0; j < tablero[i].length; j++) {
+        if (SimularMoverFicha(j, i, ficha) != null) {
+          aux++;
+        }
+      }
+    }
+    return aux;
   }
 }

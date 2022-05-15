@@ -29,6 +29,15 @@ public class Jugador {
         return tablero;
     }
 
+    public int movimientosDisponibles(Tablero tablero){
+        System.out.println("Calculando jugadas de "+this.nombre);
+        int aux1 = tablero.movimientosDisponibles(ficha1);
+        int aux2 = tablero.movimientosDisponibles(ficha2);
+        System.out.println("Ficha 1 -> "+aux1);
+        System.out.println("Ficha 2 -> "+aux2);
+        return aux1+aux2;
+    }
+
     public void setFicha1(Ficha ficha){
         this.ficha1 = ficha;
     }
