@@ -60,8 +60,8 @@ public class Juego {
 
   @Override
   public String toString() {
-    tablero.pintarTablero();
-    return "\n Jugadores: \n" + jugador + "\n" + IA;
+    
+    return tablero +"\n Jugadores: \n" + jugador + "\n" + IA;
   }
 
   public void setTablero(Tablero tablero) {

@@ -19,12 +19,12 @@ public class Jugador {
             if(aux == null){
                 return null;
             }else{
-                System.out.println("Se movio la ficha 2");
+                //System.out.println("Se movio la ficha 2");
                 setFicha2(aux);
             }
 
         }else{
-            System.out.println("Se movio la ficha 1");
+            //System.out.println("Se movio la ficha 1");
             setFicha1(aux);
         }
         return tablero;

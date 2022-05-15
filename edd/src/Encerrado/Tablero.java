@@ -49,7 +49,8 @@ public class Tablero {
   /**
    * Metodo para pintar en consola al tablero
    */
-  public void pintarTablero() {
+  @Override
+   public String toString() {
     int asciiValue = 92; //Valor en codigo ASCII del simbolo \
 
     char linea = (char) asciiValue; // Para poder imprimir en pantalla el simbolo \
@@ -80,7 +81,8 @@ public class Tablero {
       blanco +
       "]"
     );
-    System.out.println();
+    //System.out.println();
+    return "\n";
   }
 
   /**
@@ -102,13 +104,14 @@ public class Tablero {
       this.tablero[0][2] = fr1;
       this.tablero[2][0] = fr2;
       this.tablero[2][2] = fa2;
-      pintarTablero();
+      System.out.println(tablero);
+      //pintarTablero();
     } else {
       this.tablero[0][0] = fr1;
       this.tablero[0][2] = fa1;
       this.tablero[2][0] = fa2;
       this.tablero[2][2] = fr2;
-      pintarTablero();
+      System.out.println(tablero);
     }
   }
 
