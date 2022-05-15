@@ -24,6 +24,20 @@ public class Sistema {
       comenzarJuego();
     } else {
       asignarTablero();
+      if (juego.perdedor() == null) {
+        comenzarJuego();
+      } else {
+        reiniciarJuego();
+      }
+    }
+  }
+
+  public void reiniciarJuego() {
+    System.out.println("Desea reiniciar el juego? S/N");
+    if(validarSioNo()){
+      iniciarJuego();
+    }else{
+      System.out.println("FIN");
     }
   }
 
@@ -38,24 +52,24 @@ public class Sistema {
     juego.setIA(new Jugador("IA", new Ficha(1)));
     System.out.println(juego.tablero);
     for (int i = 0; i < 2; i++) {
-      System.out.println("i-->"+(i+1));
+      System.out.println("i-->" + (i + 1));
       arr =
         validarCoordenada(
           "Escoge una coordenada para la IA, ficha " + (i + 1) + "  ej: 2,0 "
         );
-      if(!juego.asignarFicha(arr[0], arr[1], juego.getIA(), (i+1))){
+      if (!juego.asignarFicha(arr[0], arr[1], juego.getIA(), (i + 1))) {
         System.out.println("Movimiento invalido");
         i--;
       }
       System.out.println(juego);
     }
     for (int i = 0; i < 2; i++) {
-      System.out.println("i-->"+(i+1));
+      System.out.println("i-->" + (i + 1));
       arr =
         validarCoordenada(
           "Escoge una coordenada para la User, ficha " + (i + 1) + "  ej: 2,0 "
         );
-      if(!juego.asignarFicha(arr[0], arr[1], juego.getJugador(), (i+1))){
+      if (!juego.asignarFicha(arr[0], arr[1], juego.getJugador(), (i + 1))) {
         System.out.println("Movimiento invalido");
         i--;
       }
