@@ -12,8 +12,8 @@ public class Ficha {
   private int color; //El color de la ficha: 1 para rojo, 0 para azul y -1 para ficha vacia
   private String figura; // ñas fichas se representan con un * del color correspondiente o como " " si es ficha vacia
   //De forma predeterminada, todas las fichas comienzan en 0,0.
-  private int fila = 1;
-  private int columna = 1;
+  private int fila = 0;
+  private int columna = 0;
 
   //Para pintar de rojo
   public static final String rojo = "\u001B[31m";
@@ -87,6 +87,25 @@ public class Ficha {
    * @return String
    */
   public String toString() {
-    return this.figura + "Fila " + this.fila + "Columna " + this.columna;
+    return this.figura + "F " + this.fila + "C " + this.columna;
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == this) {
+      return true;
+    }
+    if (!(object instanceof Ficha)) {
+      return false;
+    }
+    Ficha aux = (Ficha) object;
+    if (
+      aux.fila == this.fila &&
+      aux.columna == this.columna &&
+      aux.color == this.getColor()
+    ) {
+      return true;
+    }
+    return false;
   }
 }

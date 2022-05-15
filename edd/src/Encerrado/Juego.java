@@ -24,13 +24,29 @@ public class Juego {
     return true;
   }
 
+    //Mover una ficha especifica
+    public boolean moverFicha(int fila, int columna, Jugador jugador, Ficha ficha) {
+    Tablero aux = jugador.moverFicha(tablero, fila, columna, ficha);
+    if (aux == null) {
+      return false;
+    }
+    this.tablero = aux;
+    if (jugador.nombre.equals("User")) {
+      setJugador(jugador);
+    } else {
+      setIA(jugador);
+    }
+    return true;
+  }
+
   public void tableroPredeterminado() {
-    moverFicha(0, 2, jugador);
-    moverFicha(2, 0, jugador);
-    moverFicha(0, 0, IA);
-    IA.ficha1.setFila(0);
-    IA.ficha1.setColumna(2);
-    moverFicha(2, 2, IA);
+    System.out.println(this);
+    moverFicha(0, 2, jugador, jugador.ficha1);
+    moverFicha(2, 0, jugador, jugador.ficha2);
+    moverFicha(0, 0, IA, IA.ficha1);
+    IA.ficha2.setFila(1);
+    IA.ficha2.setColumna(1);
+    moverFicha(2, 2, IA, IA.ficha2);
   }
 
   public void escogerTablero(){

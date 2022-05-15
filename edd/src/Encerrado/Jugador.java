@@ -11,7 +11,13 @@ public class Jugador {
         this.ficha1 = fichas;
         this.ficha2 = new Ficha(fichas.getColor());
     }
+    public Jugador(String nombre, Ficha fichas, int fila){
+        this.nombre = nombre;
+        this.ficha1 = fichas;
+        this.ficha2 = new Ficha(fila,fila,fichas.getColor());
+    }
 
+    //Mueve cualquier ficha disponible 
     public Tablero moverFicha(Tablero tablero, int fila, int columna){
         Ficha aux = tablero.moverFicha(fila, columna, ficha1);
         if(aux == null){
@@ -19,14 +25,46 @@ public class Jugador {
             if(aux == null){
                 return null;
             }else{
-                //System.out.println("Se movio la ficha 2");
+                System.out.println("Se movio la ficha 2");
                 setFicha2(aux);
             }
 
         }else{
-            //System.out.println("Se movio la ficha 1");
+            System.out.println("Se movio la ficha 1");
             setFicha1(aux);
         }
+        return tablero;
+    }
+
+    //Mover una ficha en especifico
+    public Tablero moverFicha(Tablero tablero, int fila, int columna, Ficha ficha){
+        if(ficha != null && (ficha.equals(this.ficha1) || ficha.equals(this.ficha2))){
+            Ficha aux = tablero.moverFicha(fila, columna, ficha);
+            if(aux == null){
+                System.out.println("No se pudo mover");
+            }else{
+                    if(this.ficha1.equals(ficha)){
+                        this.ficha1 = ficha;
+                    }else if(this.ficha2.equals(ficha)){
+                        this.ficha2 = ficha;
+                    }
+                }
+        }else{
+            System.out.println("No existe esa ficha");
+        }
+       /* if(aux == null){
+            aux = tablero.moverFicha(fila, columna, ficha2);
+            if(aux == null){
+                return null;
+            }else{
+                System.out.println("Se movio la ficha 2");
+                setFicha2(aux);
+            }
+
+        }else{
+            System.out.println("Se movio la ficha 1");
+            setFicha1(aux);
+        }*/
         return tablero;
     }
 
@@ -49,7 +87,7 @@ public class Jugador {
 
     @Override
     public String toString(){
-        return this.nombre + " Ficha 1 " +ficha1 +" Ficha 2 "+ ficha2;
+        return this.nombre + " Ficha " +ficha1 +" Ficha "+ ficha2;
     }
 
 
