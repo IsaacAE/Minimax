@@ -24,6 +24,20 @@ public class Juego {
     return true;
   }
 
+  public boolean asignarFicha(int fila, int columna, Jugador jugador, int ficha){
+    Tablero aux = jugador.asignarFicha(this.tablero, fila, columna, ficha);
+    if (aux == null) {
+      return false;
+    }
+    tablero = aux;
+    if (jugador.nombre.equals("User")) {
+      setJugador(jugador);
+    } else {
+      setIA(jugador);
+    }
+    return true;
+  }
+
   public boolean moverFichaRandom(Jugador jugador){
     //int fila = numeroaletorio;
     //int columna = numeroaletorio;

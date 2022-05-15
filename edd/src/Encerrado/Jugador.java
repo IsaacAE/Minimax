@@ -36,6 +36,28 @@ public class Jugador {
         return tablero;
     }
 
+    /**
+     * Metodo unicamente usado para mover las fichas
+     */
+    public Tablero asignarFicha(Tablero tablero,int fila, int columna, int ficha){
+        Ficha aux = null;
+        if(ficha ==1 || ficha == 2){
+            if(ficha == 1){
+                aux = tablero.asignarFicha(fila, columna, this.ficha1);
+            }else{
+                aux = tablero.asignarFicha(fila, columna, this.ficha1);
+            }
+        }
+        if(aux != null){
+            if(ficha == 1){
+                this.ficha1 = aux;
+            }else{
+                this.ficha2 = aux;
+            }
+        }
+        return tablero;
+    }
+
 
     public boolean fichaPertenece(Ficha ficha){
         return false;

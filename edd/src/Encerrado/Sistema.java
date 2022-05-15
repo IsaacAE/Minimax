@@ -34,6 +34,13 @@ public class Sistema {
   public void asignarTablero() {
     int[] arr;
     juego.setTablero(new Tablero());
+    System.out.println(juego.tablero);
+    //Coordenada que quiere meter
+    arr = validarCoordenada("Escoge una coordenada para la IA   ej: 2,0 ");
+    juego.asignarFicha(arr[0], arr[1], juego.getJugador(), 1);
+    System.out.println(juego);
+    /*int[] arr;
+    juego.setTablero(new Tablero());
     juego.setJugador(new Jugador("User", new Ficha(0), 2));
     juego.setIA(new Jugador("IA", new Ficha(1), 2));
     //juego.jugador.ficha1 = new Ficha(1, 1);
@@ -56,16 +63,17 @@ public class Sistema {
     }
     for (int i = 0; i < 2; i++) {
       arr =
-        validarCoordenada("Escoge una coordenada para la jugador   ej: 2,0 ",juego.getIA());
+        validarCoordenada("Escoge una coordenada para la jugador   ej: 2,0 ",juego.getIA());*/
       /*if(arr[0] == 2 && arr[1] == 2){
             juego.setJugador(new Jugador("User", new Ficha(1,1,0)));
         }*/
-      juego.moverFicha(arr[0], arr[1], juego.getJugador());
+     /* juego.moverFicha(arr[0], arr[1], juego.getJugador());
       System.out.println(juego.getTablero());
     }
-    System.out.println(juego);
+    System.out.println(juego);*/
   }
 
+  //Valida al recibir una cadena y revisa si es posible moverla
   public int[] validarCoordenada(String mensaje, Jugador jugador) {
     String str;
     boolean condicion = false;
@@ -122,6 +130,42 @@ public class Sistema {
             condicion = false;
           }
           condicion = false;
+        }
+        condicion = false;
+      } catch (Exception e) {
+        condicion = false;
+        System.out.println("Ingresa una opcion valida");
+      }
+    } while (!condicion);
+    return null;
+  }
+
+  //Valida la entretrada de un valor tipo coordenada, valores entre 0 y 2: (0,2)
+  public int[] validarCoordenada(String mensaje) {
+    String str;
+    boolean condicion = false;
+    do {
+      try {
+        System.out.println(mensaje);
+        sc = new Scanner(System.in);
+        str = sc.nextLine();
+        if (str.charAt(1) != ',') {
+          System.out.println("Entro aqui");
+          condicion = false;
+          continue;
+        }
+        int coordenadas[] = new int[2];
+        coordenadas[0] = Character.getNumericValue(str.charAt(0));
+        coordenadas[1] = Character.getNumericValue(str.charAt(2));
+        System.out.println("Salimos de aqui");
+        if (
+          coordenadas[0] >= 0 &&
+          coordenadas[0] <= 2 &&
+          coordenadas[1] >= 0 &&
+          coordenadas[1] <= 2
+        ) {
+          condicion = true;
+          return coordenadas;
         }
         condicion = false;
       } catch (Exception e) {
