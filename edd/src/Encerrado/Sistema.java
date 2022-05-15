@@ -35,6 +35,10 @@ public class Sistema {
     int[] arr;
     juego.setTablero(new Tablero());
     juego.setJugador(new Jugador("User", new Ficha(0), 2));
+    juego.setIA(new Jugador("IA", new Ficha(1), 2));
+    //juego.jugador.ficha1 = new Ficha(1, 1);
+    juego.jugador.ficha1 = new Ficha(1, 1, juego.jugador.ficha1.getColor());
+    juego.IA.ficha1 = new Ficha(1, 1, juego.IA.ficha1.getColor());
 
     System.out.println(juego);
     Ficha [] f = new Ficha [2];
@@ -42,6 +46,11 @@ public class Sistema {
     f[1] = juego.getIA().ficha2;
     for (int i = 0; i < 2; i++) {
       arr = validarCoordenada("Escoge una coordenada para la IA   ej: 2,0 ",juego.getJugador());
+      if(arr[0] == 0 && arr[1] == 2 && i == 0){
+        juego.moverFicha(arr[0], arr[1], juego.getIA(),f[i+1]);
+        f[i+1] = f[i];
+        System.out.println("--X"+f[i+1]);
+      }
       juego.moverFicha(arr[0], arr[1], juego.getIA(),f[i]);
       System.out.println(juego.getTablero());
     }

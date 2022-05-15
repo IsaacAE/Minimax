@@ -40,7 +40,6 @@ public class Juego {
   }
 
   public void tableroPredeterminado() {
-    System.out.println(this);
     moverFicha(0, 2, jugador, jugador.ficha1);
     moverFicha(2, 0, jugador, jugador.ficha2);
     moverFicha(0, 0, IA, IA.ficha1);
@@ -49,7 +48,7 @@ public class Juego {
     moverFicha(2, 2, IA, IA.ficha2);
   }
 
-  public void escogerTablero(){
+  public void asignarTablero(Ficha ficha, Jugador jugador){
       
   }
 

@@ -5,7 +5,12 @@ package edd.src.Encerrado;
 public class Main {
 
   public static void main(String[] args) {
-    new Sistema();
+    //new Sistema();
+    Juego juego = new Juego();
+    System.out.println(juego);
+    juego.moverFicha(1,1, juego.getJugador(), juego.getJugador().ficha1);
+    //juego.moverFicha(2,2, juego.getJugador(), juego.getJugador().ficha1);
+    System.out.println(juego);
     /*Juego juego = new Juego();
     juego.setTablero(new Tablero());
     System.out.println(juego);
