@@ -285,6 +285,12 @@ public class Tablero {
       tablero[fila][columna] == null
     ) {
       return ficha;
+    }else{
+        System.out.println("No puedes mover la ficha");
+        System.out.println(this);
+        System.out.println("Fila "+ficha.getFila()+" columna "+ ficha.getColumna());
+        //System.out.println("-->"+validarMov(ficha.getFila(), ficha.getColumna(), fila, columna));
+        System.out.println(ficha);
     }
     return null;
   }

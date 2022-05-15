@@ -27,7 +27,9 @@ public class Sistema {
     }
   }
 
-  public void comenzarJuego() {}
+  public void comenzarJuego() {
+      System.out.println("Comenzando juego");
+  }
 
   public void asignarTablero() {
     int[] arr;
@@ -35,19 +37,18 @@ public class Sistema {
     System.out.println(juego.getTablero());
     for (int i = 0; i < 2; i++) {
         arr = validarCoordenada("Escoge una coordenada para la IA   ej: 2,0 ");
-        String aux = "";
-        for (int j : arr) {
-            aux += String.valueOf(j);
+        //Las fichas inician en 0,0, la desplazamos a 1,1 para mover a 2,2
+        if(arr[0] == 2 && arr[1] == 2){
+            juego.setIA(new Jugador("IA", new Ficha(1,1,1)));
         }
         juego.moverFicha(arr[0], arr[1], juego.getIA());
         System.out.println(juego.getTablero());
     }
     for (int i = 0; i < 2; i++) {
         arr = validarCoordenada("Escoge una coordenada para la jugador   ej: 2,0 ");
-        String aux = "";
-        for (int j : arr) {
-            aux += String.valueOf(j);
-        } 
+        if(arr[0] == 2 && arr[1] == 2){
+            juego.setJugador(new Jugador("User", new Ficha(1,1,0)));
+        }
         juego.moverFicha(arr[0], arr[1], juego.getJugador());
         System.out.println(juego.getTablero());
     }
@@ -78,7 +79,17 @@ public class Sistema {
           coordenadas[1] <= 2
         ) {
             //Verifica si alguna ficha puede ser colocada en dicha coordenada
-            Ficha aux = juego.getTablero().SimularMoverFicha(coordenadas[0], coordenadas[1], new Ficha());
+            System.out.println("If");
+            Ficha aux;
+            if(coordenadas[0] == 2 && coordenadas[1] == 2){
+                //Creamos la ficha en una posicion inicial 1,1 para poder desplazarla hasta abajo a la izquierda
+                System.out.println("Entro a esta condicion");
+                aux = juego.getTablero().SimularMoverFicha(coordenadas[0], coordenadas[1], new Ficha(1,1));
+            }else{
+                System.out.println("No entro");
+                aux = juego.getTablero().SimularMoverFicha(coordenadas[0], coordenadas[1], new Ficha());
+            }
+            
           if(aux != null){
             System.out.println("Opcion valida");
             condicion = true;
