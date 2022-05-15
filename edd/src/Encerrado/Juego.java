@@ -25,6 +25,8 @@ public class Juego {
   }
 
   public boolean asignarFicha(int fila, int columna, Jugador jugador, int ficha){
+    //jugador = new Jugador("User", new Ficha(0));
+    //IA = new Jugador("IA", new Ficha(1));
     Tablero aux = jugador.asignarFicha(this.tablero, fila, columna, ficha);
     if (aux == null) {
       return false;
@@ -35,6 +37,7 @@ public class Juego {
     } else {
       setIA(jugador);
     }
+    //System.out.println("Perrrraaa"+this);
     return true;
   }
 

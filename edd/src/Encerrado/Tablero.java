@@ -280,11 +280,12 @@ public class Tablero {
   }
 
   public Ficha asignarFicha(int fila, int columna, Ficha ficha){
+    System.out.println("Tablero -->"+this);
     if(tablero[fila][columna] == null){
       tablero[fila][columna] = ficha;
       ficha.setFila(fila);
       ficha.setColumna(columna);
-      System.out.println("--> Tablero "+this);
+      //System.out.println("--> Tablero "+this);
       return ficha;
     }
     return null;

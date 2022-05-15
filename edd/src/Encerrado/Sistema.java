@@ -34,10 +34,21 @@ public class Sistema {
   public void asignarTablero() {
     int[] arr;
     juego.setTablero(new Tablero());
+    juego.setJugador(new Jugador("User", new Ficha(0)));
+    juego.setIA(new Jugador("IA", new Ficha(1)));
     System.out.println(juego.tablero);
-    //Coordenada que quiere meter
-    arr = validarCoordenada("Escoge una coordenada para la IA   ej: 2,0 ");
-    juego.asignarFicha(arr[0], arr[1], juego.getJugador(), 1);
+    for (int i = 0; i < 2; i++) {
+      System.out.println("i-->"+(i+1));
+      arr =
+        validarCoordenada(
+          "Escoge una coordenada para la IA, ficha " + (i + 1) + "  ej: 2,0 "
+        );
+      if(!juego.asignarFicha(arr[0], arr[1], juego.getIA(), (i+1))){
+        System.out.println("Movimiento invalido");
+        i--;
+      }
+    }
+
     System.out.println(juego);
     /*int[] arr;
     juego.setTablero(new Tablero());
@@ -64,10 +75,10 @@ public class Sistema {
     for (int i = 0; i < 2; i++) {
       arr =
         validarCoordenada("Escoge una coordenada para la jugador   ej: 2,0 ",juego.getIA());*/
-      /*if(arr[0] == 2 && arr[1] == 2){
+    /*if(arr[0] == 2 && arr[1] == 2){
             juego.setJugador(new Jugador("User", new Ficha(1,1,0)));
         }*/
-     /* juego.moverFicha(arr[0], arr[1], juego.getJugador());
+    /* juego.moverFicha(arr[0], arr[1], juego.getJugador());
       System.out.println(juego.getTablero());
     }
     System.out.println(juego);*/
@@ -115,14 +126,14 @@ public class Sistema {
             return coordenadas;
           } else {
             aux =
-            juego
-              .getTablero()
-              .SimularMoverFicha(
-                coordenadas[0],
-                coordenadas[1],
-                jugador.ficha2
-              );
-            if(aux != null){
+              juego
+                .getTablero()
+                .SimularMoverFicha(
+                  coordenadas[0],
+                  coordenadas[1],
+                  jugador.ficha2
+                );
+            if (aux != null) {
               System.out.println("Opcion 2");
               condicion = true;
               return coordenadas;
@@ -164,8 +175,17 @@ public class Sistema {
           coordenadas[1] >= 0 &&
           coordenadas[1] <= 2
         ) {
-          condicion = true;
-          return coordenadas;
+          if (
+            (
+              coordenadas[0] == 1 &&
+              (coordenadas[1] == 2 || coordenadas[1] == 0)
+            ) ||
+            (coordenadas[0] != 1 && coordenadas[1] == 1)
+          ) {
+            condicion = false;
+          } else {
+            return coordenadas;
+          }
         }
         condicion = false;
       } catch (Exception e) {
