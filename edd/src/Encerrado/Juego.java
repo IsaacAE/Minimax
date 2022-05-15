@@ -33,6 +33,10 @@ public class Juego {
     moverFicha(2, 2, IA);
   }
 
+  public void escogerTablero(){
+      
+  }
+
   public Jugador perdedor() {
     int movimientosJ = this.jugador.movimientosDisponibles(this.getTablero());
     int movimientosIA = this.IA.movimientosDisponibles(this.getTablero());
