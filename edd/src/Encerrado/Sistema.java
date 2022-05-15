@@ -77,38 +77,6 @@ public class Sistema {
     }
 
     System.out.println(juego);
-    /*int[] arr;
-    juego.setTablero(new Tablero());
-    juego.setJugador(new Jugador("User", new Ficha(0), 2));
-    juego.setIA(new Jugador("IA", new Ficha(1), 2));
-    //juego.jugador.ficha1 = new Ficha(1, 1);
-    juego.jugador.ficha1 = new Ficha(1, 1, juego.jugador.ficha1.getColor());
-    juego.IA.ficha1 = new Ficha(1, 1, juego.IA.ficha1.getColor());
-
-    System.out.println(juego);
-    Ficha [] f = new Ficha [2];
-    f[0] = juego.getIA().ficha1;
-    f[1] = juego.getIA().ficha2;
-    for (int i = 0; i < 2; i++) {
-      arr = validarCoordenada("Escoge una coordenada para la IA   ej: 2,0 ",juego.getJugador());
-      if(arr[0] == 0 && arr[1] == 2 && i == 0){
-        juego.moverFicha(arr[0], arr[1], juego.getIA(),f[i+1]);
-        f[i+1] = f[i];
-        System.out.println("--X"+f[i+1]);
-      }
-      juego.moverFicha(arr[0], arr[1], juego.getIA(),f[i]);
-      System.out.println(juego.getTablero());
-    }
-    for (int i = 0; i < 2; i++) {
-      arr =
-        validarCoordenada("Escoge una coordenada para la jugador   ej: 2,0 ",juego.getIA());*/
-    /*if(arr[0] == 2 && arr[1] == 2){
-            juego.setJugador(new Jugador("User", new Ficha(1,1,0)));
-        }*/
-    /* juego.moverFicha(arr[0], arr[1], juego.getJugador());
-      System.out.println(juego.getTablero());
-    }
-    System.out.println(juego);*/
   }
 
   //Valida al recibir una cadena y revisa si es posible moverla
@@ -128,7 +96,6 @@ public class Sistema {
         int coordenadas[] = new int[2];
         coordenadas[0] = Character.getNumericValue(str.charAt(0));
         coordenadas[1] = Character.getNumericValue(str.charAt(2));
-        System.out.println("Salimos de aqui");
         if (
           coordenadas[0] >= 0 &&
           coordenadas[0] <= 2 &&
@@ -148,7 +115,7 @@ public class Sistema {
               );
 
           if (aux != null) {
-            System.out.println("Opcion valida");
+            
             condicion = true;
             return coordenadas;
           } else {
@@ -161,7 +128,6 @@ public class Sistema {
                   jugador.ficha2
                 );
             if (aux != null) {
-              System.out.println("Opcion 2");
               condicion = true;
               return coordenadas;
             }
@@ -188,7 +154,6 @@ public class Sistema {
         sc = new Scanner(System.in);
         str = sc.nextLine();
         if (str.charAt(1) != ',') {
-          System.out.println("Entro aqui");
           condicion = false;
           continue;
         }
