@@ -31,22 +31,27 @@ public class Sistema {
 
   public void asignarTablero() {
     int[] arr;
-    
-    do{
-        arr = validarCoordenada();
-        for (int i : arr) {
-          System.out.println(i);
-        }
-    }while(arr == null);
-    
+    juego.setTablero(new Tablero());
+    System.out.println(juego.getTablero());
+    for (int i = 0; i < 2; i++) {
+        arr = validarCoordenada("Escoge una coordenada para la IA   ej: 2,0 ");
+        juego.moverFicha(arr[0], arr[1], juego.getIA());
+        System.out.println(juego.getTablero());
+    }
+    for (int i = 0; i < 2; i++) {
+        arr = validarCoordenada("Escoge una coordenada para la jugador   ej: 2,0 ");    
+        juego.moverFicha(arr[0], arr[1], juego.getJugador());
+        System.out.println(juego.getTablero());
+    }
+    System.out.println(juego);
   }
 
-  public int[] validarCoordenada() {
+  public int[] validarCoordenada(String mensaje) {
     String str;
     boolean condicion = false;
     do {
       try {
-        System.out.println("Escoge una coordenada para la IA   ej: 2,0 )");
+        System.out.println(mensaje);
         sc = new Scanner(System.in);
         str = sc.nextLine();
         if (str.charAt(1) != ',') {
@@ -64,9 +69,16 @@ public class Sistema {
           coordenadas[1] >= 0 &&
           coordenadas[1] <= 2
         ) {
-          
-          condicion = true;
-          return coordenadas;
+            //Verifica si alguna ficha puede ser colocada en dicha coordenada
+            Ficha aux = juego.getTablero().SimularMoverFicha(coordenadas[0], coordenadas[1], new Ficha());
+          if(aux != null){
+            System.out.println("Opcion valida");
+            condicion = true;
+            return coordenadas;
+          }else{
+              System.out.println("ptm");
+          }
+          condicion = false;
         }
         condicion = false;
       } catch (Exception e) {

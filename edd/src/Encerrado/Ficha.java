@@ -41,6 +41,7 @@ public class Ficha {
     this.figura = " ";
   }
 
+
   /**
    * Metodo que devuelve el valor del atributo color de la ficha
    * @return int
