@@ -38,17 +38,17 @@ public class Sistema {
     for (int i = 0; i < 2; i++) {
         arr = validarCoordenada("Escoge una coordenada para la IA   ej: 2,0 ");
         //Las fichas inician en 0,0, la desplazamos a 1,1 para mover a 2,2
-        if(arr[0] == 2 && arr[1] == 2){
+       /* if(arr[0] == 2 && arr[1] == 2){
             juego.setIA(new Jugador("IA", new Ficha(1,1,1)));
-        }
+        }*/
         juego.moverFicha(arr[0], arr[1], juego.getIA());
         System.out.println(juego.getTablero());
     }
     for (int i = 0; i < 2; i++) {
         arr = validarCoordenada("Escoge una coordenada para la jugador   ej: 2,0 ");
-        if(arr[0] == 2 && arr[1] == 2){
+        /*if(arr[0] == 2 && arr[1] == 2){
             juego.setJugador(new Jugador("User", new Ficha(1,1,0)));
-        }
+        }*/
         juego.moverFicha(arr[0], arr[1], juego.getJugador());
         System.out.println(juego.getTablero());
     }
