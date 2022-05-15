@@ -47,6 +47,19 @@ public class Sistema {
         System.out.println("Movimiento invalido");
         i--;
       }
+      System.out.println(juego);
+    }
+    for (int i = 0; i < 2; i++) {
+      System.out.println("i-->"+(i+1));
+      arr =
+        validarCoordenada(
+          "Escoge una coordenada para la User, ficha " + (i + 1) + "  ej: 2,0 "
+        );
+      if(!juego.asignarFicha(arr[0], arr[1], juego.getJugador(), (i+1))){
+        System.out.println("Movimiento invalido");
+        i--;
+      }
+      System.out.println(juego);
     }
 
     System.out.println(juego);
@@ -168,7 +181,7 @@ public class Sistema {
         int coordenadas[] = new int[2];
         coordenadas[0] = Character.getNumericValue(str.charAt(0));
         coordenadas[1] = Character.getNumericValue(str.charAt(2));
-        System.out.println("Salimos de aqui");
+        //System.out.println("Salimos de aqui");
         if (
           coordenadas[0] >= 0 &&
           coordenadas[0] <= 2 &&

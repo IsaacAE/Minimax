@@ -50,7 +50,7 @@ public class Tablero {
    * Metodo para pintar en consola al tablero
    */
   @Override
-   public String toString() {
+  public String toString() {
     int asciiValue = 92; //Valor en codigo ASCII del simbolo \
 
     char linea = (char) asciiValue; // Para poder imprimir en pantalla el simbolo \
@@ -279,9 +279,11 @@ public class Tablero {
     return null;
   }
 
-  public Ficha asignarFicha(int fila, int columna, Ficha ficha){
-    System.out.println("Tablero -->"+this);
-    if(tablero[fila][columna] == null){
+  public Ficha asignarFicha(int fila, int columna, Ficha ficha) {
+    //System.out.println("Tablero -->"+this);
+    //System.out.println("Esto es lo que hay "+tablero[fila][columna]);
+    if (tablero[fila][columna] == null) {
+      //System.out.println("Entro al if");
       tablero[fila][columna] = ficha;
       ficha.setFila(fila);
       ficha.setColumna(columna);
@@ -291,7 +293,7 @@ public class Tablero {
     return null;
   }
 
-  public Ficha buscarPosicion(int numero){
+  public Ficha buscarPosicion(int numero) {
     return null;
   }
 
@@ -302,12 +304,14 @@ public class Tablero {
       tablero[fila][columna] == null
     ) {
       return ficha;
-    }else{
-        System.out.println("No puedes mover la ficha");
-        System.out.println(this);
-        System.out.println("Fila "+ficha.getFila()+" columna "+ ficha.getColumna());
-        //System.out.println("-->"+validarMov(ficha.getFila(), ficha.getColumna(), fila, columna));
-        System.out.println(ficha);
+    } else {
+      System.out.println("No puedes mover la ficha");
+      System.out.println(this);
+      System.out.println(
+        "Fila " + ficha.getFila() + " columna " + ficha.getColumna()
+      );
+      //System.out.println("-->"+validarMov(ficha.getFila(), ficha.getColumna(), fila, columna));
+      System.out.println(ficha);
     }
     return null;
   }

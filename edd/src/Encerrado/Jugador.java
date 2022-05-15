@@ -60,11 +60,12 @@ public class Jugador {
         } else {
           this.ficha2 = aux;
         }
+      }else{
+          return null;
       }
+    }else{
+        return null;
     }
-
-    System.out.println("Esta es la ficha " + aux);
-    System.out.println("Este es "+this);
     return tablero;
   }
 
