@@ -52,7 +52,7 @@ public class Sistema {
     juego.setIA(new Jugador("IA", new Ficha(1)));
     System.out.println(juego.tablero);
     for (int i = 0; i < 2; i++) {
-      System.out.println("i-->" + (i + 1));
+      //System.out.println("i-->" + (i + 1));
       arr =
         validarCoordenada(
           "Escoge una coordenada para la IA, ficha " + (i + 1) + "  ej: 2,0 "
@@ -64,7 +64,7 @@ public class Sistema {
       System.out.println(juego);
     }
     for (int i = 0; i < 2; i++) {
-      System.out.println("i-->" + (i + 1));
+      //System.out.println("i-->" + (i + 1));
       arr =
         validarCoordenada(
           "Escoge una coordenada para la User, ficha " + (i + 1) + "  ej: 2,0 "
@@ -103,7 +103,7 @@ public class Sistema {
           coordenadas[1] <= 2
         ) {
           //Verifica si alguna ficha puede ser colocada en dicha coordenada
-          System.out.println("If");
+          //System.out.println("If");
           Ficha aux;
           aux =
             juego

@@ -75,7 +75,7 @@ public class Tablero {
       blanco +
       this.tablero[2][0] +
       blanco +
-      "]------[" +
+      "]      [" +
       blanco +
       this.tablero[2][2] +
       blanco +
@@ -233,35 +233,6 @@ public class Tablero {
    * @param turno Para considerar si se puede mover la ficha elegida, el turno debe variar entre 1 y 0
    * @return Ficha[][] Se podria cambiar
    */
-  /*public Ficha[][] moverFicha(int filaInicial, int columInicial, int filaFinal, int columFinal, int turno){
-        //SI se quiere mover la ficha al mismo sitio seria incorrecto, esta validacion la podemos hacer fuera del metodo
-        //como al pedir los datos de las posiciones, esto es solo para pruebas
-        if(filaInicial==filaFinal&&columInicial==columFinal){
-            System.out.println("Hace falta atrapa bobos");
-        }
-     
-        //Para saber si el movimiento que se quiere hacer es valido, esto se puede hacer fuera del metodo
-        //se coloco aqui para pruebas
-        if(!validarMov(filaInicial, columInicial, filaFinal, columFinal)){
-            System.out.println("Movimiento invalido");
-            return this.tablero;
-        }
-           //Verificamos que la ficha que se quiere mover es del color del jugador y a la vez que no sea la ficha vacia
-                if(tablero[filaInicial][columInicial].getColor()==turno){
-                    //Verificamos que a donde se quiere mover la ficha, no hay otra ficha de color
-                    //es decir, a donde se quiere mover la ficha, esta la ficha vacia y por tanto se puede hacer el intercambio de fichas
-                    if(tablero[filaFinal][columFinal].getColor()==-1){
-                        //Si lo anterior se cumple, movemos la ficha
-                        cambiarFichas(filaInicial,columInicial,filaFinal,columFinal);
-                    }else{
-                        System.out.println("Movimiento incorrecto"); //Mas adelante necesitaremos atrapabobos
-                    }
-                    }else{
-                        System.out.println("No es tu turno o intentas mover una ficha donde no hay nada");//Mas adelante necesitaremos atrapabobos
-                    }
-
-        return this.tablero;
-    }*/
   public Ficha moverFicha(int fila, int columna, Ficha ficha) {
     if (
       validarPos(fila, columna) &&
@@ -304,14 +275,6 @@ public class Tablero {
       tablero[fila][columna] == null
     ) {
       return ficha;
-    } else {
-      System.out.println("No puedes mover la ficha");
-      System.out.println(this);
-      System.out.println(
-        "Fila " + ficha.getFila() + " columna " + ficha.getColumna()
-      );
-      //System.out.println("-->"+validarMov(ficha.getFila(), ficha.getColumna(), fila, columna));
-      System.out.println(ficha);
     }
     return null;
   }
