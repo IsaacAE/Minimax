@@ -6,7 +6,8 @@ package edd.src.Encerrado;
 public class Main {
 
   public static void main(String[] args) {
-/*
+    new Sistema();
+    /*
     //juego.getTablero(juego.getTablero().cambiarFichas(0, 0, 2, 0));
     //juego.moverFicha(1,1, juego.getJugador(), juego.getJugador().ficha1);
     //juego.moverFicha(0,2, juego.getJugador(), juego.getJugador().ficha2);

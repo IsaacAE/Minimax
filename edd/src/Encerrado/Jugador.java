@@ -70,7 +70,19 @@ public class Jugador {
   }
 
   public boolean fichaPertenece(Ficha ficha) {
+    if(ficha.equals(this.ficha1) || ficha.equals(this.ficha2)){
+      return true;
+    }
     return false;
+  }
+
+  public Ficha buscarFicha(Ficha ficha){
+    if(ficha.equals(this.ficha1)){
+      return this.ficha1;
+    }else if(ficha.equals(this.ficha2)){
+      return this.ficha2;
+    }
+    return null;
   }
 
 

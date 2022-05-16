@@ -56,22 +56,22 @@ public class Tablero {
     char linea = (char) asciiValue; // Para poder imprimir en pantalla el simbolo \
     System.out.println();
     System.out.println(
-      "[" +
+      "1 [" +
       this.tablero[0][0] +
       blanco +
       "]------[" +
       blanco +
       this.tablero[0][2] +
       blanco +
-      "]"
+      "] 2"
     );
     System.out.println(blanco + " | " + linea + "        /       |" + blanco);
     System.out.println(
-      " |   [" + blanco + this.tablero[1][1] + blanco + "]     |"
+      " |   3 [" + blanco + this.tablero[1][1] + blanco + "]     |"
     );
     System.out.println(blanco + " | /    " + linea + "       |" + blanco);
     System.out.println(
-      "[" +
+      "4 [" +
       blanco +
       this.tablero[2][0] +
       blanco +
@@ -79,7 +79,7 @@ public class Tablero {
       blanco +
       this.tablero[2][2] +
       blanco +
-      "]"
+      "] 5"
     );
     //System.out.println();
     return "\n";
@@ -250,28 +250,32 @@ public class Tablero {
     return null;
   }
 
-
+  /**
+   * Regresa una ficha segun el numero (cuadrante)
+   * @param numero
+   * @return
+   */
   public Ficha buscarPosicion(int numero){
     Ficha ficha=null;
     switch(numero){
       case 1: 
-      ficha= this.tablero[0][0];
+      ficha= this.tablero[0][0]; //Arriba a la izquierda
       break;
 
       case 2: 
-      ficha=this.tablero[0][2];
+      ficha=this.tablero[0][2]; //Arriba a la derecha
       break;
 
       case 3: 
-      ficha= this.tablero[1][1];
+      ficha= this.tablero[1][1]; //El centro
       break;
 
       case 4: 
-      ficha= this.tablero[2][0];
+      ficha= this.tablero[2][0]; //Abajo a la izquierda
       break;
 
       case 5: 
-      ficha= this.tablero[2][2];
+      ficha= this.tablero[2][2]; //Abajo a la derecha
       break;
     }
     return ficha;

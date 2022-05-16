@@ -34,15 +34,27 @@ public class Sistema {
 
   public void reiniciarJuego() {
     System.out.println("Desea reiniciar el juego? S/N");
-    if(validarSioNo()){
+    if (validarSioNo()) {
       iniciarJuego();
-    }else{
+    } else {
       System.out.println("FIN");
     }
   }
 
   public void comenzarJuego() {
+    Jugador jugadorEnTurno;
     System.out.println("Comenzando juego");
+    System.out.println("¿ Desea comenzar el usuario? S/N ");
+    if (validarSioNo()) {
+      jugadorEnTurno = juego.getJugador();
+    } else {
+      jugadorEnTurno = juego.getIA();
+    }
+    System.out.println("Va a comenzar " + jugadorEnTurno);
+  }
+
+  public void turno(Jugador jugador) {
+    System.out.println("Ingresa la ficha que quieres mover ");
   }
 
   public void asignarTablero() {
@@ -52,7 +64,6 @@ public class Sistema {
     juego.setIA(new Jugador("IA", new Ficha(1)));
     System.out.println(juego.tablero);
     for (int i = 0; i < 2; i++) {
-      //System.out.println("i-->" + (i + 1));
       arr =
         validarCoordenada(
           "Escoge una coordenada para la IA, ficha " + (i + 1) + "  ej: 2,0 "
@@ -64,7 +75,6 @@ public class Sistema {
       System.out.println(juego);
     }
     for (int i = 0; i < 2; i++) {
-      //System.out.println("i-->" + (i + 1));
       arr =
         validarCoordenada(
           "Escoge una coordenada para la User, ficha " + (i + 1) + "  ej: 2,0 "
@@ -115,7 +125,6 @@ public class Sistema {
               );
 
           if (aux != null) {
-            
             condicion = true;
             return coordenadas;
           } else {
