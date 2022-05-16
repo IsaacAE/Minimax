@@ -87,6 +87,9 @@ public class Sistema {
         "Ingresa a donde la quieres mover",
         jugador
       );
+      for (int i : coordenadas) {
+        System.out.println("Coordenadas "+i);
+      }
       juego.moverFicha(coordenadas[0], coordenadas[1], jugador, fichaMover);
       System.out.println(juego);
       return true;
@@ -115,7 +118,12 @@ public class Sistema {
           Ficha fichaMover = juego.getTablero().buscarPosicion(numero);
           if (fichaMover != null) {
             if (jugador.fichaPertenece(fichaMover)) {
-              return numero;
+              if(juego.getTablero().movimientosDisponibles(fichaMover) != 0){
+                return numero;
+              }else{
+                System.out.println("Esa ficha no tiene movimiento");
+              }
+              
             } else {
               System.out.println("No puedes tomar esa ficha");
             }
