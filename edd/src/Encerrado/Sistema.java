@@ -51,12 +51,59 @@ public class Sistema {
       jugadorEnTurno = juego.getIA();
     }
     System.out.println("Va a comenzar " + jugadorEnTurno);
+    turno(jugadorEnTurno);
   }
 
   public void turno(Jugador jugador) {
-    System.out.println("Ingresa la ficha que quieres mover ");
+    
+    //do{}
+    int posicion = validarNumeros("Ingresa la ficha que quieres mover ", jugador);
+    Ficha fichaMover = juego.getTablero().buscarPosicion(posicion);
+    System.out.println("La ficha que se va a mover "+fichaMover);
+    int coordenadas[] = validarCoordenada("Ingresa a donde la quieres mover",jugador);
+    juego.moverFicha(coordenadas[0], coordenadas[1], jugador, fichaMover);
+    System.out.println(juego);
+    //juego.moverFicha(fila, columna, jugador)
   }
 
+  /**
+   * Valida que el jugador pueda tomar una ficha segun el indice del tablero .
+   * Recibe el indice en enteros, busca que la ficha exista en el tablero y que
+   * le pertenezca al jugador
+   * @param mensaje
+   * @param jugador
+   * @return
+   */
+  public int validarNumeros(String mensaje, Jugador jugador){
+    boolean aux = false;
+    sc = new Scanner(System.in);
+    do{
+      try {
+        System.out.println(mensaje);
+        int numero = Integer.parseInt(sc.nextLine());
+        if(numero > 0 && numero <= 5){
+          Ficha fichaMover = juego.getTablero().buscarPosicion(numero);
+          if(fichaMover != null){
+            if(jugador.fichaPertenece(fichaMover)){
+              return numero;
+            }else{
+              System.out.println("No puedes tomar esa ficha");
+            }
+          }else{
+            System.out.println("Esa ficha no existe");
+          }
+        }
+        aux = false;
+      } catch (Exception e) {
+        aux = false;
+        System.out.println("Ingresa una opcion valida");
+      }
+    }while(!aux);
+    sc.close();
+    return 0;
+  }
+
+  
   public void asignarTablero() {
     int[] arr;
     juego.setTablero(new Tablero());
@@ -89,7 +136,11 @@ public class Sistema {
     System.out.println(juego);
   }
 
-  //Valida al recibir una cadena y revisa si es posible moverla
+  /**
+   * Valida si una coordenada se puede mover, regresa la coordenada en un arreglo entero
+   * @param mensaje
+   * @return
+   */
   public int[] validarCoordenada(String mensaje, Jugador jugador) {
     String str;
     boolean condicion = false;
@@ -153,7 +204,7 @@ public class Sistema {
     return null;
   }
 
-  //Valida la entretrada de un valor tipo coordenada, valores entre 0 y 2: (0,2)
+
   public int[] validarCoordenada(String mensaje) {
     String str;
     boolean condicion = false;
