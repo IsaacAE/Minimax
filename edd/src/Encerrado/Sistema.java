@@ -50,7 +50,7 @@ public class Sistema {
     if (validarSioNo()) {
       //jugadorEnTurno = juego.getJugador();
       //System.out.println("Va a comenzar " + jugadores[0]);
-      //aux = 0;      
+      //aux = 0;
       jugadorEnTurno = juego.getJugador();
     } else {
       //jugadorEnTurno = juego.getIA();
@@ -59,17 +59,15 @@ public class Sistema {
       jugadorEnTurno = juego.getIA();
     }
     boolean aux = false;
-    do{
-      System.out.println("Turno de "+jugadorEnTurno);
+    do {
+      System.out.println("Turno de " + jugadorEnTurno);
       aux = turno(jugadorEnTurno);
-      if(jugadorEnTurno.equals(juego.getJugador())){
+      if (jugadorEnTurno.equals(juego.getJugador())) {
         jugadorEnTurno = juego.getIA();
-      }else{
+      } else {
         jugadorEnTurno = juego.getJugador();
       }
-    }while(aux);
-    
-
+    } while (aux);
   }
 
   //public void rondas()
@@ -77,23 +75,28 @@ public class Sistema {
     boolean hayPerdedor = false;
     hayPerdedor = juego.hayPerdedor();
     if (!hayPerdedor) {
-      int posicion = validarNumeros(
-        "Ingresa la ficha que quieres mover ",
-        jugador
-      );
-      Ficha fichaMover = juego.getTablero().buscarPosicion(posicion);
-      System.out.println("La ficha que se va a mover " + fichaMover);
-      int coordenadas[] = validarCoordenada(
-        "Ingresa a donde la quieres mover",
-        jugador
-      );
-      for (int i : coordenadas) {
-        System.out.println("Coordenadas "+i);
+      if (jugador.equals(juego.getIA())) {
+        juego.moverFichaRandom(jugador);
+      } else {
+        int posicion = validarNumeros(
+          "Ingresa la ficha que quieres mover ",
+          jugador
+        );
+        Ficha fichaMover = juego.getTablero().buscarPosicion(posicion);
+        System.out.println("La ficha que se va a mover " + fichaMover);
+        int coordenadas[] = validarCoordenada(
+          "Ingresa a donde la quieres mover coordenadas ej 2,0",
+          jugador
+        );
+        for (int i : coordenadas) {
+          System.out.println("Coordenadas " + i);
+        }
+        juego.moverFicha(coordenadas[0], coordenadas[1], jugador, fichaMover);
       }
-      juego.moverFicha(coordenadas[0], coordenadas[1], jugador, fichaMover);
+
       System.out.println(juego);
       return true;
-    }else{
+    } else {
       return false;
     }
     //juego.moverFicha(fila, columna, jugador)
@@ -118,12 +121,11 @@ public class Sistema {
           Ficha fichaMover = juego.getTablero().buscarPosicion(numero);
           if (fichaMover != null) {
             if (jugador.fichaPertenece(fichaMover)) {
-              if(juego.getTablero().movimientosDisponibles(fichaMover) != 0){
+              if (juego.getTablero().movimientosDisponibles(fichaMover) != 0) {
                 return numero;
-              }else{
+              } else {
                 System.out.println("Esa ficha no tiene movimiento");
               }
-              
             } else {
               System.out.println("No puedes tomar esa ficha");
             }
