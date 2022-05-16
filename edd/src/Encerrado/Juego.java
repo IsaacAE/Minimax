@@ -93,6 +93,19 @@ public class Juego {
     return null;
   }
 
+  public boolean hayPerdedor() {
+    int movimientosJ = this.jugador.movimientosDisponibles(this.getTablero());
+    int movimientosIA = this.IA.movimientosDisponibles(this.getTablero());
+    if (movimientosJ == 0) {
+      System.out.println("El jugador " + this.jugador + " ha perdido");
+      return true;
+    } else if (movimientosIA == 0) {
+      System.out.println("El jugador " + this.IA + " ha perdido");
+      return true;
+    }
+    return false;
+  }
+
   public Jugador getJugador() {
     return this.jugador;
   }

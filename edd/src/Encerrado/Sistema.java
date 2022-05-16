@@ -45,24 +45,54 @@ public class Sistema {
     Jugador jugadorEnTurno;
     System.out.println("Comenzando juego");
     System.out.println("¿ Desea comenzar el usuario? S/N ");
+    Jugador jugadores[] = { juego.getJugador(), juego.getIA() };
+    //int aux = 0;
     if (validarSioNo()) {
+      //jugadorEnTurno = juego.getJugador();
+      //System.out.println("Va a comenzar " + jugadores[0]);
+      //aux = 0;      
       jugadorEnTurno = juego.getJugador();
     } else {
+      //jugadorEnTurno = juego.getIA();
+      //System.out.println("Va a comenzar " + jugadores[1]);
+      //aux = 1;
       jugadorEnTurno = juego.getIA();
     }
-    System.out.println("Va a comenzar " + jugadorEnTurno);
-    turno(jugadorEnTurno);
+    boolean aux = false;
+    do{
+      System.out.println("Turno de "+jugadorEnTurno);
+      aux = turno(jugadorEnTurno);
+      if(jugadorEnTurno.equals(juego.getJugador())){
+        jugadorEnTurno = juego.getIA();
+      }else{
+        jugadorEnTurno = juego.getJugador();
+      }
+    }while(aux);
+    
+
   }
 
-  public void turno(Jugador jugador) {
-    
-    //do{}
-    int posicion = validarNumeros("Ingresa la ficha que quieres mover ", jugador);
-    Ficha fichaMover = juego.getTablero().buscarPosicion(posicion);
-    System.out.println("La ficha que se va a mover "+fichaMover);
-    int coordenadas[] = validarCoordenada("Ingresa a donde la quieres mover",jugador);
-    juego.moverFicha(coordenadas[0], coordenadas[1], jugador, fichaMover);
-    System.out.println(juego);
+  //public void rondas()
+  public boolean turno(Jugador jugador) {
+    boolean hayPerdedor = false;
+    hayPerdedor = juego.hayPerdedor();
+    if (!hayPerdedor) {
+      int posicion = validarNumeros(
+        "Ingresa la ficha que quieres mover ",
+        jugador
+      );
+      Ficha fichaMover = juego.getTablero().buscarPosicion(posicion);
+      System.out.println("La ficha que se va a mover " + fichaMover);
+      int coordenadas[] = validarCoordenada(
+        "Ingresa a donde la quieres mover",
+        jugador
+      );
+      juego.moverFicha(coordenadas[0], coordenadas[1], jugador, fichaMover);
+      System.out.println(juego);
+      return true;
+    }else{
+      return false;
+    }
     //juego.moverFicha(fila, columna, jugador)
   }
 
@@ -74,22 +104,22 @@ public class Sistema {
    * @param jugador
    * @return
    */
-  public int validarNumeros(String mensaje, Jugador jugador){
+  public int validarNumeros(String mensaje, Jugador jugador) {
     boolean aux = false;
     sc = new Scanner(System.in);
-    do{
+    do {
       try {
         System.out.println(mensaje);
         int numero = Integer.parseInt(sc.nextLine());
-        if(numero > 0 && numero <= 5){
+        if (numero > 0 && numero <= 5) {
           Ficha fichaMover = juego.getTablero().buscarPosicion(numero);
-          if(fichaMover != null){
-            if(jugador.fichaPertenece(fichaMover)){
+          if (fichaMover != null) {
+            if (jugador.fichaPertenece(fichaMover)) {
               return numero;
-            }else{
+            } else {
               System.out.println("No puedes tomar esa ficha");
             }
-          }else{
+          } else {
             System.out.println("Esa ficha no existe");
           }
         }
@@ -98,12 +128,11 @@ public class Sistema {
         aux = false;
         System.out.println("Ingresa una opcion valida");
       }
-    }while(!aux);
+    } while (!aux);
     sc.close();
     return 0;
   }
 
-  
   public void asignarTablero() {
     int[] arr;
     juego.setTablero(new Tablero());
@@ -203,7 +232,6 @@ public class Sistema {
     } while (!condicion);
     return null;
   }
-
 
   public int[] validarCoordenada(String mensaje) {
     String str;

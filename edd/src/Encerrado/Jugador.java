@@ -133,7 +133,7 @@ public class Jugador {
   }
 
   public int movimientosDisponibles(Tablero tablero) {
-    System.out.println("Calculando jugadas de " + this.nombre);
+    //System.out.println("Calculando jugadas de " + this.nombre);
     int aux1 = tablero.movimientosDisponibles(ficha1);
     int aux2 = tablero.movimientosDisponibles(ficha2);
     //System.out.println("Ficha 1 -> " + aux1);
@@ -149,6 +149,26 @@ public class Jugador {
 
   public void setFicha2(Ficha ficha) {
     this.ficha2 = ficha;
+  }
+
+  @Override
+  public boolean equals(Object object){
+    if (object == this) {
+      return true;
+    }
+    if (!(object instanceof Ficha)) {
+      return false;
+    }
+
+    Jugador aux = (Jugador) object;
+    if (
+      aux.nombre == this.nombre &&
+      aux.ficha1.equals(this.ficha1) &&
+      aux.ficha2.equals(this.ficha2)
+    ) {
+      return true;
+    }
+    return false;
   }
 
   @Override
