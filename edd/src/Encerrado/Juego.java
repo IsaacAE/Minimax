@@ -24,11 +24,32 @@ public class Juego {
     return true;
   }
 
+  public boolean asignarFicha(int fila, int columna, Jugador jugador, int ficha){
+    //jugador = new Jugador("User", new Ficha(0));
+    //IA = new Jugador("IA", new Ficha(1));
+    Tablero aux = jugador.asignarFicha(this.tablero, fila, columna, ficha);
+    if (aux == null) {
+      return false;
+    }
+    tablero = aux;
+    if (jugador.nombre.equals("User")) {
+      setJugador(jugador);
+    } else {
+      setIA(jugador);
+    }
+    //System.out.println("Perrrraaa"+this);
+    return true;
+  }
+
   public boolean moverFichaRandom(Jugador jugador){
-    //int fila = numeroaletorio;
-    //int columna = numeroaletorio;
-    //moverFicha(fila, columna, jugador);
-    return false;
+    boolean ok = false;
+    ok = moverFicha(1, 1, jugador);
+    while(!ok){
+    int fila = (int) (Math.random()*3);
+    int columna = (int) (Math.random()*3);
+    ok = moverFicha(fila, columna, jugador);
+   }
+    return ok;
   }
 
     //Mover una ficha especifica
@@ -70,6 +91,19 @@ public class Juego {
       return this.IA;
     }
     return null;
+  }
+
+  public boolean hayPerdedor() {
+    int movimientosJ = this.jugador.movimientosDisponibles(this.getTablero());
+    int movimientosIA = this.IA.movimientosDisponibles(this.getTablero());
+    if (movimientosJ == 0) {
+      System.out.println("El jugador " + this.jugador + " ha perdido");
+      return true;
+    } else if (movimientosIA == 0) {
+      System.out.println("El jugador " + this.IA + " ha perdido");
+      return true;
+    }
+    return false;
   }
 
   public Jugador getJugador() {
