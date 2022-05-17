@@ -1,22 +1,9 @@
 package edd.src.Encerrado;
 
-import java.io.FileNotFoundException;
-//import javax.lang.model.util.ElementScanner14;
-//import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
-//import wizard.src.Estructuras.*;
-//import wizard.Archivo;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 /**
  * @author Mauricio Rubio Haro
  * @author Kevin Isaac Alcantara Estrada
  */
-//package minimax.src;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * Clase que representa un tablero para jugar

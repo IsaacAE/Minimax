@@ -45,17 +45,9 @@ public class Sistema {
     Jugador jugadorEnTurno;
     System.out.println("Comenzando juego");
     System.out.println("¿ Desea comenzar el usuario? S/N ");
-    Jugador jugadores[] = { juego.getJugador(), juego.getIA() };
-    //int aux = 0;
     if (validarSioNo()) {
-      //jugadorEnTurno = juego.getJugador();
-      //System.out.println("Va a comenzar " + jugadores[0]);
-      //aux = 0;
       jugadorEnTurno = juego.getJugador();
     } else {
-      //jugadorEnTurno = juego.getIA();
-      //System.out.println("Va a comenzar " + jugadores[1]);
-      //aux = 1;
       jugadorEnTurno = juego.getIA();
     }
     boolean aux = false;
@@ -70,13 +62,18 @@ public class Sistema {
     } while (aux);
   }
 
-  //public void rondas()
   public boolean turno(Jugador jugador) {
     boolean hayPerdedor = false;
     hayPerdedor = juego.hayPerdedor();
     if (!hayPerdedor) {
       if (jugador.equals(juego.getIA())) {
-        juego.moverFichaRandom(jugador);
+        try {
+          //Ponemos a "Dormir" el programa durante los ms que queremos
+          Thread.sleep(3*1000);
+          juego.moverFichaRandom(jugador);
+       } catch (Exception e) {
+          System.out.println(e);
+       }
       } else {
         int posicion = validarNumeros(
           "Ingresa la ficha que quieres mover ",
@@ -85,7 +82,7 @@ public class Sistema {
         Ficha fichaMover = juego.getTablero().buscarPosicion(posicion);
         System.out.println("La ficha que se va a mover " + fichaMover);
         int coordenadas[] = validarCoordenada(
-          "Ingresa a donde la quieres mover coordenadas ej 2,0",
+          "Ingresa a donde la quieres mover (1-5)",
           jugador
         );
         for (int i : coordenadas) {
@@ -99,7 +96,6 @@ public class Sistema {
     } else {
       return false;
     }
-    //juego.moverFicha(fila, columna, jugador)
   }
 
   /**
@@ -181,21 +177,45 @@ public class Sistema {
    * @return
    */
   public int[] validarCoordenada(String mensaje, Jugador jugador) {
-    String str;
     boolean condicion = false;
     do {
       try {
-        System.out.println(mensaje);
+        int coordenadas[] = new int[2];
         sc = new Scanner(System.in);
-        str = sc.nextLine();
-        if (str.charAt(1) != ',') {
+        System.out.println(mensaje);
+        int eleccion = sc.nextInt();
+        switch (eleccion) {
+          case 1:
+            coordenadas[0] = 0;
+            coordenadas[1] = 0;
+            break;
+          case 2:
+            coordenadas[0] = 0;
+            coordenadas[1] = 2;
+            break;
+          case 3:
+            coordenadas[0] = 1;
+            coordenadas[1] = 1;
+            break;
+          case 4:
+            coordenadas[0] = 2;
+            coordenadas[1] = 0;
+          case 5:
+            coordenadas[0] = 2;
+            coordenadas[1] = 2;
+            break;
+          default:
+          throw new Exception();
+            //break;
+        }
+        /*if (str.charAt(1) != ',') {
           System.out.println("Entro aqui");
           condicion = false;
           continue;
-        }
-        int coordenadas[] = new int[2];
-        coordenadas[0] = Character.getNumericValue(str.charAt(0));
-        coordenadas[1] = Character.getNumericValue(str.charAt(2));
+        }*/
+
+        //coordenadas[0] = Character.getNumericValue(str.charAt(0));
+        //coordenadas[1] = Character.getNumericValue(str.charAt(2));
         if (
           coordenadas[0] >= 0 &&
           coordenadas[0] <= 2 &&
