@@ -86,25 +86,24 @@ public class Jugador {
   }
 
 
-    public int[][] movimientosDisponiblesCord(Tablero tablero){
-        int[][] coordenadas = new int[2][4];
-        int[][] ficha1Cord = new int[2][2];
-        int[][] ficha2Cord = new int[2][2];
-         ficha1Cord= tablero.movimientosDisponiblesCord(ficha1);
-        ficha2Cord= tablero.movimientosDisponiblesCord(ficha2);
-        coordenadas [0][0]= ficha1Cord[0][0];
-        coordenadas [0][1]= ficha1Cord[0][1];
-        coordenadas [0][2]= ficha1Cord[1][0];
-        coordenadas [0][3]= ficha1Cord[1][1];
+    public int[] movimientosDisponiblesCord(Tablero tablero){
+        int[] coordenadas = new int[4];
+        int[] ficha1Cord = new int[2];
+        int[] ficha2Cord = new int[2];
 
-        coordenadas [1][0]= ficha2Cord[0][0];
-        coordenadas [1][1]= ficha2Cord[0][1];
-        coordenadas [1][2]= ficha2Cord[1][0];
-        coordenadas [1][3]= ficha2Cord[1][1];
-
+        ficha1Cord=tablero.movimientosDisponiblesCord(this.ficha1);
+        ficha2Cord=tablero.movimientosDisponiblesCord(this.ficha2);
+        coordenadas[0]=ficha1Cord[0];
+        coordenadas[1]=ficha1Cord[1];
+        coordenadas[2]=ficha2Cord[0];
+        coordenadas[3]=ficha2Cord[1];
+       /* for(int pec=0;pec<coordenadas.length;pec++){
+          System.out.println(coordenadas[pec]);
+        }*/
         return coordenadas;
-        //return aux1+aux2;
     }
+
+    
   //Mover una ficha en especifico
   public Tablero moverFicha(
     Tablero tablero,

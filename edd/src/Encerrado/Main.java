@@ -6,6 +6,8 @@ package edd.src.Encerrado;
 public class Main {
 
   public static void main(String[] args) {
+   // Juego juego = new Juego();
+   // System.out.println(juego.getTablero().estadoTablero());
     new Sistema();
     /*
     //juego.getTablero(juego.getTablero().cambiarFichas(0, 0, 2, 0));
@@ -13,7 +15,7 @@ public class Main {
     //juego.moverFicha(0,2, juego.getJugador(), juego.getJugador().ficha2);
     //juego.moverFicha(2,2, juego.getJugador(), juego.getJugador().ficha1);
     //System.out.println(juego);
-    /*Juego juego = new Juego();
+    /*
     juego.setTablero(new Tablero());
     System.out.println(juego);
     juego.moverFicha(0,0, juego.getJugador(), juego.getJugador().ficha1);
