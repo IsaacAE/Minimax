@@ -281,6 +281,48 @@ public class Tablero {
     return ficha;
   }
 
+    /**
+   * Regresa una ficha segun el numero (cuadrante)
+   * @param numero
+   * @return
+   */
+  public int[] buscarPosicionCord(int numero){
+    //Ficha ficha=null;
+    int aux [] = new int [2];
+    switch(numero){
+      case 1: 
+      aux[0] = 0;
+      aux[1] = 0;
+      //ficha= this.tablero[0][0]; //Arriba a la izquierda
+      break;
+
+      case 2: 
+      aux[0] = 0;
+      aux[1] = 2;
+      //ficha=this.tablero[0][2]; //Arriba a la derecha
+      break;
+
+      case 3: 
+      aux[0] = 1;
+      aux[1] = 1;
+      //ficha= this.tablero[1][1]; //El centro
+      break;
+
+      case 4: 
+      aux[0] = 2;
+      aux[1] = 0;
+      //ficha= this.tablero[2][0]; //Abajo a la izquierda
+      break;
+
+      case 5: 
+      aux[0] = 2;
+      aux[1] = 2;
+      //ficha= this.tablero[2][2]; //Abajo a la derecha
+      break;
+    }
+    return aux;
+  }
+
   public Ficha asignarFicha(int fila, int columna, Ficha ficha) {
     //System.out.println("Tablero -->"+this);
     //System.out.println("Esto es lo que hay "+tablero[fila][columna]);
