@@ -89,7 +89,7 @@ public class Sistema {
         Ficha fichaMover = juego.getTablero().buscarPosicion(posicion);
         System.out.println("La ficha que se va a mover " + fichaMover);
         int coordenadas[] = validarCoordenada(
-            "Ingresa a donde la quieres mover coordenadas ej 2,0",
+            "Ingresa a donde la quieres (1-5)",
             jugador);
         for (int i : coordenadas) {
           System.out.println("Coordenadas " + i);
@@ -155,7 +155,7 @@ public class Sistema {
     System.out.println(juego.tablero);
     for (int i = 0; i < 2; i++) {
       arr = validarCoordenada(
-          "Escoge una coordenada para la IA, ficha " + (i + 1) + "  ej: 2,0 ");
+          "Escoge una posicion para la IA, ficha " + (i + 1) + "  (1-5) ");
       if (!juego.asignarFicha(arr[0], arr[1], juego.getIA(), (i + 1))) {
         System.out.println("Movimiento invalido");
         i--;
@@ -164,7 +164,7 @@ public class Sistema {
     }
     for (int i = 0; i < 2; i++) {
       arr = validarCoordenada(
-          "Escoge una coordenada para la User, ficha " + (i + 1) + "  ej: 2,0 ");
+          "Escoge una posicion para la User, ficha " + (i + 1) + " (1-5) ");
       if (!juego.asignarFicha(arr[0], arr[1], juego.getJugador(), (i + 1))) {
         System.out.println("Movimiento invalido");
         i--;
@@ -241,14 +241,14 @@ public class Sistema {
       try {
         System.out.println(mensaje);
         sc = new Scanner(System.in);
-        str = sc.nextLine();
-        if (str.charAt(1) != ',') {
+        int elec = sc.nextInt();
+        /*if (str.charAt(1) != ',') {
           condicion = false;
           continue;
-        }
-        int coordenadas[] = new int[2];
-        coordenadas[0] = Character.getNumericValue(str.charAt(0));
-        coordenadas[1] = Character.getNumericValue(str.charAt(2));
+        }*/
+        int coordenadas[] = juego.getTablero().buscarPosicionCord(elec);
+        //coordenadas[0] = Character.getNumericValue(str.charAt(0));
+        //coordenadas[1] = Character.getNumericValue(str.charAt(2));
         // System.out.println("Salimos de aqui");
         if (coordenadas[0] >= 0 &&
             coordenadas[0] <= 2 &&
