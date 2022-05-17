@@ -1,22 +1,9 @@
 package edd.src.Encerrado;
 
-import java.io.FileNotFoundException;
-//import javax.lang.model.util.ElementScanner14;
-//import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
-//import wizard.src.Estructuras.*;
-//import wizard.Archivo;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 /**
  * @author Mauricio Rubio Haro
  * @author Kevin Isaac Alcantara Estrada
  */
-//package minimax.src;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * Clase que representa un tablero para jugar
@@ -279,6 +266,48 @@ public class Tablero {
       break;
     }
     return ficha;
+  }
+
+    /**
+   * Regresa una ficha segun el numero (cuadrante)
+   * @param numero
+   * @return
+   */
+  public int[] buscarPosicionCord(int numero){
+    //Ficha ficha=null;
+    int aux [] = new int [2];
+    switch(numero){
+      case 1: 
+      aux[0] = 0;
+      aux[1] = 0;
+      //ficha= this.tablero[0][0]; //Arriba a la izquierda
+      break;
+
+      case 2: 
+      aux[0] = 0;
+      aux[1] = 2;
+      //ficha=this.tablero[0][2]; //Arriba a la derecha
+      break;
+
+      case 3: 
+      aux[0] = 1;
+      aux[1] = 1;
+      //ficha= this.tablero[1][1]; //El centro
+      break;
+
+      case 4: 
+      aux[0] = 2;
+      aux[1] = 0;
+      //ficha= this.tablero[2][0]; //Abajo a la izquierda
+      break;
+
+      case 5: 
+      aux[0] = 2;
+      aux[1] = 2;
+      //ficha= this.tablero[2][2]; //Abajo a la derecha
+      break;
+    }
+    return aux;
   }
 
   public Ficha asignarFicha(int fila, int columna, Ficha ficha) {
