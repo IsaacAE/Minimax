@@ -1,22 +1,9 @@
 package edd.src.Encerrado;
 
-import java.io.FileNotFoundException;
-//import javax.lang.model.util.ElementScanner14;
-//import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
-//import wizard.src.Estructuras.*;
-//import wizard.Archivo;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 /**
  * @author Mauricio Rubio Haro
  * @author Kevin Isaac Alcantara Estrada
  */
-//package minimax.src;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * Clase que representa un tablero para jugar
@@ -56,22 +43,22 @@ public class Tablero {
     char linea = (char) asciiValue; // Para poder imprimir en pantalla el simbolo \
     System.out.println();
     System.out.println(
-      "[" +
+      "1 [" +
       this.tablero[0][0] +
       blanco +
       "]------[" +
       blanco +
       this.tablero[0][2] +
       blanco +
-      "]"
+      "] 2"
     );
     System.out.println(blanco + " | " + linea + "        /       |" + blanco);
     System.out.println(
-      " |   [" + blanco + this.tablero[1][1] + blanco + "]     |"
+      " |   3 [" + blanco + this.tablero[1][1] + blanco + "]     |"
     );
     System.out.println(blanco + " | /    " + linea + "       |" + blanco);
     System.out.println(
-      "[" +
+      "4 [" +
       blanco +
       this.tablero[2][0] +
       blanco +
@@ -79,7 +66,7 @@ public class Tablero {
       blanco +
       this.tablero[2][2] +
       blanco +
-      "]"
+      "] 5"
     );
     //System.out.println();
     return "\n";
@@ -233,35 +220,6 @@ public class Tablero {
    * @param turno Para considerar si se puede mover la ficha elegida, el turno debe variar entre 1 y 0
    * @return Ficha[][] Se podria cambiar
    */
-  /*public Ficha[][] moverFicha(int filaInicial, int columInicial, int filaFinal, int columFinal, int turno){
-        //SI se quiere mover la ficha al mismo sitio seria incorrecto, esta validacion la podemos hacer fuera del metodo
-        //como al pedir los datos de las posiciones, esto es solo para pruebas
-        if(filaInicial==filaFinal&&columInicial==columFinal){
-            System.out.println("Hace falta atrapa bobos");
-        }
-     
-        //Para saber si el movimiento que se quiere hacer es valido, esto se puede hacer fuera del metodo
-        //se coloco aqui para pruebas
-        if(!validarMov(filaInicial, columInicial, filaFinal, columFinal)){
-            System.out.println("Movimiento invalido");
-            return this.tablero;
-        }
-           //Verificamos que la ficha que se quiere mover es del color del jugador y a la vez que no sea la ficha vacia
-                if(tablero[filaInicial][columInicial].getColor()==turno){
-                    //Verificamos que a donde se quiere mover la ficha, no hay otra ficha de color
-                    //es decir, a donde se quiere mover la ficha, esta la ficha vacia y por tanto se puede hacer el intercambio de fichas
-                    if(tablero[filaFinal][columFinal].getColor()==-1){
-                        //Si lo anterior se cumple, movemos la ficha
-                        cambiarFichas(filaInicial,columInicial,filaFinal,columFinal);
-                    }else{
-                        System.out.println("Movimiento incorrecto"); //Mas adelante necesitaremos atrapabobos
-                    }
-                    }else{
-                        System.out.println("No es tu turno o intentas mover una ficha donde no hay nada");//Mas adelante necesitaremos atrapabobos
-                    }
-
-        return this.tablero;
-    }*/
   public Ficha moverFicha(int fila, int columna, Ficha ficha) {
     if (
       validarPos(fila, columna) &&
@@ -279,31 +237,77 @@ public class Tablero {
     return null;
   }
 
-
+  /**
+   * Regresa una ficha segun el numero (cuadrante)
+   * @param numero
+   * @return
+   */
   public Ficha buscarPosicion(int numero){
     Ficha ficha=null;
     switch(numero){
       case 1: 
-      ficha= this.tablero[0][0];
+      ficha= this.tablero[0][0]; //Arriba a la izquierda
       break;
 
       case 2: 
-      ficha=this.tablero[0][2];
+      ficha=this.tablero[0][2]; //Arriba a la derecha
       break;
 
       case 3: 
-      ficha= this.tablero[1][1];
+      ficha= this.tablero[1][1]; //El centro
       break;
 
       case 4: 
-      ficha= this.tablero[2][0];
+      ficha= this.tablero[2][0]; //Abajo a la izquierda
       break;
 
       case 5: 
-      ficha= this.tablero[2][2];
+      ficha= this.tablero[2][2]; //Abajo a la derecha
       break;
     }
     return ficha;
+  }
+
+    /**
+   * Regresa una ficha segun el numero (cuadrante)
+   * @param numero
+   * @return
+   */
+  public int[] buscarPosicionCord(int numero){
+    //Ficha ficha=null;
+    int aux [] = new int [2];
+    switch(numero){
+      case 1: 
+      aux[0] = 0;
+      aux[1] = 0;
+      //ficha= this.tablero[0][0]; //Arriba a la izquierda
+      break;
+
+      case 2: 
+      aux[0] = 0;
+      aux[1] = 2;
+      //ficha=this.tablero[0][2]; //Arriba a la derecha
+      break;
+
+      case 3: 
+      aux[0] = 1;
+      aux[1] = 1;
+      //ficha= this.tablero[1][1]; //El centro
+      break;
+
+      case 4: 
+      aux[0] = 2;
+      aux[1] = 0;
+      //ficha= this.tablero[2][0]; //Abajo a la izquierda
+      break;
+
+      case 5: 
+      aux[0] = 2;
+      aux[1] = 2;
+      //ficha= this.tablero[2][2]; //Abajo a la derecha
+      break;
+    }
+    return aux;
   }
 
   public Ficha asignarFicha(int fila, int columna, Ficha ficha) {
@@ -329,13 +333,6 @@ public class Tablero {
       tablero[fila][columna] == null
     ) {
       return ficha;
-    }else{
-        /*System.out.println("No puedes mover la ficha");
-        System.out.println(this);
-        System.out.println("Fila "+ficha.getFila()+" columna "+ ficha.getColumna());
-        //System.out.println("-->"+validarMov(ficha.getFila(), ficha.getColumna(), fila, columna));
-        System.out.println(ficha);*/
-
     }
     return null;
   }
@@ -353,48 +350,92 @@ public class Tablero {
     return aux;
   }
 
-  public int[][] movimientosDisponiblesCord(Ficha ficha){
-    int[][] coord = new int[2][2];
+  public int[] movimientosDisponiblesCord(Ficha ficha){
+    int[] coord = new int[2];
     int k=0;
 
-    for (int i = 0; i < coord.length; i++) {
-      for (int j = 0; j < coord[i].length; j++) {
-       coord[i][j]=-1;
-      }
-    }
+   
 
   
     if(SimularMoverFicha(0, 0, ficha)!=null){
-      coord[k][0]= 0;
-      coord[k][1]= 0;
+     coord[k]=1;
       k++;
     }
 
     if(SimularMoverFicha(0, 2, ficha)!=null){
-      coord[k][0]= 0;
-      coord[k][1]= 2;
+      coord[k]=2;
       k++;
     }
 
     if(SimularMoverFicha(1, 1, ficha)!=null){
-      coord[k][0]= 1;
-      coord[k][1]= 1;
+      coord[k]=3;
       k++;
     }
 
     if(SimularMoverFicha(2, 0, ficha)!=null){
-      coord[k][0]= 2;
-      coord[k][1]= 0;
+      coord[k]=4;
       k++;
     }
 
     if(SimularMoverFicha(2, 2, ficha)!=null){
-      coord[k][0]= 2;
-      coord[k][1]= 1;
+      coord[k]=5;
       k++;
     }
 
     return coord;    
+}
+
+
+public String estadoTablero(){
+  String s="";
+//Para la primera
+  if(this.tablero[0][0]==null){
+    s+="2";
+  }else if(this.tablero[0][0].getColor()==0){
+    s+="0";
+  }else{
+    s+="1";
+  }
+
+  //Para la segunda
+  if(this.tablero[0][2]==null){
+    s+="2";
+  }else if(this.tablero[0][2].getColor()==0){
+    s+="0";
+  }else{
+    s+="1";
+  }
+
+  //Para la tercera
+  if(this.tablero[1][1]==null){
+    s+="2";
+  }else if(this.tablero[1][1].getColor()==0){
+    s+="0";
+  }else{
+    s+="1";
+  }
+
+   //Para la cuarta
+   if(this.tablero[2][0]==null){
+    s+="2";
+  }else if(this.tablero[2][0].getColor()==0){
+    s+="0";
+  }else{
+    s+="1";
+  }
+
+  //Para la quinta
+  if(this.tablero[2][2]==null){
+    s+="2";
+  }else if(this.tablero[2][2].getColor()==0){
+    s+="0";
+  }else{
+    s+="1";
+  }
+
+
+
+  return s;
 }
 
 }

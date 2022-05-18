@@ -70,29 +70,40 @@ public class Jugador {
   }
 
   public boolean fichaPertenece(Ficha ficha) {
+    if(ficha.equals(this.ficha1) || ficha.equals(this.ficha2)){
+      return true;
+    }
     return false;
   }
 
-
-    public int[][] movimientosDisponiblesCord(Tablero tablero){
-        int[][] coordenadas = new int[2][4];
-        int[][] ficha1Cord = new int[2][2];
-        int[][] ficha2Cord = new int[2][2];
-         ficha1Cord= tablero.movimientosDisponiblesCord(ficha1);
-        ficha2Cord= tablero.movimientosDisponiblesCord(ficha2);
-        coordenadas [0][0]= ficha1Cord[0][0];
-        coordenadas [0][1]= ficha1Cord[0][1];
-        coordenadas [0][2]= ficha1Cord[1][0];
-        coordenadas [0][3]= ficha1Cord[1][1];
-
-        coordenadas [1][0]= ficha2Cord[0][0];
-        coordenadas [1][1]= ficha2Cord[0][1];
-        coordenadas [1][2]= ficha2Cord[1][0];
-        coordenadas [1][3]= ficha2Cord[1][1];
-
-        return coordenadas;
-        //return aux1+aux2;
+  public Ficha buscarFicha(Ficha ficha){
+    if(ficha.equals(this.ficha1)){
+      return this.ficha1;
+    }else if(ficha.equals(this.ficha2)){
+      return this.ficha2;
     }
+    return null;
+  }
+
+
+    public int[] movimientosDisponiblesCord(Tablero tablero){
+        int[] coordenadas = new int[4];
+        int[] ficha1Cord = new int[2];
+        int[] ficha2Cord = new int[2];
+
+        ficha1Cord=tablero.movimientosDisponiblesCord(this.ficha1);
+        ficha2Cord=tablero.movimientosDisponiblesCord(this.ficha2);
+        coordenadas[0]=ficha1Cord[0];
+        coordenadas[1]=ficha1Cord[1];
+        coordenadas[2]=ficha2Cord[0];
+        coordenadas[3]=ficha2Cord[1];
+       /* for(int pec=0;pec<coordenadas.length;pec++){
+          System.out.println(coordenadas[pec]);
+        }*/
+        return coordenadas;
+    }
+
+    
   //Mover una ficha en especifico
   public Tablero moverFicha(
     Tablero tablero,
@@ -121,11 +132,11 @@ public class Jugador {
   }
 
   public int movimientosDisponibles(Tablero tablero) {
-    System.out.println("Calculando jugadas de " + this.nombre);
+    //System.out.println("Calculando jugadas de " + this.nombre);
     int aux1 = tablero.movimientosDisponibles(ficha1);
     int aux2 = tablero.movimientosDisponibles(ficha2);
-    System.out.println("Ficha 1 -> " + aux1);
-    System.out.println("Ficha 2 -> " + aux2);
+    //System.out.println("Ficha 1 -> " + aux1);
+    //System.out.println("Ficha 2 -> " + aux2);
     return aux1 + aux2;
   }
 
@@ -137,6 +148,26 @@ public class Jugador {
 
   public void setFicha2(Ficha ficha) {
     this.ficha2 = ficha;
+  }
+
+  @Override
+  public boolean equals(Object object){
+    if (object == this) {
+      return true;
+    }
+    if (!(object instanceof Ficha)) {
+      return false;
+    }
+
+    Jugador aux = (Jugador) object;
+    if (
+      aux.nombre == this.nombre &&
+      aux.ficha1.equals(this.ficha1) &&
+      aux.ficha2.equals(this.ficha2)
+    ) {
+      return true;
+    }
+    return false;
   }
 
   @Override
