@@ -43,7 +43,7 @@ public class Juego {
 
   public boolean moverFichaRandom(Jugador jugador){
     boolean ok = false;
-    ok = moverFicha(1, 1, jugador);
+   // ok = moverFicha(1, 1, jugador);
     while(!ok){
     int fila = (int) (Math.random()*3);
     int columna = (int) (Math.random()*3);

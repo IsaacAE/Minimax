@@ -350,48 +350,92 @@ public class Tablero {
     return aux;
   }
 
-  public int[][] movimientosDisponiblesCord(Ficha ficha){
-    int[][] coord = new int[2][2];
+  public int[] movimientosDisponiblesCord(Ficha ficha){
+    int[] coord = new int[2];
     int k=0;
 
-    for (int i = 0; i < coord.length; i++) {
-      for (int j = 0; j < coord[i].length; j++) {
-       coord[i][j]=-1;
-      }
-    }
+   
 
   
     if(SimularMoverFicha(0, 0, ficha)!=null){
-      coord[k][0]= 0;
-      coord[k][1]= 0;
+     coord[k]=1;
       k++;
     }
 
     if(SimularMoverFicha(0, 2, ficha)!=null){
-      coord[k][0]= 0;
-      coord[k][1]= 2;
+      coord[k]=2;
       k++;
     }
 
     if(SimularMoverFicha(1, 1, ficha)!=null){
-      coord[k][0]= 1;
-      coord[k][1]= 1;
+      coord[k]=3;
       k++;
     }
 
     if(SimularMoverFicha(2, 0, ficha)!=null){
-      coord[k][0]= 2;
-      coord[k][1]= 0;
+      coord[k]=4;
       k++;
     }
 
     if(SimularMoverFicha(2, 2, ficha)!=null){
-      coord[k][0]= 2;
-      coord[k][1]= 1;
+      coord[k]=5;
       k++;
     }
 
     return coord;    
+}
+
+
+public String estadoTablero(){
+  String s="";
+//Para la primera
+  if(this.tablero[0][0]==null){
+    s+="2";
+  }else if(this.tablero[0][0].getColor()==0){
+    s+="0";
+  }else{
+    s+="1";
+  }
+
+  //Para la segunda
+  if(this.tablero[0][2]==null){
+    s+="2";
+  }else if(this.tablero[0][2].getColor()==0){
+    s+="0";
+  }else{
+    s+="1";
+  }
+
+  //Para la tercera
+  if(this.tablero[1][1]==null){
+    s+="2";
+  }else if(this.tablero[1][1].getColor()==0){
+    s+="0";
+  }else{
+    s+="1";
+  }
+
+   //Para la cuarta
+   if(this.tablero[2][0]==null){
+    s+="2";
+  }else if(this.tablero[2][0].getColor()==0){
+    s+="0";
+  }else{
+    s+="1";
+  }
+
+  //Para la quinta
+  if(this.tablero[2][2]==null){
+    s+="2";
+  }else if(this.tablero[2][2].getColor()==0){
+    s+="0";
+  }else{
+    s+="1";
+  }
+
+
+
+  return s;
 }
 
 }

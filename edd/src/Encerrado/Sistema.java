@@ -98,6 +98,7 @@ public class Sistema {
       }
 
       System.out.println(juego);
+      jugador.movimientosDisponiblesCord(juego.getTablero());
       return true;
     } else {
       return false;
