@@ -1,6 +1,6 @@
 package edd.src.Encerrado;
 
-public class Jugador implements Cloneable{
+public class Jugador{
 
   public String nombre;
   //De forma predeterminada, todas las fichas comienzan en 0,0.
@@ -189,15 +189,6 @@ public class Jugador implements Cloneable{
   @Override
   public String toString() {
     return this.nombre + " Ficha " + ficha1 + " Ficha " + ficha2;
-  }
-
-  @Override
-  public Object clone(){  
-    try{  
-        return super.clone();  
-    }catch(Exception e){ 
-        return null; 
-    }
   }
 }
 

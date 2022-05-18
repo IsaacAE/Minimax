@@ -1,6 +1,6 @@
 package edd.src.Encerrado;
 
-public class Juego implements Cloneable{
+public class Juego{
 
   Tablero tablero = new Tablero();
   public Jugador jugador = new Jugador("User", new Ficha(0));
@@ -143,13 +143,4 @@ public class Juego implements Cloneable{
   public void setIA(Jugador jugador) {
     this.IA = jugador;
   }
-
-  @Override
-public Object clone(){  
-  try{  
-      return super.clone();  
-  }catch(Exception e){ 
-      return null; 
-  }
-}
 }
