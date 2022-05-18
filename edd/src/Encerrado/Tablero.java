@@ -22,6 +22,16 @@ public class Tablero implements Cloneable{
     tablero = new Ficha[3][3];
   }
 
+  public Tablero(Tablero object){
+    this.tablero = new Ficha [3][3];
+    for ( int i = 0; i < object.getTablero().length; i++) {
+      for (int j = 0; j < tablero.length; j++) {
+          this.tablero[i][j] = object.tablero[i][j];
+      }
+    }
+    
+  }
+
   /**
    * Metodo que devuelve el atributo tablero
    * @return Ficha[][]

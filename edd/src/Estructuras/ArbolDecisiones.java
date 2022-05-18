@@ -45,8 +45,15 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
 
     int[] arrF2 = { arr[2], arr[3] };
 
-    Juego sim1 = (Juego) this.juego.clone();
-    sim1.moverFicha(1,1, sim1.inicial);
+    Juego sim1 = new Juego(this.juego);
+    //sim1.jugador.ficha1 = new Ficha(1);
+    //sim1.moverFicha(1,1, sim1.getJugador());
+    sim1.moverFicha(1, 1, sim1.getJugador(), sim1.getJugador().getFicha1());
+    String str1 = sim1.getTablero().estadoTablero();
+    System.out.println("Sim1 str --> "+str1);
+    /*Tablero tab = sim1.getTablero();
+    tab.moverFicha(1, 1, new Ficha(2));
+    sim1.setTablero(tab);*/
     System.out.println("Sim1 ->"+sim1);
     System.out.println("Juego original ->"+this.juego);
     

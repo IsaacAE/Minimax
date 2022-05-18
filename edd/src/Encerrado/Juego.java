@@ -3,12 +3,19 @@ package edd.src.Encerrado;
 public class Juego implements Cloneable{
 
   Tablero tablero = new Tablero();
-  Jugador jugador = new Jugador("User", new Ficha(0));
+  public Jugador jugador = new Jugador("User", new Ficha(0));
   Jugador IA = new Jugador("IA", new Ficha(1));
   public Jugador inicial = jugador;
 
   public Juego() {
     tableroPredeterminado();
+  }
+  //public Jugador getIncial(){}
+  public Juego(Juego object){
+    this.tablero = new Tablero(object.getTablero());
+    this.jugador = new Jugador(object.getJugador());
+    this.IA = new Jugador(object.getIA());
+    //this.inicial = object.inicial;
   }
 
   public boolean moverFicha(int fila, int columna, Jugador jugador) {

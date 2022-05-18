@@ -22,12 +22,17 @@ public class Ficha implements Cloneable{
   //Para ointar de azul
   public static final String azul = "\u001B[36m";
 
+  public static final String ANSI_GREEN = "\u001B[32m";
+
   //Constructor de la ficha que recibe un numero para determinar su color, 1 para roja, 0 para azul
   public Ficha(int color) {
     if (color == 1) {
       this.color = 1;
       this.figura = rojo + "*" + reset; //pintamos rojo
-    } else {
+    } else if(color == 2){
+      this.color = 2;
+      this.figura = ANSI_GREEN +"*"+reset;
+    }else {
       this.color = 0;
       this.figura = azul + "*" + reset; //pintamos azul
     }
@@ -58,6 +63,13 @@ public class Ficha implements Cloneable{
     this.columna = columna;
   }
 
+  public Ficha (Ficha object){
+    this.color = object.getColor();
+    this.figura = object.getFigura();
+    this.fila = object.getFila();
+    this.columna = object.getColumna();
+  }
+
   /**
    * Metodo que devuelve el valor del atributo color de la ficha
    * @return int
@@ -68,6 +80,10 @@ public class Ficha implements Cloneable{
 
   public int getFila() {
     return this.fila;
+  }
+
+  public String getFigura() {
+    return this.figura;
   }
 
   public void setFila(int fila) {

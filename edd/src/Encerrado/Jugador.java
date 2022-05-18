@@ -3,7 +3,6 @@ package edd.src.Encerrado;
 public class Jugador implements Cloneable{
 
   public String nombre;
-
   //De forma predeterminada, todas las fichas comienzan en 0,0.
   public Ficha ficha1;
   public Ficha ficha2;
@@ -20,6 +19,23 @@ public class Jugador implements Cloneable{
     this.ficha2 = new Ficha(fila, fila, fichas.getColor());
   }
 
+  public Jugador(Jugador object){
+    this.nombre = object.getNombre();
+    this.ficha1 = new Ficha(object.getFicha1());
+    this.ficha2 = new Ficha(object.getFicha2());
+  }
+
+  public String getNombre(){
+    return this.nombre;
+  }
+
+  public Ficha getFicha1(){
+    return this.ficha1;
+  }
+
+  public Ficha getFicha2(){
+    return this.ficha2;
+  }
   //Mueve cualquier ficha disponible
   public Tablero moverFicha(Tablero tablero, int fila, int columna) {
     Ficha aux = tablero.moverFicha(fila, columna, ficha1);
