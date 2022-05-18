@@ -5,7 +5,7 @@ package edd.src.Encerrado;
  *@author Alcantara Estrada Kevin Isaac
  *@auhtor Rubio Haro Mauricio
  */
-public class Ficha {
+public class Ficha implements Cloneable{
 
   //Atributos privados de la clase
 
@@ -107,5 +107,13 @@ public class Ficha {
       return true;
     }
     return false;
+  }
+  @Override
+  public Object clone(){  
+    try{  
+        return super.clone();  
+    }catch(Exception e){ 
+        return null; 
+    }
   }
 }

@@ -10,7 +10,7 @@ package edd.src.Encerrado;
  * @author Alcantara Estrada Kevin Isaac
  * @author Rubio Haro Mauricio
  */
-public class Tablero {
+public class Tablero implements Cloneable{
 
   //atributo unico de la clase, un tablero que contiene fichas
   Ficha[][] tablero;
@@ -389,6 +389,7 @@ public class Tablero {
 public String estadoTablero(){
   String s="";
 //Para la primera
+//0 azul 1 rojo
   if(this.tablero[0][0]==null){
     s+="2";
   }else if(this.tablero[0][0].getColor()==0){
@@ -436,6 +437,14 @@ public String estadoTablero(){
 
 
   return s;
+}
+@Override
+public Object clone(){  
+  try{  
+      return super.clone();  
+  }catch(Exception e){ 
+      return null; 
+  }
 }
 
 }

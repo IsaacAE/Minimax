@@ -1,6 +1,6 @@
 package edd.src.Encerrado;
 
-public class Jugador {
+public class Jugador implements Cloneable{
 
   public String nombre;
 
@@ -173,6 +173,15 @@ public class Jugador {
   @Override
   public String toString() {
     return this.nombre + " Ficha " + ficha1 + " Ficha " + ficha2;
+  }
+
+  @Override
+  public Object clone(){  
+    try{  
+        return super.clone();  
+    }catch(Exception e){ 
+        return null; 
+    }
   }
 }
 

@@ -1,21 +1,93 @@
 package edd.src.Estructuras;
 
+import edd.src.Encerrado.*;
+//import edd.src.Encerrado.Tablero;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import edd.src.Encerrado.Juego;
+//import edd.src.Estructuras.ArbolMiniMax;
 
-public class ArbolDecisiones<T extends Comparable<T>> extends ArbolBinarioBusqueda<T> {
-    Juego juego;
+public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
+
+  Juego juego;
+  Tablero tablero;
+
+  public ArbolDecisiones() {
+    super();
+  }
+
+  public void setJuego(Juego juego) {
+    this.juego = juego;
+    this.tablero = juego.getTablero();
+    construirArbol();
+  }
+
+  public Tablero getTablero(){
+    return this.tablero;
+  }
+
+  public Juego getJuego(){
+    return this.juego;
+  }
+
+  public void construirArbol() {
+    String str = tablero.estadoTablero();
+    System.out.println("-->str " + str);
+    System.out.println("Jugador inicial " + juego.inicial);
+    System.out.println("Jugador inicial " + juego);
+    VerticeMinimax aux = new VerticeMinimax(str);
+    int[] arr = juego.inicial.movimientosDisponiblesCord(tablero);
+    for (int i : arr) {
+      System.out.println(": " + i);
+    }
+    int[] arrF1 = { arr[0], arr[1] };
+
+    int[] arrF2 = { arr[2], arr[3] };
+
+    Juego sim1 = (Juego) this.juego.clone();
+    sim1.moverFicha(1,1, sim1.inicial);
+    System.out.println("Sim1 ->"+sim1);
+    System.out.println("Juego original ->"+this.juego);
     
-    public ArbolDecisiones(Juego juego){
-        this.super();
-        this.juego = juego;
-        construirArbol();
-    }
+    
+    
+    /*this.raiz = aux;
+    this.raiz.izquierdo = new VerticeMinimax(str);
+    this.raiz.derecho = new VerticeMinimax(str);
+    System.out.println("Arbolito " + this);
+    System.out.println(this.raiz.profundidad());*/
+    //this.raiz = new Vertice
+  }
 
-    public void construirArbol(){
-        String str = juego.getTablero();
+  public void moverFicha(
+    int[] arr,
+    int color,
+    Tablero tablerito,
+    Ficha ficha
+  ) {
+    for (int i = 0; i < arr.length; i++) {
+      switch (arr[i]) {
+        case 1:
+          ficha = tablerito.moverFicha(0, 0, ficha);
+          break;
+        case 2:
+          ficha = tablerito.moverFicha(0, 2, ficha);
+          break;
+        case 3:
+          ficha = tablerito.moverFicha(1, 1, ficha);
+          break;
+        case 4:
+          ficha = tablerito.moverFicha(2, 0, ficha);
+          break;
+        case 5:
+          ficha = tablerito.moverFicha(2, 2, ficha);
+          break;
+        default:
+          System.out.println("No se mueve");
+          break;
+      }
     }
+    //return ficha;
+  }
 }
