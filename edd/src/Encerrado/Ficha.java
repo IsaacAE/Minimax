@@ -103,7 +103,8 @@ public class Ficha{
    * @return String
    */
   public String toString() {
-    return this.figura + "F " + this.fila + "C " + this.columna;
+    return this.figura;
+    //return this.figura + "F " + this.fila + "C " + this.columna;
   }
 
   @Override

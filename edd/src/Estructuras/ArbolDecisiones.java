@@ -23,46 +23,70 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     construirArbol();
   }
 
-  public Tablero getTablero(){
+  public Tablero getTablero() {
     return this.tablero;
   }
 
-  public Juego getJuego(){
+  public Juego getJuego() {
     return this.juego;
   }
 
   public void construirArbol() {
     String str = tablero.estadoTablero();
     System.out.println("-->str " + str);
-    System.out.println("Jugador inicial " + juego.inicial);
-    System.out.println("Jugador inicial " + juego);
-    VerticeMinimax aux = new VerticeMinimax(str);
+    //VerticeMinimax aux = new VerticeMinimax(str);
     int[] arr = juego.inicial.movimientosDisponiblesCord(tablero);
-    for (int i : arr) {
-      System.out.println(": " + i);
-    }
-    int[] arrF1 = { arr[0], arr[1] };
 
+    int[] arrF1 = { arr[0], arr[1] };
     int[] arrF2 = { arr[2], arr[3] };
 
-    Juego sim1 = new Juego(this.juego);
-    sim1.moverFicha(1, 1, sim1.getJugador(), sim1.getJugador().getFicha1());
-    String str1 = sim1.getTablero().estadoTablero();
-    System.out.println("Sim1 str --> "+str1);
-    System.out.println("Sim1 ->"+sim1);
-    System.out.println("Juego original ->"+this.juego);
-    
-    
-    
-    /*this.raiz = aux;
-    this.raiz.izquierdo = new VerticeMinimax(str);
-    this.raiz.derecho = new VerticeMinimax(str);
-    System.out.println("Arbolito " + this);
-    System.out.println(this.raiz.profundidad());*/
-    //this.raiz = new Vertice
+    String [] permutaciones = jugadasPosibles(arrF1, arrF2);
+    this.raiz = new VerticeMinimax(str);
+    this.raiz.izquierdo = new VerticeMinimax(permutaciones[0]);
+    this.raiz.derecho = new VerticeMinimax(permutaciones[1]);
+    System.out.println(this);
   }
 
-  public void moverFicha(
+  public String [] jugadasPosibles(int[] arrF1, int[] arrF2) {
+    String [] permutacion = new String[2];
+    Ficha[] fichasJinicial = {
+      juego.inicial.getFicha1(),
+      juego.inicial.getFicha2(),
+    };
+    Lista<Juego> lista = new Lista<>();
+    lista.add(this.juego);
+
+    for (int i = 0; i < arrF1.length; i++) {
+      //System.out.println("i " + i);
+      Juego sim1 = new Juego(lista.peek());
+      sim1.setTablero(
+        moverFicha(
+          arrF1,
+          juego.inicial.ficha1.getColor(),
+          sim1.getTablero(),
+          fichasJinicial[i]
+        )
+      );
+      lista.add(sim1);
+    }
+
+    lista.delete(this.juego);
+    Iterator<Juego> iterador = lista.iterator();
+    Vertice aux = new VerticeMinimax(this.juego.getTablero().estadoTablero());
+    Tablero tabAux = iterador.next().getTablero();
+    System.out.println(tabAux);
+    permutacion[0] = tabAux.estadoTablero();
+    //aux.derecho = new VerticeMinimax(tabAux.estadoTablero());
+    tabAux = iterador.next().getTablero();
+    System.out.println(tabAux);
+    permutacion[1] = tabAux.estadoTablero();
+    //aux.izquierdo = new VerticeMinimax(tabAux.estadoTablero());
+    //this.raiz = aux;
+    //System.out.println("Arbolito " + this);
+    return permutacion;
+  }
+
+  public Tablero moverFicha(
     int[] arr,
     int color,
     Tablero tablerito,
@@ -71,25 +95,25 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     for (int i = 0; i < arr.length; i++) {
       switch (arr[i]) {
         case 1:
-          ficha = tablerito.moverFicha(0, 0, ficha);
+          tablerito.moverFicha(0, 0, ficha);
           break;
         case 2:
-          ficha = tablerito.moverFicha(0, 2, ficha);
+          tablerito.moverFicha(0, 2, ficha);
           break;
         case 3:
-          ficha = tablerito.moverFicha(1, 1, ficha);
+          tablerito.moverFicha(1, 1, ficha);
           break;
         case 4:
-          ficha = tablerito.moverFicha(2, 0, ficha);
+          tablerito.moverFicha(2, 0, ficha);
           break;
         case 5:
-          ficha = tablerito.moverFicha(2, 2, ficha);
+          tablerito.moverFicha(2, 2, ficha);
           break;
         default:
-          System.out.println("No se mueve");
+          //System.out.println("No se mueve");
           break;
       }
     }
-    //return ficha;
+    return tablerito;
   }
 }
