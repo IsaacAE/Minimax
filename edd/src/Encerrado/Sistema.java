@@ -18,7 +18,8 @@ public class Sistema {
     System.out.println("\n Este es el tablero inicial");
     System.out.println(juego);
     System.out.println(
-        "\n Este es el tablero inicial ¿Deseas mantenerlo asi? (S/N)");
+      "\n Este es el tablero inicial ¿Deseas mantenerlo asi? (S/N)"
+    );
     if (validarSioNo()) {
       comenzarJuego();
     } else {
@@ -34,6 +35,7 @@ public class Sistema {
   public void reiniciarJuego() {
     System.out.println("Desea reiniciar el juego? S/N");
     if (validarSioNo()) {
+      this.juego = new Juego();
       iniciarJuego();
     } else {
       System.out.println("FIN");
@@ -67,6 +69,9 @@ public class Sistema {
         jugadorEnTurno = juego.getJugador();
       }
     } while (aux);
+    if (!aux) {
+      reiniciarJuego();
+    }
   }
 
   // public void rondas()
@@ -77,20 +82,22 @@ public class Sistema {
       if (jugador.equals(juego.getIA())) {
         try {
           //Ponemos a "Dormir" el programa durante los ms que queremos
-          Thread.sleep(2*1000);
-       } catch (Exception e) {
+          Thread.sleep(2 * 1000);
+        } catch (Exception e) {
           System.out.println(e);
-       }
+        }
         juego.moverFichaRandom(jugador);
       } else {
         int posicion = validarNumeros(
-            "Ingresa la ficha que quieres mover ",
-            jugador);
+          "Ingresa la ficha que quieres mover ",
+          jugador
+        );
         Ficha fichaMover = juego.getTablero().buscarPosicion(posicion);
         System.out.println("La ficha que se va a mover " + fichaMover);
         int coordenadas[] = validarCoordenada(
-            "Ingresa a donde la quieres (1-5)",
-            jugador);
+          "Ingresa a donde la quieres (1-5)",
+          jugador
+        );
         for (int i : coordenadas) {
           System.out.println("Coordenadas " + i);
         }
@@ -110,7 +117,7 @@ public class Sistema {
    * Valida que el jugador pueda tomar una ficha segun el indice del tablero .
    * Recibe el indice en enteros, busca que la ficha exista en el tablero y que
    * le pertenezca al jugador
-   * 
+   *
    * @param mensaje
    * @param jugador
    * @return
@@ -155,8 +162,10 @@ public class Sistema {
     juego.setIA(new Jugador("IA", new Ficha(1)));
     System.out.println(juego.tablero);
     for (int i = 0; i < 2; i++) {
-      arr = validarCoordenada(
-          "Escoge una posicion para la IA, ficha " + (i + 1) + "  (1-5) ");
+      arr =
+        validarCoordenada(
+          "Escoge una posicion para la IA, ficha " + (i + 1) + "  (1-5) "
+        );
       if (!juego.asignarFicha(arr[0], arr[1], juego.getIA(), (i + 1))) {
         System.out.println("Movimiento invalido");
         i--;
@@ -164,8 +173,10 @@ public class Sistema {
       System.out.println(juego);
     }
     for (int i = 0; i < 2; i++) {
-      arr = validarCoordenada(
-          "Escoge una posicion para la User, ficha " + (i + 1) + " (1-5) ");
+      arr =
+        validarCoordenada(
+          "Escoge una posicion para la User, ficha " + (i + 1) + " (1-5) "
+        );
       if (!juego.asignarFicha(arr[0], arr[1], juego.getJugador(), (i + 1))) {
         System.out.println("Movimiento invalido");
         i--;
@@ -179,7 +190,7 @@ public class Sistema {
   /**
    * Valida si una coordenada se puede mover, regresa la coordenada en un arreglo
    * entero
-   * 
+   *
    * @param mensaje
    * @return
    */
@@ -197,27 +208,33 @@ public class Sistema {
         if (aux == null) {
           coordenadas = juego.getTablero().buscarPosicionCord(elec);
         }
-        if (coordenadas[0] >= 0 &&
-            coordenadas[0] <= 2 &&
-            coordenadas[1] >= 0 &&
-            coordenadas[1] <= 2) {
-          aux = juego
+        if (
+          coordenadas[0] >= 0 &&
+          coordenadas[0] <= 2 &&
+          coordenadas[1] >= 0 &&
+          coordenadas[1] <= 2
+        ) {
+          aux =
+            juego
               .getTablero()
               .SimularMoverFicha(
-                  coordenadas[0],
-                  coordenadas[1],
-                  jugador.ficha1);
+                coordenadas[0],
+                coordenadas[1],
+                jugador.ficha1
+              );
 
           if (aux != null) {
             condicion = true;
             return coordenadas;
           } else {
-            aux = juego
+            aux =
+              juego
                 .getTablero()
                 .SimularMoverFicha(
-                    coordenadas[0],
-                    coordenadas[1],
-                    jugador.ficha2);
+                  coordenadas[0],
+                  coordenadas[1],
+                  jugador.ficha2
+                );
             if (aux != null) {
               condicion = true;
               return coordenadas;
@@ -251,13 +268,19 @@ public class Sistema {
         //coordenadas[0] = Character.getNumericValue(str.charAt(0));
         //coordenadas[1] = Character.getNumericValue(str.charAt(2));
         // System.out.println("Salimos de aqui");
-        if (coordenadas[0] >= 0 &&
-            coordenadas[0] <= 2 &&
-            coordenadas[1] >= 0 &&
-            coordenadas[1] <= 2) {
-          if ((coordenadas[0] == 1 &&
-              (coordenadas[1] == 2 || coordenadas[1] == 0)) ||
-              (coordenadas[0] != 1 && coordenadas[1] == 1)) {
+        if (
+          coordenadas[0] >= 0 &&
+          coordenadas[0] <= 2 &&
+          coordenadas[1] >= 0 &&
+          coordenadas[1] <= 2
+        ) {
+          if (
+            (
+              coordenadas[0] == 1 &&
+              (coordenadas[1] == 2 || coordenadas[1] == 0)
+            ) ||
+            (coordenadas[0] != 1 && coordenadas[1] == 1)
+          ) {
             condicion = false;
           } else {
             return coordenadas;
