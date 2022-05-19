@@ -81,23 +81,29 @@ public class ArbolMiniMax<T extends Comparable<T>> extends ArbolBinarioBusqueda<
         //super(coleccion);
     }
 
-    public int colorear(Vertice a){
+    public int colorear(Vertice a, int j){
+        int k;
+        if(j==0){
+            k=1;
+        }else{
+            k=0;
+        }
         VerticeMinimax b = convertirMiniMax(a);
         if(this.raiz==a){
             return 3;
         }else{
             VerticeMinimax c = convertirMiniMax(a.padre);
-            if(c.color==0 ||c.color==3){
-                return 1;
-            }else if(c.color==1){
-                return 0;
+            if(c.color==k ||c.color==3){
+                return j;
+            }else if(c.color==j){
+                return k;
             }else{
                 return 10;
             }
         }
     }
 
-    public void creaVertices(Vertice v){
+   /* public void creaVertices(Vertice v){
        VerticeMinimax vi = convertirMiniMax(v);
         vi.color= colorear(v);
         vi.izquierdo= nuevoVertice(v.get());
@@ -106,19 +112,19 @@ public class ArbolMiniMax<T extends Comparable<T>> extends ArbolBinarioBusqueda<
         vi.derecho.padre=v;
          v=vi;
      vi.padre=v.padre;
-    }
+    }*/
 
 
 
     public void expandirArbol(Vertice v){
        
         if(v.profundidad()<5){
-            creaVertices(v);
+            //creaVertices(v);
             expandirArbol(v.izquierdo);
             expandirArbol(v.derecho);
         }
         VerticeMinimax j = convertirMiniMax(v);
-        j.color=colorear(j);
+       // j.color=colorear(j);
         if(v.profundidad()>=5){
         j.valor= (int)(Math.random()*8);
         j.visitado=true;
@@ -147,9 +153,9 @@ public void calcularValor(Vertice v,int i){
        
        
         if(k.hayDerecho()){
-        if(k.color==i){
+        if(k.color==i && k.color!=3){
             k.valor= Math.max(ki.valor, kd.valor);
-        }else{
+        }else if(k.color!=3){
             k.valor=Math.min(ki.valor,kd.valor);
         }
     }else if(k.hayIzquierdo()){

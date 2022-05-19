@@ -18,6 +18,7 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
   Cola<Juego> colaJuegos;
   Juego juegoAux1;
   Juego juegoAux2;
+  int colorI;
 
   //VerticeMinimax raiz;
 
@@ -39,6 +40,7 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     return this.juego;
   }
 
+
   public void construirArbol() {
     String str = tablero.estadoTablero();
     this.raiz = new VerticeMinimax(str);
@@ -48,8 +50,8 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     colaJuegos.push(this.juego);
     System.out.println("Peek vertices " + colaVertices.peek());
     System.out.println("Peek tablero " + colaJuegos.peek().getTablero());
-    Jugador[] jugadores = { juego.getIA(), juego.getJugador() };
-
+    Jugador[] jugadores = {juego.getJugador() ,juego.getIA()};
+    colorI= jugadores[0].getFicha1().getColor();
     int p=0;
     while(!colaVertices.isEmpty()){
       int c = colaVertices.size();
@@ -66,7 +68,7 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
   
    
   System.out.println(this);
-  calcularValor(this.raiz,1);
+  calcularValor(this.raiz,colorI);
   System.out.println(this);
 
   }
@@ -79,7 +81,7 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     /*System.out.println(colaJuegos.peek());
     System.out.println(jugadores[i]);
     System.out.println(jugadores[i].movimientosDisponibles(colaJuegos.peek().getTablero()));*/
-    if(colaVertices.peek().profundidad()<8){
+    if(colaVertices.peek().profundidad()<11){
     int[] arr =
       jugadores[i].movimientosDisponiblesCord(colaJuegos.peek().getTablero());
      
@@ -101,7 +103,7 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
       if(true){
         Tablero Tabaux=new Tablero();
       VerticeMinimax aux = colaVertices.pop();
-      aux.color=colorear(aux);
+      aux.color=colorear(aux, colorI);
      
      // Juego auxJuego = colaJuegos.pop();
      if(juegoAux1!=null){
@@ -127,33 +129,28 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
      }
       
      
-     aux.color=colorear(aux);
+     
+
      if(juegoAux1==null&&juegoAux2==null){
-       aux.valor=100;
+       if(aux.color==colorI){
+       aux.valor=1;
+       }else{
+         aux.valor=-1;
+       }
+       aux.visitado=true;
      }
       System.out.println("Cola 1->" + colaJuegos);
     System.out.println("Cola 1->" + colaVertices);
     
       System.out.println(this);
 
-    /* while(!colaVertices.isEmpty()){
-
-      if(aux.color==0){
-        recursionDeNodos(jugadores, 1);
-      }else {
-        recursionDeNodos(jugadores,0);
-      }
-    }*/
     }
   }else{
     VerticeMinimax auxi =colaVertices.pop();
     auxi.visitado=true;
     System.out.println(auxi);
-    auxi.valor= (int) (Math.random()*6);
-   /* 
-    VerticeMinimax b= convertirMinimax(auxi.padre);
-    b.visitado=true;
-    b.valor= (int) (Math.random()*6);*/
+    auxi.valor= 0;
+  
   }
     
   }
@@ -169,8 +166,6 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     System.out.println("JUEGUITO");
     
     jueguito.setTablero(jueguito.getTablero().actualizaRef());
-    //Juego juegoAux = new Juego(this.juego);
-    //juegoAux.setTablero(tab);
     for(int h=0;h<arrF1.length;h++){
       System.out.println(arrF1[h]);
     }
@@ -223,12 +218,9 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
       aux.setTablero(aux.getTablero().actualizaRef());
       if(i==0){
         juegoAux1=aux;
-        System.out.println("JUEGO AUX 1");
-        System.out.println(juegoAux1);
+       
       }else{
         juegoAux2=aux;
-        System.out.println("JUEGO AUX 2");
-        System.out.println(juegoAux2);
       }
       colaJuegos.push(aux);
       permutacion[i] = aux.getTablero().estadoTablero();
@@ -268,8 +260,6 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
       }
     }
    // tablerito= tablerito.actualizaRef();
-   System.out.println("TABLERITOOOOO");
-   System.out.println(tablerito);
     return tablerito;
   }
 }
