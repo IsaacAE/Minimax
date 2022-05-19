@@ -103,8 +103,8 @@ public class Ficha{
    * @return String
    */
   public String toString() {
-    return this.figura;
-    //return this.figura + "F " + this.fila + "C " + this.columna;
+    //return this.figura;
+    return this.figura + "F " + this.fila + "C " + this.columna;
   }
 
   @Override
@@ -124,5 +124,15 @@ public class Ficha{
       return true;
     }
     return false;
+  }
+
+  public Ficha clonar(){
+    Ficha f = new Ficha();
+    f.color=this.color;
+    f.fila=this.fila;
+    f.columna=this.columna;
+    f.figura=this.figura;
+
+    return f;
   }
 }

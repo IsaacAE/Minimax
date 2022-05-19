@@ -191,6 +191,10 @@ public class Tablero{
     int columFinal
   ) {
     //SI se quiere mover de entre las esquinas inferiores (de izquierda a derecha o viceversa) devuelve falso
+    if(filaInicial==0&&columInicial==2&& filaFinal==2 && columFinal==2){
+      return true;
+    }
+
     if (
       filaInicial == 2 &&
       filaFinal == 2 &&
@@ -202,7 +206,7 @@ public class Tablero{
     if (Math.abs(columInicial - columFinal) == 2 && filaInicial == filaFinal) {
       return true;
     }
-
+   
     //Caso especial para mover de abajo hacia arriba desde la esquina superior derecha hacia la esquina inferior derecha
     if (Math.abs(filaInicial - filaFinal) == 2 && columInicial == columFinal) {
       return true;
@@ -231,6 +235,8 @@ public class Tablero{
    * @return Ficha[][] Se podria cambiar
    */
   public Ficha moverFicha(int fila, int columna, Ficha ficha) {
+
+
     if (
       validarPos(fila, columna) &&
       validarMov(ficha.getFila(), ficha.getColumna(), fila, columna) &&
@@ -447,6 +453,19 @@ public String estadoTablero(){
 
 
   return s;
+}
+
+
+public Tablero actualizaRef(){
+  for(int j=0;j<this.tablero.length;j++){
+    for(int g=0;g<this.tablero.length;g++){
+      if(this.tablero[j][g]!=null){
+        this.tablero[j][g].setFila(j);
+        this.tablero[j][g].setColumna(g);
+      }
+    }
+  }
+  return this;
 }
 
 }

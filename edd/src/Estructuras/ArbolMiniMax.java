@@ -87,9 +87,9 @@ public class ArbolMiniMax<T extends Comparable<T>> extends ArbolBinarioBusqueda<
             return 3;
         }else{
             VerticeMinimax c = convertirMiniMax(a.padre);
-            if(c.color==0 ){
+            if(c.color==0 ||c.color==3){
                 return 1;
-            }else if(c.color==1||c.color==3){
+            }else if(c.color==1){
                 return 0;
             }else{
                 return 10;
@@ -129,21 +129,33 @@ public class ArbolMiniMax<T extends Comparable<T>> extends ArbolBinarioBusqueda<
     }
 
 
-public void calcularValor(Vertice v){
+public void calcularValor(Vertice v,int i){
     VerticeMinimax k = convertirMiniMax(v);
+    VerticeMinimax kd=null;
+    VerticeMinimax ki=null;
     if(!k.visitado){
-        calcularValor(v.izquierdo);
-        calcularValor(v.derecho);
-        VerticeMinimax ki = convertirMiniMax(k.izquierdo);
-        VerticeMinimax kd = convertirMiniMax(k.derecho);
-
-        if(k.color==0){
-            k.valor= Math.max(ki.valor, kd.valor);
-        }else if(k.color==1){
-            k.valor=Math.min(ki.valor,kd.valor);
-        }else{
-            k.valor=-1;
+        if(v.hayIzquierdo()){
+        calcularValor(v.izquierdo,i);
+       
+       ki = convertirMiniMax(k.izquierdo);
         }
+         
+        if(v.hayDerecho()){
+        calcularValor(v.derecho,i);
+        kd = convertirMiniMax(k.derecho);
+        }
+       
+       
+        if(k.hayDerecho()){
+        if(k.color==i){
+            k.valor= Math.max(ki.valor, kd.valor);
+        }else{
+            k.valor=Math.min(ki.valor,kd.valor);
+        }
+    }else if(k.hayIzquierdo()){
+        int dev =ki.valor;
+        k.valor=dev;
+    }
             k.visitado=true;
         
     }
