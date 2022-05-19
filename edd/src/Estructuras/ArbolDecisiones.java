@@ -13,7 +13,7 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
   Juego juego;
   Tablero tablero;
   Cola<VerticeMinimax> colaVertices;
-  Cola<Tablero> colaTableros;
+  Cola<Juego> colaJuegos;
 
   //VerticeMinimax raiz;
 
@@ -39,6 +39,25 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     String str = tablero.estadoTablero();
     this.raiz = new VerticeMinimax(str);
     colaVertices = new Cola<>();
+    colaJuegos = new Cola<>();
+    colaVertices.push((VerticeMinimax) this.raiz);
+    colaJuegos.push(this.juego);
+    System.out.println("Peek vertices " + colaVertices.peek());
+    System.out.println("Peek tablero " + colaJuegos.peek().getTablero());
+    Jugador[] jugadores = { juego.getIA(), juego.getJugador() };
+    int[] arr =
+      jugadores[0].movimientosDisponiblesCord(colaJuegos.peek().getTablero());
+    int[] arrF1 = { arr[0], arr[1] };
+    int[] arrF2 = { arr[2], arr[3] };
+    String[] permutaciones = jugadasPosibles(arrF1,arrF2,jugadores[1],colaJuegos.peek()
+    );
+    for (String string : permutaciones) {
+      System.out.println("--Z"+string);
+    }
+    System.out.println(colaJuegos);
+    /*String str = tablero.estadoTablero();
+    this.raiz = new VerticeMinimax(str);
+    colaVertices = new Cola<>();
     colaTableros = new Cola<>();
     colaVertices.push((VerticeMinimax) this.raiz);
     colaTableros.push(tablero);
@@ -51,9 +70,9 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     /**------------------------- */
     //System.out.println("Cola vertices ->" + colaVertices);
     //System.out.println("Cola Tableros ->" + colaTableros);
-    
+
     /**--------------------------- */
-    int i = 0;
+    /*int i = 0;
     int x = 0;
     do {
       int colaLenght = colaVertices.size();
@@ -130,57 +149,48 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     System.out.println(this);*/
   }
 
-  public String[] jugadasPosibles(int[] arrF1, int[] arrF2, Jugador jugador, Tablero tab) {
-    String[] permutacion = new String[2];
+  public String[] jugadasPosibles(
+    int[] arrF1,
+    int[] arrF2,
+    Jugador jugador,
+    Juego jueguito
+  ) {
     Ficha[] fichasJinicial = { jugador.getFicha1(), jugador.getFicha2() };
     Lista<Juego> lista = new Lista<>();
-    Juego juegoAux = new Juego(this.juego);
-    juegoAux.setTablero(tab);
-    lista.add(this.juego);
-
+    //Juego juegoAux = new Juego(this.juego);
+    //juegoAux.setTablero(tab);
+    lista.add(jueguito);
     for (int i = 0; i < arrF1.length; i++) {
-      //System.out.println("i " + i);
-      Juego sim1 = new Juego(lista.peek());
-      sim1.setTablero(
-        moverFicha(
-          arrF1,
-          jugador.ficha1.getColor(),
-          sim1.getTablero(),
-          fichasJinicial[i]
-        )
-      );
-      lista.add(sim1);
+      if (arrF1[i] > 0) {
+        Juego sim1 = new Juego(lista.peek());
+        boolean aux = sim1.moverFichaCuadrante(arrF1[i], jugador, fichasJinicial[0]);
+        if (aux) {
+          lista.add(sim1);
+        }
+      }
     }
-    /*for (int i = 0; i < arrF1.length; i++) {
-      //System.out.println("i " + i);
-      Juego sim1 = new Juego(lista.peek());
-      sim1.setTablero(
-        moverFicha(
-          arrF1,
-          jugador.ficha1.getColor(),
-          sim1.getTablero(),
-          fichasJinicial[i]
-        )
-      );
-      lista.add(sim1);
-    }*/
+    for (int i = 0; i < arrF2.length; i++) {
+      if (arrF2[i] > 0) {
+        Juego sim1 = new Juego(lista.peek());
+        boolean aux = sim1.moverFichaCuadrante(arrF2[i], jugador, fichasJinicial[1]);
+        if (aux) {
+          lista.add(sim1);
+        }
+      }
+    }
 
-    lista.delete(this.juego);
+    lista.delete(jueguito);
+    String[] permutacion = new String[lista.size()];
+
     Iterator<Juego> iterador = lista.iterator();
-    System.out.println("Lista lenght"+lista.size());
-    Vertice aux = new VerticeMinimax(this.juego.getTablero().estadoTablero());
-    Tablero tabAux = iterador.next().getTablero();
-    colaTableros.push(tabAux);
-    //System.out.println(tabAux);
-    permutacion[0] = tabAux.estadoTablero();
-    //aux.derecho = new VerticeMinimax(tabAux.estadoTablero());
-    tabAux = iterador.next().getTablero();
-    colaTableros.push(tabAux);
-    //System.out.println(tabAux);
-    permutacion[1] = tabAux.estadoTablero();
-    //aux.izquierdo = new VerticeMinimax(tabAux.estadoTablero());
-    //this.raiz = aux;
-    //System.out.println("Arbolito " + this);
+    int i = 0;
+    while (iterador.hasNext()) {
+      Juego aux = iterador.next();
+      colaJuegos.push(aux);
+      permutacion[i] = aux.getTablero().estadoTablero();
+      i++;
+    }
+    System.out.println("Lista lenght" + lista.size());
     return permutacion;
   }
 

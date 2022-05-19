@@ -114,6 +114,34 @@ public class Juego{
     return false;
   }
 
+  public boolean moverFichaCuadrante(int cuandrante , Jugador jugador, Ficha ficha){
+    boolean aux = false;
+    if(cuandrante >= 1 && cuandrante <= 5){
+      switch(cuandrante){
+        case 1: 
+        aux = this.moverFicha(0, 0, jugador, ficha);
+        break;
+  
+        case 2: 
+        aux = this.moverFicha(0, 2, jugador, ficha);
+        break;
+  
+        case 3: 
+        aux = this.moverFicha(1, 1, jugador, ficha);
+        break;
+  
+        case 4: 
+        aux = this.moverFicha(2, 0, jugador, ficha);
+        break;
+  
+        case 5: 
+        aux = this.moverFicha(2, 2, jugador, ficha);
+        break;
+      }
+    }
+    return aux;
+  }
+
   public Jugador getJugador() {
     return this.jugador;
   }
