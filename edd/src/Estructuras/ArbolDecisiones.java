@@ -53,11 +53,10 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
    * @param juego nuevo valor para el atributo
    */
   public void setJuego(Juego juego) {
-    this.juego = new Juego(juego);
+    //this.juego = new Juego(juego);
+    this.juego = juego;
     this.tablero = juego.getTablero();
-    System.out.println("Juego que esta llegando");
-    System.out.println(this.juego);
-    construirArbol();
+    //construirArbol();
   }
 /**
  * Metodo que devuelve el valor del atributo tablero

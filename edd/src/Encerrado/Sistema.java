@@ -93,6 +93,7 @@ public class Sistema {
         if (minimaxActivado) {
           System.out.println("Minimax activado");
           movimientoMinimax();
+          this.juego.repararTablero();
         } else {
           juego.moverFichaRandom(jugador);
         }
@@ -112,7 +113,9 @@ public class Sistema {
         }
         juego.moverFicha(coordenadas[0], coordenadas[1], jugador, fichaMover);
       }
-
+      
+      //System.out.println("pta madre "+juego.getJugador());
+      this.juego.repararTablero();
       System.out.println(juego);
       jugador.movimientosDisponiblesCord(juego.getTablero());
       return true;
@@ -125,15 +128,19 @@ public class Sistema {
   public void movimientoMinimax() {
     ArbolDecisiones arbol = new ArbolDecisiones();
     String jugada;
+    //Juego tabux = new Juego(this.juego);
+    //tabux.repararTablero();
+    //Tablero tabux = new Tablero(this.juego.getTablero());
+    //System.arraycopy(this.juego.getTablero().getTablero(), 0, tabux, 0, this.juego.getTablero().getTablero().length);
     arbol.setJuego(this.juego);
-    
+    this.juego = new Juego(this.juego);
+    //this.juego.setTablero(tabux);
+    arbol.construirArbol();
+    //System.out.println("Tab aux "+tabux);
     System.out.println(arbol);
-    //System.out.println("Hijo derecho"+arbol.hijoDerechoRaiz());
-    //System.out.println("Hijo izquiedo"+arbol.hijoIzquierdoRaiz());
-    //System.out.println(arbol.nodoDerecho((VerticeMinimax)arbol.getRaiz()));
+    this.juego.repararTablero();
     if(arbol.hijoDerechoRaiz() != null && arbol.hijoIzquierdoRaiz() != null){
       if(arbol.getValor(arbol.hijoIzquierdoRaiz()) >= arbol.getValor(arbol.hijoDerechoRaiz())){
-
         jugada = arbol.getElemento(arbol.hijoIzquierdoRaiz()).toString();
       }else{
         jugada = arbol.getElemento(arbol.hijoDerechoRaiz()).toString();
@@ -142,29 +149,28 @@ public class Sistema {
       jugada = arbol.getElemento(arbol.hijoIzquierdoRaiz()).toString();
     }
     permutacionCuadrante(jugada);
-    //System.out.println("Permutacion "+jugada);
+    System.out.println("Permutacion "+jugada);
   }
 
   public void permutacionCuadrante(String permutacion){
-    int arr[] = this.juego.getIA().movimientosDisponiblesCord(this.juego.getTablero());
-    Ficha [] fichas = {this.juego.getIA().getFicha1(), this.juego.getIA().getFicha2()};
-    Lista<Juego> lista = new Lista<>();
-    
-    System.out.println("Estado actual "+this.juego);
+    //int arr[] = this.juego.getIA().movimientosDisponiblesCord(this.juego.getTablero());
+    //Ficha [] fichas = {this.juego.getIA().getFicha1(), this.juego.getIA().getFicha2()};
+    //Lista<Juego> lista = new Lista<>();
+    //System.out.println("Estado actual "+this.juego);
     //System.out.println("Real"+this.juego);
     /*for (int i = 0; i < arr.length-2; i++) {
       Juego sim1 = new Juego(this.juego);
-      System.out.println("Simulacion"+sim1);
-      System.out.println("Real"+this.juego);
+      //System.out.println("Simulacion"+sim1);
+      //System.out.println("Real"+this.juego);
       if(sim1.moverFichaCuadrante(arr[i], this.juego.getIA(), fichas[0])){
-        System.out.println("Se movio");
-        System.out.println(sim1);
+        //System.out.println("Se movio");
+        //System.out.println(sim1);
         if(permutacion.equals(sim1.getTablero().estadoTablero())){
           lista.add(sim1);
         }  
       }  
-    }*/
-   /* for (int i = 0; i < arr.length-2; i++) {
+    }
+    for (int i = 0; i < arr.length-2; i++) {
       Juego sim1 = new Juego(this.juego);
       sim1.moverFichaCuadrante(arr[i], this.juego.getIA(), fichas[1]);
       if(permutacion.equals(sim1.getTablero().estadoTablero())){
@@ -172,7 +178,7 @@ public class Sistema {
       }
     }*/
     System.out.println("--------------------------");
-    System.out.println("Lista de casos"+lista);
+    //System.out.println("Lista de casos"+lista);
     System.out.println("--------------------------");
   }
 

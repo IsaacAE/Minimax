@@ -189,6 +189,18 @@ public class Juego{
     return aux;
   }
 
+
+  public void repararTablero(){
+    //Tablero aux = new Tablero();
+    this.tablero = new Tablero();
+    this.asignarFicha(jugador.ficha1.getFila(), jugador.ficha1.getColumna(), jugador, 1);
+    this.asignarFicha(jugador.ficha2.getFila(), jugador.ficha2.getColumna(), jugador, 2);
+    this.asignarFicha(IA.ficha2.getFila(), IA.ficha2.getColumna(), IA, 2);
+    this.asignarFicha(IA.ficha1.getFila(), IA.ficha1.getColumna(), IA, 1);
+    //System.out.println("Reparacion de tablero");
+    //System.out.println(this.tablero);
+  }
+
   /**
    * Metodo que devuelve el valor del atributo jugador
    * @return Jugador

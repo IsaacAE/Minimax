@@ -1,5 +1,8 @@
 package edd.src.Encerrado;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 /**
  * @author Mauricio Rubio Haro
  * @author Kevin Isaac Alcantara Estrada
@@ -10,7 +13,7 @@ package edd.src.Encerrado;
  * @author Alcantara Estrada Kevin Isaac
  * @author Rubio Haro Mauricio
  */
-public class Tablero{
+public class Tablero {
 
   //atributo unico de la clase, un tablero que contiene fichas
   Ficha[][] tablero;
@@ -22,14 +25,22 @@ public class Tablero{
     tablero = new Ficha[3][3];
   }
 
-  public Tablero(Tablero object){
-    this.tablero = new Ficha [3][3];
-    for ( int i = 0; i < object.getTablero().length; i++) {
-      for (int j = 0; j < tablero.length; j++) {
-          this.tablero[i][j] = object.tablero[i][j];
+  public Tablero(Tablero object) {
+    //System.out.println("Haciendo deep copy");
+    this.tablero = new Ficha[3][3];
+    Ficha[][] aux = object.getTablero();
+    int l1 = aux.length;
+    //int l2 = object.getTablero().[0].length;
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        this.tablero[i][j] = object.tablero[i][j];
       }
     }
-    
+    /* for (int i = 0; i < l1; i++) {
+      //this.tablero[i] = Arrays.copyOf(object.getTablero()[i], object.getTablero()[i].length);
+      this.tablero[i] = aux[i].clone();
+    }*/
+
   }
 
   /**
@@ -192,7 +203,9 @@ public class Tablero{
     int columFinal
   ) {
     //SI se quiere mover de entre las esquinas inferiores (de izquierda a derecha o viceversa) devuelve falso
-    if(filaInicial==0&&columInicial==2&& filaFinal==2 && columFinal==2){
+    if (
+      filaInicial == 0 && columInicial == 2 && filaFinal == 2 && columFinal == 2
+    ) {
       return true;
     }
 
@@ -207,7 +220,7 @@ public class Tablero{
     if (Math.abs(columInicial - columFinal) == 2 && filaInicial == filaFinal) {
       return true;
     }
-   
+
     //Caso especial para mover de abajo hacia arriba desde la esquina superior derecha hacia la esquina inferior derecha
     if (Math.abs(filaInicial - filaFinal) == 2 && columInicial == columFinal) {
       return true;
@@ -236,8 +249,6 @@ public class Tablero{
    * @return Ficha[][] Se podria cambiar
    */
   public Ficha moverFicha(int fila, int columna, Ficha ficha) {
-
-
     if (
       validarPos(fila, columna) &&
       validarMov(ficha.getFila(), ficha.getColumna(), fila, columna) &&
@@ -259,76 +270,68 @@ public class Tablero{
    * @param numero
    * @return Ficha
    */
-  public Ficha buscarPosicion(int numero){
-    Ficha ficha=null;
-    switch(numero){
-      case 1: 
-      ficha= this.tablero[0][0]; //Arriba a la izquierda
-      break;
-
-      case 2: 
-      ficha=this.tablero[0][2]; //Arriba a la derecha
-      break;
-
-      case 3: 
-      ficha= this.tablero[1][1]; //El centro
-      break;
-
-      case 4: 
-      ficha= this.tablero[2][0]; //Abajo a la izquierda
-      break;
-
-      case 5: 
-      ficha= this.tablero[2][2]; //Abajo a la derecha
-      break;
+  public Ficha buscarPosicion(int numero) {
+    Ficha ficha = null;
+    switch (numero) {
+      case 1:
+        ficha = this.tablero[0][0]; //Arriba a la izquierda
+        break;
+      case 2:
+        ficha = this.tablero[0][2]; //Arriba a la derecha
+        break;
+      case 3:
+        ficha = this.tablero[1][1]; //El centro
+        break;
+      case 4:
+        ficha = this.tablero[2][0]; //Abajo a la izquierda
+        break;
+      case 5:
+        ficha = this.tablero[2][2]; //Abajo a la derecha
+        break;
     }
     return ficha;
   }
 
-    /**
+  /**
    * Regresa las coordenadas del tablero segun un cuadrante
    * @param numero
    * @return int[]
    */
-  public int[] buscarPosicionCord(int numero){
+  public int[] buscarPosicionCord(int numero) {
     //Ficha ficha=null;
-    int aux [] = new int [2];
-    switch(numero){
-      case 1: 
-      aux[0] = 0;
-      aux[1] = 0;
-      //ficha= this.tablero[0][0]; //Arriba a la izquierda
-      break;
-
-      case 2: 
-      aux[0] = 0;
-      aux[1] = 2;
-      //ficha=this.tablero[0][2]; //Arriba a la derecha
-      break;
-
-      case 3: 
-      aux[0] = 1;
-      aux[1] = 1;
-      //ficha= this.tablero[1][1]; //El centro
-      break;
-
-      case 4: 
-      aux[0] = 2;
-      aux[1] = 0;
-      //ficha= this.tablero[2][0]; //Abajo a la izquierda
-      break;
-
-      case 5: 
-      aux[0] = 2;
-      aux[1] = 2;
-      //ficha= this.tablero[2][2]; //Abajo a la derecha
-      break;
+    int aux[] = new int[2];
+    switch (numero) {
+      case 1:
+        aux[0] = 0;
+        aux[1] = 0;
+        //ficha= this.tablero[0][0]; //Arriba a la izquierda
+        break;
+      case 2:
+        aux[0] = 0;
+        aux[1] = 2;
+        //ficha=this.tablero[0][2]; //Arriba a la derecha
+        break;
+      case 3:
+        aux[0] = 1;
+        aux[1] = 1;
+        //ficha= this.tablero[1][1]; //El centro
+        break;
+      case 4:
+        aux[0] = 2;
+        aux[1] = 0;
+        //ficha= this.tablero[2][0]; //Abajo a la izquierda
+        break;
+      case 5:
+        aux[0] = 2;
+        aux[1] = 2;
+        //ficha= this.tablero[2][2]; //Abajo a la derecha
+        break;
     }
     return aux;
   }
 
   /**
-   * Metodo que permite colocar una ficha en el tablero 
+   * Metodo que permite colocar una ficha en el tablero
    * @param fila Fila donde se quiere colocar la ficha
    * @param columna COlumna donde se quiere colocar la ficha
    * @param ficha Ficha a colocar
@@ -348,14 +351,13 @@ public class Tablero{
     return null;
   }
 
- 
-/**
- * Metodo que simula mover una ficha a un lugar dado para verificar si es posible realizar tal movimiento
- * @param fila Fila en la que se encuentra la ficha
- * @param columna Columna en la que se encuentra la ficha
- * @param ficha Ficha que se simulara mover
- * @return Ficha
- */
+  /**
+   * Metodo que simula mover una ficha a un lugar dado para verificar si es posible realizar tal movimiento
+   * @param fila Fila en la que se encuentra la ficha
+   * @param columna Columna en la que se encuentra la ficha
+   * @param ficha Ficha que se simulara mover
+   * @return Ficha
+   */
   public Ficha SimularMoverFicha(int fila, int columna, Ficha ficha) {
     if (
       validarPos(fila, columna) &&
@@ -390,112 +392,106 @@ public class Tablero{
    * @param ficha Ficha de la cual se calcularan los movimientos disponibles
    * @return int[]
    */
-  public int[] movimientosDisponiblesCord(Ficha ficha){
+  public int[] movimientosDisponiblesCord(Ficha ficha) {
     int[] coord = new int[2];
-    int k=0;
+    int k = 0;
 
-   
-
-  
-    if(SimularMoverFicha(0, 0, ficha)!=null){
-     coord[k]=1;
+    if (SimularMoverFicha(0, 0, ficha) != null) {
+      coord[k] = 1;
       k++;
     }
 
-    if(SimularMoverFicha(0, 2, ficha)!=null){
-      coord[k]=2;
+    if (SimularMoverFicha(0, 2, ficha) != null) {
+      coord[k] = 2;
       k++;
     }
 
-    if(SimularMoverFicha(1, 1, ficha)!=null){
-      coord[k]=3;
+    if (SimularMoverFicha(1, 1, ficha) != null) {
+      coord[k] = 3;
       k++;
     }
 
-    if(SimularMoverFicha(2, 0, ficha)!=null){
-      coord[k]=4;
+    if (SimularMoverFicha(2, 0, ficha) != null) {
+      coord[k] = 4;
       k++;
     }
 
-    if(SimularMoverFicha(2, 2, ficha)!=null){
-      coord[k]=5;
+    if (SimularMoverFicha(2, 2, ficha) != null) {
+      coord[k] = 5;
       k++;
     }
 
-    return coord;    
-}
-
-/**
- * Metodo que toma el estado actual del tablero y lo representa como una cadena de texto
- * @return String
- */
-public String estadoTablero(){
-  String s="";
-//Para la primera
-//0 azul 1 rojo
-  if(this.tablero[0][0]==null){
-    s+="2";
-  }else if(this.tablero[0][0].getColor()==0){
-    s+="0";
-  }else{
-    s+="1";
+    return coord;
   }
 
-  //Para la segunda
-  if(this.tablero[0][2]==null){
-    s+="2";
-  }else if(this.tablero[0][2].getColor()==0){
-    s+="0";
-  }else{
-    s+="1";
+  /**
+   * Metodo que toma el estado actual del tablero y lo representa como una cadena de texto
+   * @return String
+   */
+  public String estadoTablero() {
+    String s = "";
+    //Para la primera
+    //0 azul 1 rojo
+    if (this.tablero[0][0] == null) {
+      s += "2";
+    } else if (this.tablero[0][0].getColor() == 0) {
+      s += "0";
+    } else {
+      s += "1";
+    }
+
+    //Para la segunda
+    if (this.tablero[0][2] == null) {
+      s += "2";
+    } else if (this.tablero[0][2].getColor() == 0) {
+      s += "0";
+    } else {
+      s += "1";
+    }
+
+    //Para la tercera
+    if (this.tablero[1][1] == null) {
+      s += "2";
+    } else if (this.tablero[1][1].getColor() == 0) {
+      s += "0";
+    } else {
+      s += "1";
+    }
+
+    //Para la cuarta
+    if (this.tablero[2][0] == null) {
+      s += "2";
+    } else if (this.tablero[2][0].getColor() == 0) {
+      s += "0";
+    } else {
+      s += "1";
+    }
+
+    //Para la quinta
+    if (this.tablero[2][2] == null) {
+      s += "2";
+    } else if (this.tablero[2][2].getColor() == 0) {
+      s += "0";
+    } else {
+      s += "1";
+    }
+
+    return s;
   }
 
-  //Para la tercera
-  if(this.tablero[1][1]==null){
-    s+="2";
-  }else if(this.tablero[1][1].getColor()==0){
-    s+="0";
-  }else{
-    s+="1";
-  }
-
-   //Para la cuarta
-   if(this.tablero[2][0]==null){
-    s+="2";
-  }else if(this.tablero[2][0].getColor()==0){
-    s+="0";
-  }else{
-    s+="1";
-  }
-
-  //Para la quinta
-  if(this.tablero[2][2]==null){
-    s+="2";
-  }else if(this.tablero[2][2].getColor()==0){
-    s+="0";
-  }else{
-    s+="1";
-  }
-
-
-
-  return s;
-}
-
-/**
- * Metodo para actualizar las referencias y posiciones de las fichas que estan en el tablero
- * @return Tablero
- */
-public Tablero actualizaRef(){
-  for(int j=0;j<this.tablero.length;j++){
-    for(int g=0;g<this.tablero.length;g++){
-      if(this.tablero[j][g]!=null){
-        this.tablero[j][g].setFila(j);
-        this.tablero[j][g].setColumna(g);
+  /**
+   * Metodo para actualizar las referencias y posiciones de las fichas que estan en el tablero
+   * @return Tablero
+   */
+  public Tablero actualizaRef() {
+    for (int j = 0; j < this.tablero.length; j++) {
+      for (int g = 0; g < this.tablero.length; g++) {
+        if (this.tablero[j][g] != null) {
+          this.tablero[j][g].setFila(j);
+          this.tablero[j][g].setColumna(g);
+        }
       }
     }
+    return this;
   }
-  return this;
-}
-
 }

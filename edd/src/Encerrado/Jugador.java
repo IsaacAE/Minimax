@@ -194,7 +194,7 @@ public class Jugador {
     ) {
       Ficha aux = tablero.moverFicha(fila, columna, ficha);
       if (aux == null) {
-        System.out.println("No se pudo mover");
+        //System.out.println("No se pudo mover");
       } else {
         if (this.ficha1.equals(ficha)) {
           this.ficha1 = ficha;
