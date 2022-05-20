@@ -46,6 +46,16 @@ public class ArbolMiniMax<T extends Comparable<T>> extends ArbolBinarioBusqueda<
             }
         }
 
+        @Override
+        public boolean hayDerecho(){
+            return derecho != null;
+        }
+
+        @Override
+        public boolean hayIzquierdo(){
+            return izquierdo != null;
+        }
+
         
 
 

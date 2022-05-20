@@ -28,13 +28,35 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     super();
   }
 
+  public VerticeMinimax hijoDerechoRaiz(){
+    if(raiz.hayDerecho()){
+      return (VerticeMinimax)raiz.derecho;
+    }
+    return null;
+  }
+  public VerticeMinimax hijoIzquierdoRaiz(){
+    if(raiz.hayIzquierdo()){
+    return (VerticeMinimax)raiz.izquierdo;
+    }
+    return null;
+  }
+
+  public T getElemento(VerticeMinimax vertice){
+    return (T) vertice.elemento;
+  }
+  public int getValor(VerticeMinimax vertice){
+    return vertice.valor;
+  }
+
   /**
    * Metodo para modificar el atributo juego de la clase
    * @param juego nuevo valor para el atributo
    */
   public void setJuego(Juego juego) {
-    this.juego = juego;
+    this.juego = new Juego(juego);
     this.tablero = juego.getTablero();
+    System.out.println("Juego que esta llegando");
+    System.out.println(this.juego);
     construirArbol();
   }
 /**
@@ -80,7 +102,7 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
       }
     }
   calcularValor(this.raiz,colorI);
-  System.out.println(this);
+  //System.out.println(this);
 
   }
 
