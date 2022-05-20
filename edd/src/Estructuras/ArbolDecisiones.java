@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 //import edd.src.Estructuras.ArbolMiniMax;
 
 public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
-
+//Atributos privados de la clase
   Juego juego;
   Tablero tablero;
   Cola<VerticeMinimax> colaVertices;
@@ -20,27 +20,43 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
   Juego juegoAux2;
   int colorI;
 
-  //VerticeMinimax raiz;
-
+ 
+/**
+ * Constructor sin parametros de la clase
+ */
   public ArbolDecisiones() {
     super();
   }
 
+  /**
+   * Metodo para modificar el atributo juego de la clase
+   * @param juego nuevo valor para el atributo
+   */
   public void setJuego(Juego juego) {
     this.juego = juego;
     this.tablero = juego.getTablero();
     construirArbol();
   }
-
+/**
+ * Metodo que devuelve el valor del atributo tablero
+ * @return Tablero
+ */
   public Tablero getTablero() {
     return this.tablero;
   }
 
+  /**
+   * Metodo que devuelve el valor del atributo juego
+   * @return JUego
+   */
   public Juego getJuego() {
     return this.juego;
   }
 
-
+/**
+ * Metodo que genera el ArbolDecisiones a partir del valor del atributo juego de la clase
+ * y forma el arbol dedecisiones de manera iterativa con apoyo de otros metodos
+ */
   public void construirArbol() {
     String str = tablero.estadoTablero();
     this.raiz = new VerticeMinimax(str);
@@ -48,11 +64,10 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
     colaJuegos = new Cola<>();
     colaVertices.push((VerticeMinimax) this.raiz);
     colaJuegos.push(this.juego);
-    System.out.println("Peek vertices " + colaVertices.peek());
-    System.out.println("Peek tablero " + colaJuegos.peek().getTablero());
-    Jugador[] jugadores = {juego.getJugador() ,juego.getIA()};
+    Jugador[] jugadores = {juego.getIA(), juego.getJugador()};
     colorI= jugadores[0].getFicha1().getColor();
     int p=0;
+    //Mientras cola de vertices no este vacia, seguimos constuyendo el arbol
     while(!colaVertices.isEmpty()){
       int c = colaVertices.size();
       for(int l=0; l<c;l++){
@@ -64,15 +79,18 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
         p=0;
       }
     }
-
-  
-   
-  System.out.println(this);
   calcularValor(this.raiz,colorI);
   System.out.println(this);
 
   }
 
+  /**
+   * Metodo que construye un los hijos de un vertice al estado de tal vertice, apoyandose de la cola de vertices para saber 
+   * cual sera el vertice al cual se le crearan los hijos y y la colaJuegos para conocer el estado del juego
+   * sobre el cual se calcularan los hijos de este vertice (tales hijos representan jugadas posibles)
+   * @param jugadores arreglo que contiene a nuestros dos jugadoes
+   * @param i entero que representa la posicion del arreglo de jugadores a usar
+   */
   public void recursionDeNodos(Jugador [] jugadores, int i) {
 
     //System.out.println("TABLERO PICK");
@@ -87,12 +105,7 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
      
     int[] arrF1 = { arr[0], arr[1] };
     int[] arrF2 = { arr[2], arr[3] };
-    for(int h=0;h<arrF1.length;h++){
-      System.out.println(arrF1[h]);
-    }
-    for(int l=0;l<arrF2.length;l++){
-      System.out.println(arrF2[l]);
-    }
+   
     String[] permutaciones = jugadasPosibles(
       arrF1,
       arrF2,
@@ -139,22 +152,23 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
        }
        aux.visitado=true;
      }
-      System.out.println("Cola 1->" + colaJuegos);
-    System.out.println("Cola 1->" + colaVertices);
-    
-      System.out.println(this);
-
+      
     }
   }else{
     VerticeMinimax auxi =colaVertices.pop();
     auxi.visitado=true;
-    System.out.println(auxi);
     auxi.valor= 0;
-  
   }
-    
   }
 
+  /**
+   * Metodo que calcula las jugadas posibles de las fichas de un jugadores respecto al estado del juego
+   * @param arrF1 Arreglo con las posiciones a las cuales se puede mover la primer ficha del jugador
+   * @param arrF2 Arreglo con las posiciones a las cuales se puede mover la segunda ficha del jugador
+   * @param jugador Jugador del cual se calcularan los movimientos disponibles
+   * @param jueguito Juego respecto al cual se haran los calculos
+   * @return
+   */
   public String[] jugadasPosibles(
     int[] arrF1,
     int[] arrF2,
@@ -163,15 +177,8 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
   ) {
     Ficha[] fichasJinicial = { jugador.getFicha1(), jugador.getFicha2() };
     Lista<Juego> lista = new Lista<>();
-    System.out.println("JUEGUITO");
     
     jueguito.setTablero(jueguito.getTablero().actualizaRef());
-    for(int h=0;h<arrF1.length;h++){
-      System.out.println(arrF1[h]);
-    }
-    for(int l=0;l<arrF2.length;l++){
-      System.out.println(arrF2[l]);
-    }
     lista.add(jueguito);
     for (int i = 0; i < arrF1.length; i++) {
       if (arrF1[i] > 0) {
@@ -207,8 +214,6 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
 
     lista.delete(jueguito);
     String[] permutacion = new String[lista.size()];
-    System.out.println("LISTAAAA");
-    System.out.println(lista);
     juegoAux1=null;
     juegoAux2=null;
     Iterator<Juego> iterador = lista.iterator();
@@ -227,10 +232,18 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
       i++;
     }
     colaJuegos.pop();
-    System.out.println("Lista lenght" + lista.size());
     return permutacion;
   }
 
+
+  /**
+   * Metodo que pretende mover una ficha
+   * @param arr arreglo con las posibles 
+   * @param color
+   * @param tablerito
+   * @param ficha
+   * @return
+   */
   public Tablero moverFicha(
     int[] arr,
     int color,

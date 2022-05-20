@@ -10,16 +10,16 @@ public class Ficha{
   //Atributos privados de la clase
 
   private int color; //El color de la ficha: 1 para rojo, 0 para azul y -1 para ficha vacia
-  private String figura; // ñas fichas se representan con un * del color correspondiente o como " " si es ficha vacia
+  private String figura; // las fichas se representan con un * del color correspondiente o como " " si es ficha vacia
   //De forma predeterminada, todas las fichas comienzan en 0,0.
-  private int fila = 0;
-  private int columna = 0;
+  private int fila = 0; //fila en donde esta la ficha
+  private int columna = 0; //columna en donde esta la ficha
 
   //Para pintar de rojo
   public static final String rojo = "\u001B[31m";
-
+//Para pintar de blanco
   public static final String reset = "\u001B[0m";
-  //Para ointar de azul
+  //Para pintar de azul
   public static final String azul = "\u001B[36m";
 
   public static final String ANSI_GREEN = "\u001B[32m";
@@ -45,7 +45,12 @@ public class Ficha{
     this.color = -1;
     this.figura = " ";
   }
-
+/**
+ * Constructor con parametros de la ficha (modifica el color de la ficha)
+ * @param fila
+ * @param columna
+ * @param color
+ */
   public Ficha(int fila, int columna, int color) {
     if (color == 1) {
       this.color = 1;
@@ -57,7 +62,11 @@ public class Ficha{
     this.fila = fila;
     this.columna = columna;
   }
-
+/**
+ * Constructor con parametros de la ficha (no modifica el color de la ficha)
+ * @param fila
+ * @param columna
+ */
   public Ficha(int fila, int columna) {
     this.fila = fila;
     this.columna = columna;
@@ -78,22 +87,40 @@ public class Ficha{
     return this.color;
   }
 
+  /**
+   * Metodo que devuelve el valor del atributo fila de la ficha
+   * @return fila
+   */
   public int getFila() {
     return this.fila;
   }
+
 
   public String getFigura() {
     return this.figura;
   }
 
+
+  /**
+   * Metodo que modifica el valor del atributo fila de la ficha
+   * @param fila
+   */
   public void setFila(int fila) {
     this.fila = fila;
   }
 
+  /**
+   * Metodo que modifica el valor del atributo ficha
+   * @param columna
+   */
   public void setColumna(int columna) {
     this.columna = columna;
   }
 
+  /**
+   * Metodo que devuelve el valor del atributo columna de la ficha
+   * @return columna
+   */
   public int getColumna() {
     return this.columna;
   }
@@ -107,6 +134,10 @@ public class Ficha{
     return this.figura + "F " + this.fila + "C " + this.columna;
   }
 
+  /**
+   * Metodo para saber si una ficha es igual al otra
+   * @param object
+   */
   @Override
   public boolean equals(Object object) {
     if (object == this) {

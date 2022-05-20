@@ -6,15 +6,19 @@ import java.util.NoSuchElementException;
 
 public class ArbolMiniMax<T extends Comparable<T>> extends ArbolBinarioBusqueda<T> {
     /**
-     * Clase interna protegida para vértices de árboles rojinegros. La única
+     * Clase interna protegida para vértices de árboles MiniMax. La única
      * diferencia con los vértices de árbol binario, es que tienen un campo para
-     * el color del vértice.
+     * el color del vértice, un valor y un booleano.
     */
     protected class VerticeMinimax extends Vertice {
         public int color;
         public int valor;
         public boolean visitado;
 
+        /**
+         * Constructor con parametros de la clase
+         * @param elemento elemento que estara en el vertice
+         */
         public VerticeMinimax(T elemento){
             super(elemento);
             color=-1; 
@@ -44,43 +48,33 @@ public class ArbolMiniMax<T extends Comparable<T>> extends ArbolBinarioBusqueda<
 
         
 
-     /**
-         * Compara el vértice con otro objeto. La comparación es
-         * <em>recursiva</em>.
-         * 
-         * @param o el objeto con el cual se comparará el vértice.
-         * @return <code>true</code> si el objeto es instancia de la clase
-         *         {@link VerticeRojinegro}, su elemento es igual al elemento de
-         *         éste vértice, los descendientes de ambos son recursivamente
-         *         iguales, y los colores son iguales; <code>false</code> en
-         *         otro caso.
-         */
-       // @Override
-       /* public boolean equals(Object o) {
-            if (o == null || getClass() != o.getClass())
-                return false;
-            @SuppressWarnings("unchecked")
-            VerticeMinimax vertice = (VerticeMinimax) o;
-            return color == vertice.color && super.equals(o);
-        }*/
 
     }
 
+    /**
+     * COnstructor sin parametros de la clase
+     */
     public ArbolMiniMax() {
         super();
     }
 
     /**
-     * Construye un árbol rojinegro a partir de una colección. El árbol
-     * rojinegro tiene los mismos elementos que la colección recibida.
+     * Construye un árbol MinMax a partir de una colección. El árbol
+     * MiniMax tiene los mismos elementos que la colección recibida.
      * 
      * @param coleccion la colección a partir de la cual creamos el árbol
      *                  rojinegro.
      */
     public ArbolMiniMax(Collection<T> coleccion) {
-        //super(coleccion);
+        
     }
 
+    /**
+     * Metodo que otorga un valor al color del nodo respecto al valor del color de su padre
+     * @param a vertice que deseamos "colorear"
+     * @param j valor del color respecto al que lo colorearemos
+     * @return int
+     */
     public int colorear(Vertice a, int j){
         int k;
         if(j==0){
@@ -103,38 +97,12 @@ public class ArbolMiniMax<T extends Comparable<T>> extends ArbolBinarioBusqueda<
         }
     }
 
-   /* public void creaVertices(Vertice v){
-       VerticeMinimax vi = convertirMiniMax(v);
-        vi.color= colorear(v);
-        vi.izquierdo= nuevoVertice(v.get());
-        vi.derecho= nuevoVertice(v.get());
-        vi.izquierdo.padre=v;
-        vi.derecho.padre=v;
-         v=vi;
-     vi.padre=v.padre;
-    }*/
 
-
-
-    public void expandirArbol(Vertice v){
-       
-        if(v.profundidad()<5){
-            //creaVertices(v);
-            expandirArbol(v.izquierdo);
-            expandirArbol(v.derecho);
-        }
-        VerticeMinimax j = convertirMiniMax(v);
-       // j.color=colorear(j);
-        if(v.profundidad()>=5){
-        j.valor= (int)(Math.random()*8);
-        j.visitado=true;
-        }
-
-
-       // System.out.println(v.profundidad());
-    }
-
-
+/**
+ * Metodo para calcular el valor del nodo utilizando el algoritmo de MinMax
+ * @param v vertice del cual se quiere calcular el valor
+ * @param i color respecto al cual se calculara el valor
+ */
 public void calcularValor(Vertice v,int i){
     VerticeMinimax k = convertirMiniMax(v);
     VerticeMinimax kd=null;
@@ -169,27 +137,29 @@ public void calcularValor(Vertice v,int i){
 
     /**
      * Construye un nuevo vértice, usando una instancia de {@link
-     * VerticeRojinegro}.
+     * VerticeMinimax}.
      * 
      * @param elemento el elemento dentro del vértice.
-     * @return un nuevo vértice rojinegro con el elemento recibido dentro del mismo.
+     * @return un nuevo vértice Minimax con el elemento recibido dentro del mismo.
      */
     @Override
     protected Vertice nuevoVertice(T elemento) {
         return new VerticeMinimax(elemento);
     }
 
+    /**
+     * Transforma un vertice de la clase VerticeArbolBinario en uns instancia de vertice Minimax
+     * @param vertice vertice a convertir
+     * @return vertice
+     */
     protected VerticeMinimax convertirMiniMax(VerticeArbolBinario<T> vertice) {
         return (VerticeMinimax) vertice;
     }
 
     /**
-     * Regresa el color del vértice rojinegro.
-     * 
+     * Regresa el color del vértice.
      * @param vertice el vértice del que queremos el color.
-     * @return el color del vértice rojinegro.
-     * @throws ClassCastException si el vértice no es instancia de {@link
-     *                            VerticeRojinegro}.
+     * @return el color del vértice 
      */
     public int getColor(VerticeArbolBinario<T> vertice) {
         VerticeMinimax aux = (VerticeMinimax) vertice;
@@ -197,10 +167,7 @@ public void calcularValor(Vertice v,int i){
     }
 
     /**
-     * Agrega un nuevo elemento al árbol. El método invoca al método {@link
-     * ArbolBinarioOrdenado#agrega}, y después balancea el árbol recoloreando
-     * vértices y girando el árbol como sea necesario.
-     * 
+     * Agrega un nuevo elemento al árbol. 
      * @param elemento el elemento a agregar.
      */
     @Override
@@ -208,60 +175,21 @@ public void calcularValor(Vertice v,int i){
         if (elemento != null) {
             super.add(elemento);
 
-            // ToDo ... Conseguir el ultimoAgregado
-            /*VerticeRojinegro v = convertirRojiNegro(ultimoAgregado);
-            v.color = Color.ROJO;
-            rebalancea(v);*/
         }
 
     }
 
     
-    //tiene2hijos
-    //hasAbuelo
-    //getAbuelo
+   
 
 
     /**
-     * Elimina un elemento del árbol. El método elimina el vértice que contiene
-     * el elemento, y recolorea y gira el árbol como sea necesario para
-     * rebalancearlo.
+     * Elimina un elemento del árbol. 
      * @param elemento el elemento a eliminar del árbol.
      */
     @Override public boolean delete(T elemento) {
-        // Caso 1
-        // Caso 2
-        // Caso 3
         return false;
     }
 
-    /**
-     * Lanza la excepción {@link UnsupportedOperationException}: los árboles
-     * rojinegros no pueden ser girados a la izquierda por los usuarios de la
-     * clase, porque se desbalancean.
-     * 
-     * @param vertice el vértice sobre el que se quiere girar.
-     * @throws UnsupportedOperationException siempre.
-     */
-    //@Override
-    public void giraIzquierda(VerticeArbolBinario<T> vertice) {
-        throw new UnsupportedOperationException("Los árboles rojinegros no " +
-                "pueden girar a la izquierda " +
-                "por el usuario.");
-    }
-
-    /**
-     * Lanza la excepción {@link UnsupportedOperationException}: los árboles
-     * rojinegros no pueden ser girados a la derecha por los usuarios de la
-     * clase, porque se desbalancean.
-     * 
-     * @param vertice el vértice sobre el que se quiere girar.
-     * @throws UnsupportedOperationException siempre.
-     */
-    //@Override
-    public void giraDerecha(VerticeArbolBinario<T> vertice) {
-        throw new UnsupportedOperationException("Los árboles rojinegros no " +
-                "pueden girar a la derecha " +
-                "por el usuario.");
-    }
+  
 }
