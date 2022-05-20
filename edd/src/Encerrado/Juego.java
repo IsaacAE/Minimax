@@ -189,32 +189,59 @@ public class Juego{
     return aux;
   }
 
+  /**
+   * Metodo que devuelve el valor del atributo jugador
+   * @return Jugador
+   */
   public Jugador getJugador() {
     return this.jugador;
   }
 
+  /**
+   * Metodo que devuelve el valor del atributo tablero
+   * @return Tablero
+   */
   public Tablero getTablero() {
     return this.tablero;
   }
 
+   /**
+   * Metodo que devuelve el valor del atributo IA
+   * @return Jugador
+   */
   public Jugador getIA() {
     return this.IA;
   }
 
+  /**
+   * Metodo que representa en cadena a la clase
+   * @return String
+   */
   @Override
   public String toString() {
-    
     return tablero +"\n Jugadores: \n" + jugador + "\n" + IA;
   }
 
+  /**
+   * Metodo que modifica el valor del atributo tablero
+   * @param tablero nuevo valor para el atributo
+   */
   public void setTablero(Tablero tablero) {
     this.tablero = tablero;
   }
 
+  /**
+   * Metodo que modifica el valor del atributo jugador
+   * @param jugador nuevo valor para el atributo
+   */
   public void setJugador(Jugador jugador) {
     this.jugador = jugador;
   }
 
+  /**
+   * Metodo que modifica el valor del atributo IA
+   * @param jugador nuevo valor para el atributo
+   */
   public void setIA(Jugador jugador) {
     this.IA = jugador;
   }

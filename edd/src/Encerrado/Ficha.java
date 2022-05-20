@@ -72,6 +72,10 @@ public class Ficha{
     this.columna = columna;
   }
 
+  /**
+   * COnstructor de la clase con parametros que "clona" a una instancia de la misma clase
+   * @param object Objeto de la clase ficha a copiar
+   */
   public Ficha (Ficha object){
     this.color = object.getColor();
     this.figura = object.getFigura();
@@ -95,7 +99,10 @@ public class Ficha{
     return this.fila;
   }
 
-
+/**
+ * Metodo que devuelve el atributo figura de la clase
+ * @return String
+ */
   public String getFigura() {
     return this.figura;
   }
@@ -103,7 +110,7 @@ public class Ficha{
 
   /**
    * Metodo que modifica el valor del atributo fila de la ficha
-   * @param fila
+   * @param fila nuevo valor para el atributo
    */
   public void setFila(int fila) {
     this.fila = fila;
@@ -111,7 +118,7 @@ public class Ficha{
 
   /**
    * Metodo que modifica el valor del atributo ficha
-   * @param columna
+   * @param columna nuevo valor para el atributo
    */
   public void setColumna(int columna) {
     this.columna = columna;
@@ -136,7 +143,7 @@ public class Ficha{
 
   /**
    * Metodo para saber si una ficha es igual al otra
-   * @param object
+   * @param object objeto a comparar
    */
   @Override
   public boolean equals(Object object) {
@@ -157,13 +164,4 @@ public class Ficha{
     return false;
   }
 
-  public Ficha clonar(){
-    Ficha f = new Ficha();
-    f.color=this.color;
-    f.fila=this.fila;
-    f.columna=this.columna;
-    f.figura=this.figura;
-
-    return f;
-  }
 }
