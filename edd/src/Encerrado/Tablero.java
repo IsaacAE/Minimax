@@ -161,7 +161,6 @@ public class Tablero {
     }
 
     //SI la casilla dada no corresponde a ninguna de las anteriores, regresa falso
-    //System.out.println("Error en validarPos");
     return false;
   }
 
@@ -335,14 +334,10 @@ public class Tablero {
    * @return Ficha
    */
   public Ficha asignarFicha(int fila, int columna, Ficha ficha) {
-    //System.out.println("Tablero -->"+this);
-    //System.out.println("Esto es lo que hay "+tablero[fila][columna]);
     if (tablero[fila][columna] == null) {
-      //System.out.println("Entro al if");
       tablero[fila][columna] = ficha;
       ficha.setFila(fila);
       ficha.setColumna(columna);
-      //System.out.println("--> Tablero "+this);
       return ficha;
     }
     return null;
@@ -373,7 +368,6 @@ public class Tablero {
    */
   public int movimientosDisponibles(Ficha ficha) {
     int aux = 0;
-    //System.out.println("Calculando opciones de la ficha " + ficha);
     for (int i = 0; i < tablero.length; i++) {
       for (int j = 0; j < tablero[i].length; j++) {
         if (SimularMoverFicha(j, i, ficha) != null) {

@@ -167,9 +167,6 @@ public class Jugador {
         coordenadas[1]=ficha1Cord[1];
         coordenadas[2]=ficha2Cord[0];
         coordenadas[3]=ficha2Cord[1];
-       /* for(int pec=0;pec<coordenadas.length;pec++){
-          System.out.println(coordenadas[pec]);
-        }*/
         return coordenadas;
     }
 

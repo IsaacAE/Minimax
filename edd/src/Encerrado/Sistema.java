@@ -127,9 +127,6 @@ public class Sistema {
           "Ingresa a donde la quieres (1-5)",
           jugador
         );
-        for (int i : coordenadas) {
-          System.out.println("Coordenadas " + i);
-        }
         juego.moverFicha(coordenadas[0], coordenadas[1], jugador, fichaMover);
       }
       

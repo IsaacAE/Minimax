@@ -70,7 +70,6 @@ public class Juego {
     } else {
       setIA(jugador);
     }
-    //System.out.println("Perrrraaa"+this);
     return true;
   }
 
