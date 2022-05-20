@@ -3,11 +3,14 @@ package edd.src.Encerrado;
 import java.lang.Character;
 import java.util.Scanner;
 
+import edd.src.Estructuras.*;
+
 public class Sistema {
 
   Scanner sc;
   Juego juego = new Juego();
   Jugador turno;
+  boolean minimaxActivado = false;
 
   public Sistema() {
     iniciarJuego();
@@ -47,20 +50,21 @@ public class Sistema {
     System.out.println("Comenzando juego");
     System.out.println("¿ Desea comenzar el usuario? S/N ");
     Jugador jugadores[] = { juego.getJugador(), juego.getIA() };
-    // int aux = 0;
     if (validarSioNo()) {
-      // jugadorEnTurno = juego.getJugador();
-      // System.out.println("Va a comenzar " + jugadores[0]);
-      // aux = 0;
       jugadorEnTurno = juego.getJugador();
     } else {
-      // jugadorEnTurno = juego.getIA();
-      // System.out.println("Va a comenzar " + jugadores[1]);
-      // aux = 1;
       jugadorEnTurno = juego.getIA();
     }
     boolean aux = false;
     do {
+      if (jugadorEnTurno.equals(juego.getIA())) {
+        System.out.println("Desea activar el minimax?");
+        if (validarSioNo()) {
+          minimaxActivado = true;
+        } else {
+          minimaxActivado = false;
+        }
+      }
       System.out.println("Turno de " + jugadorEnTurno);
       aux = turno(jugadorEnTurno);
       if (jugadorEnTurno.equals(juego.getJugador())) {
@@ -86,7 +90,12 @@ public class Sistema {
         } catch (Exception e) {
           System.out.println(e);
         }
-        juego.moverFichaRandom(jugador);
+        if (minimaxActivado) {
+          System.out.println("Minimax activado");
+          movimientoMinimax();
+        } else {
+          juego.moverFichaRandom(jugador);
+        }
       } else {
         int posicion = validarNumeros(
           "Ingresa la ficha que quieres mover ",
@@ -111,6 +120,60 @@ public class Sistema {
       return false;
     }
     // juego.moverFicha(fila, columna, jugador)
+  }
+
+  public void movimientoMinimax() {
+    ArbolDecisiones arbol = new ArbolDecisiones();
+    String jugada;
+    arbol.setJuego(this.juego);
+    
+    System.out.println(arbol);
+    //System.out.println("Hijo derecho"+arbol.hijoDerechoRaiz());
+    //System.out.println("Hijo izquiedo"+arbol.hijoIzquierdoRaiz());
+    //System.out.println(arbol.nodoDerecho((VerticeMinimax)arbol.getRaiz()));
+    if(arbol.hijoDerechoRaiz() != null && arbol.hijoIzquierdoRaiz() != null){
+      if(arbol.getValor(arbol.hijoIzquierdoRaiz()) >= arbol.getValor(arbol.hijoDerechoRaiz())){
+
+        jugada = arbol.getElemento(arbol.hijoIzquierdoRaiz()).toString();
+      }else{
+        jugada = arbol.getElemento(arbol.hijoDerechoRaiz()).toString();
+      }
+    }else{
+      jugada = arbol.getElemento(arbol.hijoIzquierdoRaiz()).toString();
+    }
+    permutacionCuadrante(jugada);
+    //System.out.println("Permutacion "+jugada);
+  }
+
+  public void permutacionCuadrante(String permutacion){
+    int arr[] = this.juego.getIA().movimientosDisponiblesCord(this.juego.getTablero());
+    Ficha [] fichas = {this.juego.getIA().getFicha1(), this.juego.getIA().getFicha2()};
+    Lista<Juego> lista = new Lista<>();
+    
+    System.out.println("Estado actual "+this.juego);
+    //System.out.println("Real"+this.juego);
+    /*for (int i = 0; i < arr.length-2; i++) {
+      Juego sim1 = new Juego(this.juego);
+      System.out.println("Simulacion"+sim1);
+      System.out.println("Real"+this.juego);
+      if(sim1.moverFichaCuadrante(arr[i], this.juego.getIA(), fichas[0])){
+        System.out.println("Se movio");
+        System.out.println(sim1);
+        if(permutacion.equals(sim1.getTablero().estadoTablero())){
+          lista.add(sim1);
+        }  
+      }  
+    }*/
+   /* for (int i = 0; i < arr.length-2; i++) {
+      Juego sim1 = new Juego(this.juego);
+      sim1.moverFichaCuadrante(arr[i], this.juego.getIA(), fichas[1]);
+      if(permutacion.equals(sim1.getTablero().estadoTablero())){
+        lista.add(sim1);
+      }
+    }*/
+    System.out.println("--------------------------");
+    System.out.println("Lista de casos"+lista);
+    System.out.println("--------------------------");
   }
 
   /**

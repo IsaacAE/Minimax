@@ -209,6 +209,10 @@ public abstract class ArbolBinario<T> implements Collection<T> {
     /** El contador del número de elementos */
     protected int elementos;
 
+
+    public Vertice getRaiz(){
+        return this.raiz;
+    }
     /**
      * Constructor sin parametros 
      * 
