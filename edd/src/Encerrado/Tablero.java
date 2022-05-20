@@ -22,6 +22,10 @@ public class Tablero{
     tablero = new Ficha[3][3];
   }
 
+  /**
+   * Metodo constructor que clona una instancia de la clase
+   * @param object Tablero a copiar
+   */
   public Tablero(Tablero object){
     this.tablero = new Ficha [3][3];
     for ( int i = 0; i < object.getTablero().length; i++) {
@@ -79,7 +83,6 @@ public class Tablero{
       blanco +
       "] 5"
     );
-    //System.out.println();
     return "\n";
   }
 
