@@ -65,7 +65,6 @@ public class Sistema {
     Jugador jugadorEnTurno;
     System.out.println("Comenzando juego");
     System.out.println("¿ Desea comenzar el usuario? S/N ");
-    Jugador jugadores[] = { juego.getJugador(), juego.getIA() };
     if (validarSioNo()) {
       jugadorEnTurno = juego.getJugador();
     } else {
@@ -74,7 +73,7 @@ public class Sistema {
     boolean aux = false;
     do {
       if (jugadorEnTurno.equals(juego.getIA())) {
-        System.out.println("Desea activar el minimax?");
+        System.out.println("Desea activar el minimax? (S/N)");
         if (validarSioNo()) {
           minimaxActivado = true;
         } else {
@@ -128,9 +127,6 @@ public class Sistema {
           "Ingresa a donde la quieres (1-5)",
           jugador
         );
-        for (int i : coordenadas) {
-          System.out.println("Coordenadas " + i);
-        }
         juego.moverFicha(coordenadas[0], coordenadas[1], jugador, fichaMover);
       }
       
@@ -144,13 +140,17 @@ public class Sistema {
     // juego.moverFicha(fila, columna, jugador)
   }
 
+  /**
+   * Genera un arbol de decisiones segun el estado actual del juego
+   * Evalua entre los nodos hijos de la raiz cual le conviene mas, obtiene una permutacion
+   * del tablero (el tablero le conviene ) y efectua el movimiento en asignar Permutacion
+   */
   public void movimientoMinimax() {
     ArbolDecisiones arbol = new ArbolDecisiones();
     String jugada;
     arbol.setJuego(this.juego);
     this.juego = new Juego(this.juego);
     arbol.construirArbol();
-    //System.out.println(arbol);
     if(arbol.hijoDerechoRaiz() != null && arbol.hijoIzquierdoRaiz() != null){
       if(arbol.getValor(arbol.hijoIzquierdoRaiz()) >= arbol.getValor(arbol.hijoDerechoRaiz())){
         jugada = arbol.getElemento(arbol.hijoIzquierdoRaiz()).toString();
@@ -160,43 +160,7 @@ public class Sistema {
     }else{
       jugada = arbol.getElemento(arbol.hijoIzquierdoRaiz()).toString();
     }
-    //permutacionCuadrante(jugada);
-    System.out.println("Permutacion "+jugada);
     juego.asignarPermutacion(jugada);
-  }
-
-  public void permutacionCuadrante(String permutacion){
-    int arr[] = this.juego.getIA().movimientosDisponiblesCord(this.juego.getTablero());
-    Ficha [] fichas = {this.juego.getIA().getFicha1(), this.juego.getIA().getFicha2()};
-    Lista<Juego> lista = new Lista<>();
-    //System.out.println("Estado actual "+this.juego);
-    //System.out.println("Real"+this.juego);
-    for (int i = 0; i < arr.length-2; i++) {
-      Juego sim1 = new Juego(this.juego);
-      if(sim1.moverFichaCuadrante(arr[i], this.juego.getIA(), fichas[0])){
-        if(permutacion.equals(sim1.getTablero().estadoTablero())){
-          lista.add(sim1);
-        }  
-      }  
-    }
-    if(lista.size() == 0){
-      for (int i = 0; i < arr.length-2; i++) {
-        Juego sim1 = new Juego(this.juego);
-        this.juego.repararTablero();
-        if(sim1.moverFichaCuadrante(arr[i], this.juego.getIA(), fichas[1])){
-          if(permutacion.equals(sim1.getTablero().estadoTablero())){
-            lista.add(sim1);
-          }  
-        }  
-      }
-    }
-    if(lista.size() == 0){
-      juego.moverFichaRandom(juego.getIA());
-    }
-    System.out.println("--------------------------");
-    System.out.println("Lista de casos"+lista);
-    System.out.println("--------------------------");
-    this.juego.repararTablero();
   }
 
   /**
@@ -284,8 +248,6 @@ public class Sistema {
    * @return int[]
    */
   public int[] validarCoordenada(String mensaje, Jugador jugador) {
-    String str;
-
     boolean condicion = false;
     do {
       try {
@@ -347,21 +309,13 @@ public class Sistema {
    * @return int[]
    */
   public int[] validarCoordenada(String mensaje) {
-    String str;
     boolean condicion = false;
     do {
       try {
         System.out.println(mensaje);
         sc = new Scanner(System.in);
         int elec = sc.nextInt();
-        /*if (str.charAt(1) != ',') {
-          condicion = false;
-          continue;
-        }*/
         int coordenadas[] = juego.getTablero().buscarPosicionCord(elec);
-        //coordenadas[0] = Character.getNumericValue(str.charAt(0));
-        //coordenadas[1] = Character.getNumericValue(str.charAt(2));
-        // System.out.println("Salimos de aqui");
         if (
           coordenadas[0] >= 0 &&
           coordenadas[0] <= 2 &&

@@ -70,7 +70,6 @@ public class Juego {
     } else {
       setIA(jugador);
     }
-    //System.out.println("Perrrraaa"+this);
     return true;
   }
 
@@ -219,52 +218,24 @@ public class Juego {
       );
     this.asignarFicha(IA.ficha2.getFila(), IA.ficha2.getColumna(), IA, 2);
     this.asignarFicha(IA.ficha1.getFila(), IA.ficha1.getColumna(), IA, 1);
-    //System.out.println("Reparacion de tablero");
-    //System.out.println(this.tablero);
   }
 
   public void asignarPermutacion(String string) {
-    Ficha[] arrJ = { jugador.getFicha1(), jugador.getFicha2() };
-    Ficha[] arrI = new Ficha[2];
-    if (string.charAt(0) == '0') {
-      arrI[0] = IA.getFicha2();
-      arrI[1] = IA.getFicha1();
-    } else {
-      arrI[1] = IA.getFicha2();
-      arrI[0] = IA.getFicha1();
-    }
-    System.out.println("Index " + string.charAt(0));
     this.tablero = new Tablero();
-    // 1 maquina 0 jugador
-    /*if (string.equals("01012")) {
-      moverFichaRandom(IA);
-      return;
-    } else if (string.equals("00211")) {
-      moverFichaRandom(IA);
-      return;
-    }else {*/ 
       int x = 1, y =1;
       Tablero Tabaux = new Tablero();
       for (int i = 0; i < 5; i++) {
         char aux = string.charAt(i);
         int [] arrAux = regresarCoordenada(i+1);
-        System.out.println("Inde "+aux);
         if (aux == '1') {
-          System.out.println("x-->"+x);
-          //System.out.println("Ficha que se va a mover "+arrI[x]);
-          //this.moverFichaCuadrante(i+1, IA, arrI[x]);
           Tabaux = IA.asignarFicha(tablero, arrAux[0], arrAux[1], x);
           x++;
         } else if (aux == '0') {
-          System.out.println("y-->"+y);
-          //System.out.println("Ficha que se va a mover "+arrJ[y]);
-          //this.moverFichaCuadrante(i+1, jugador, arrJ[y]);
           Tabaux =  jugador.asignarFicha(tablero, arrAux[0], arrAux[1], y);
           y++;
         }
         this.setTablero(Tabaux);
       }
-    //}
   }
 
   public int [] regresarCoordenada(int numero){
