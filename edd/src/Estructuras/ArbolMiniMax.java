@@ -3,7 +3,11 @@ package edd.src.Estructuras;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
+/**
+ * Clase que simula un arbol para aplicarle el algoritmo MinMax
+ * @author Alcantara Estrada Kevin Isaac
+ * @author Rubio Haro Mauricio
+ */
 public class ArbolMiniMax<T extends Comparable<T>> extends ArbolBinarioBusqueda<T> {
     /**
      * Clase interna protegida para vértices de árboles MiniMax. La única

@@ -8,8 +8,12 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-//import edd.src.Estructuras.ArbolMiniMax;
 
+/**
+ * Clase que simula un arbol para tomar una decision
+ * @author Alcantara Estrada Kevin Isaac
+ * @author Rubio Haro Mauricio
+ */
 public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
 //Atributos privados de la clase
   Juego juego;
@@ -80,28 +84,28 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
  */
   public void construirArbol() {
     String str = tablero.estadoTablero();
-    this.raiz = new VerticeMinimax(str);
+    this.raiz = new VerticeMinimax(str);//creamos la raiz
     colaVertices = new Cola<>();
     colaJuegos = new Cola<>();
     colaVertices.push((VerticeMinimax) this.raiz);
     colaJuegos.push(this.juego);
     Jugador[] jugadores = {juego.getIA(), juego.getJugador()};
-    colorI= jugadores[0].getFicha1().getColor();
+    colorI= jugadores[0].getFicha1().getColor();//damos a colorI el color de la IA
     int p=0;
     //Mientras cola de vertices no este vacia, seguimos constuyendo el arbol
     while(!colaVertices.isEmpty()){
       int c = colaVertices.size();
-      for(int l=0; l<c;l++){
+      for(int l=0; l<c;l++){//aplicaremos el metodo tantas veces como vertices habia en la cola antes de comenzar el proceso
     recursionDeNodos(jugadores, p);
       }
-      if(p==0){
+      if(p==0){//este condicional es para alternar enre los jugadores que se usan dentro del metodo recursionNodos
       p++;
       }else{
         p=0;
       }
     }
-  calcularValor(this.raiz,colorI);
-  //System.out.println(this);
+    
+  calcularValor(this.raiz,colorI);//calculamos el valor de los vertices aplicando MInMax
 
   }
 
@@ -114,32 +118,30 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
    */
   public void recursionDeNodos(Jugador [] jugadores, int i) {
 
-    //System.out.println("TABLERO PICK");
-    
+    //Sactualizamos referencias del primer elemento de la colaJuegos
     colaJuegos.peek().setTablero(colaJuegos.peek().getTablero().actualizaRef());
-    /*System.out.println(colaJuegos.peek());
-    System.out.println(jugadores[i]);
-    System.out.println(jugadores[i].movimientosDisponibles(colaJuegos.peek().getTablero()));*/
-    if(colaVertices.peek().profundidad()<11){
-    int[] arr =
-      jugadores[i].movimientosDisponiblesCord(colaJuegos.peek().getTablero());
-     
+    if(colaVertices.peek().profundidad()<11){//Para que no se cicle y limitar la profundidad de las hojas
+      int[] arr =jugadores[i].movimientosDisponiblesCord(colaJuegos.peek().getTablero());//calculamos los movimientos disponibles de las fichas del jugador
+   
+      //dividimos el arreglo por ficha
     int[] arrF1 = { arr[0], arr[1] };
     int[] arrF2 = { arr[2], arr[3] };
    
+    //calculamos los resultados posibles a partir de los posibles movimientos de las fichas
     String[] permutaciones = jugadasPosibles(
       arrF1,
       arrF2,
       jugadores[i],
       colaJuegos.peek()
     );
-    //if (!this.raiz.hayIzquierdo() && !this.raiz.hayDerecho()) {
+    
       if(true){
+
         Tablero Tabaux=new Tablero();
-      VerticeMinimax aux = colaVertices.pop();
-      aux.color=colorear(aux, colorI);
+      VerticeMinimax aux = colaVertices.pop();//tomamos el primer vertice de la cola de vertices para manejarlo
+      aux.color=colorear(aux, colorI);//coloreamos tal vertice
      
-     // Juego auxJuego = colaJuegos.pop();
+     //si hay una posible jugada entonces creamos un nuevo vertice con el estado de tal jugada y agregamos el vertice creado a la colaVertices
      if(juegoAux1!=null){
        juegoAux1.setTablero(juegoAux1.getTablero().actualizaRef());
        Tabaux = juegoAux1.getTablero();
@@ -148,11 +150,8 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
        aux.izquierdo.padre=aux;
        colaVertices.push((VerticeMinimax) aux.izquierdo);
      }
-      //colaJuegos.push(auxJuego);
-      
-    //  auxJuego = colaJuegos.pop();
-      //colaJuegos.push(auxJuego);
-     // Tabaux = auxJuego.getTablero();
+     
+     //si hay una posible segunda jugada entonces creamos un nuevo vertice con el estado de tal jugada y agregamos el vertice creado a la colaVertices
      if(juegoAux2!=null){
       juegoAux2.setTablero(juegoAux2.getTablero().actualizaRef());
       Tabaux = juegoAux2.getTablero();
@@ -164,7 +163,7 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
       
      
      
-
+//Si no hay posibles jugadas, hemos llegado a un estado final y convertimos al vertice en hoja, lo quitamos de la cola de vertices
      if(juegoAux1==null&&juegoAux2==null){
        if(aux.color==colorI){
        aux.valor=1;
@@ -198,10 +197,10 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
   ) {
     Ficha[] fichasJinicial = { jugador.getFicha1(), jugador.getFicha2() };
     Lista<Juego> lista = new Lista<>();
-    
+    //Actualizamos referencias del tablero actual
     jueguito.setTablero(jueguito.getTablero().actualizaRef());
-    lista.add(jueguito);
-    for (int i = 0; i < arrF1.length; i++) {
+    lista.add(jueguito);//agregamos el juego que pasamos como parametro
+    for (int i = 0; i < arrF1.length; i++) {//revisamos las posibles jugadas de la ficha 1 y creamos los estados resultantes
       if (arrF1[i] > 0) {
         Juego sim1 = new Juego(lista.peek());
         sim1.setTablero(sim1.getTablero().actualizaRef());
@@ -212,11 +211,11 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
         );
         sim1.setTablero(sim1.getTablero().actualizaRef());
         if (aux) {
-          lista.add(sim1);
+          lista.add(sim1);//si hay jugadas disponibles, agregamos tales juegos resultantes a la lista
         }
       }
     }
-    for (int i = 0; i < arrF2.length; i++) {
+    for (int i = 0; i < arrF2.length; i++) {//revisamos las posibles jugadas de la ficha 1 y creamos los estados resultantes
       if (arrF2[i] > 0) {
         Juego sim1 = new Juego(lista.peek());
         sim1.setTablero(sim1.getTablero().actualizaRef());
@@ -228,18 +227,18 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
         sim1.setTablero(sim1.getTablero().actualizaRef());
         if (aux) {
           
-          lista.add(sim1);
+          lista.add(sim1);//agregamos los juegos resultantes de las jugadas posibles a la lista
         }
       }
     }
 
-    lista.delete(jueguito);
+    lista.delete(jueguito);//eliminamos de la lista el estado original del juego
     String[] permutacion = new String[lista.size()];
-    juegoAux1=null;
-    juegoAux2=null;
+    juegoAux1=null;//vaciamos variables
+    juegoAux2=null;//vaciamos variables
     Iterator<Juego> iterador = lista.iterator();
     int i = 0;
-    while (iterador.hasNext()) {
+    while (iterador.hasNext()) {//guardamos los juegos resultantes si es que los hubo
       Juego aux = iterador.next();
       aux.setTablero(aux.getTablero().actualizaRef());
       if(i==0){
@@ -248,8 +247,8 @@ public class ArbolDecisiones<T extends Comparable<T>> extends ArbolMiniMax {
       }else{
         juegoAux2=aux;
       }
-      colaJuegos.push(aux);
-      permutacion[i] = aux.getTablero().estadoTablero();
+      colaJuegos.push(aux);//agregamos los posibles juegos resultantes a la colaJuegos
+      permutacion[i] = aux.getTablero().estadoTablero();//tomamos el estado del tablero de tal juego
       i++;
     }
     colaJuegos.pop();
