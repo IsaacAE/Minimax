@@ -25,21 +25,19 @@ public class Tablero {
     tablero = new Ficha[3][3];
   }
 
-  public Tablero(Tablero object) {
-    //System.out.println("Haciendo deep copy");
-    this.tablero = new Ficha[3][3];
-    Ficha[][] aux = object.getTablero();
-    int l1 = aux.length;
-    //int l2 = object.getTablero().[0].length;
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        this.tablero[i][j] = object.tablero[i][j];
+
+  /**
+   * Metodo constructor que clona una instancia de la clase
+   * @param object Tablero a copiar
+   */
+  public Tablero(Tablero object){
+    this.tablero = new Ficha [3][3];
+    for ( int i = 0; i < object.getTablero().length; i++) {
+      for (int j = 0; j < tablero.length; j++) {
+          this.tablero[i][j] = object.tablero[i][j];
       }
     }
-    /* for (int i = 0; i < l1; i++) {
-      //this.tablero[i] = Arrays.copyOf(object.getTablero()[i], object.getTablero()[i].length);
-      this.tablero[i] = aux[i].clone();
-    }*/
+   
 
   }
 
@@ -90,7 +88,6 @@ public class Tablero {
       blanco +
       "] 5"
     );
-    //System.out.println();
     return "\n";
   }
 
