@@ -243,22 +243,23 @@ public class Juego {
       moverFichaRandom(IA);
       return;
     }else {*/ 
-      int x = 0;
-      int y = 0;
+      int x = 1, y =1;
       Tablero Tabaux = new Tablero();
       for (int i = 0; i < 5; i++) {
         char aux = string.charAt(i);
         int [] arrAux = regresarCoordenada(i+1);
         System.out.println("Inde "+aux);
         if (aux == '1') {
-          System.out.println("Ficha que se va a mover "+arrI[x]);
+          System.out.println("x-->"+x);
+          //System.out.println("Ficha que se va a mover "+arrI[x]);
           //this.moverFichaCuadrante(i+1, IA, arrI[x]);
-          Tabaux = IA.asignarFicha(Tabaux, arrAux[0], arrAux[1], x);
+          Tabaux = IA.asignarFicha(tablero, arrAux[0], arrAux[1], x);
           x++;
         } else if (aux == '0') {
-          System.out.println("Ficha que se va a mover "+arrJ[y]);
+          System.out.println("y-->"+y);
+          //System.out.println("Ficha que se va a mover "+arrJ[y]);
           //this.moverFichaCuadrante(i+1, jugador, arrJ[y]);
-          Tabaux =  jugador.asignarFicha(Tabaux, arrAux[0], arrAux[1], y);
+          Tabaux =  jugador.asignarFicha(tablero, arrAux[0], arrAux[1], y);
           y++;
         }
         this.setTablero(Tabaux);
