@@ -62,8 +62,17 @@ public class Tablero {
 
     char linea = (char) asciiValue; // Para poder imprimir en pantalla el simbolo \
     System.out.println();
-    System.out.println(
-      "1 [" +
+    
+
+    for(int g =0; g<this.tablero.length;g++){
+      for(int h=0; h<this.tablero.length;h++){
+        if(this.tablero[h][g]==null){
+          this.tablero[h][g]= new Ficha();
+        }
+      }
+    }
+
+      System.out.println("1 [" +
       this.tablero[0][0] +
       blanco +
       "]------[" +
@@ -72,11 +81,11 @@ public class Tablero {
       blanco +
       "] 2"
     );
-    System.out.println(blanco + " | " + linea + "        /       |" + blanco);
+    System.out.println(blanco + " | " + linea + "      /   |" + blanco);
     System.out.println(
-      " |   3 [" + blanco + this.tablero[1][1] + blanco + "]     |"
+      " |   3[" + blanco + this.tablero[1][1] + blanco + "]     |"
     );
-    System.out.println(blanco + " | /    " + linea + "       |" + blanco);
+    System.out.println(blanco + " | /       " +    linea + "  |" + blanco);
     System.out.println(
       "4 [" +
       blanco +
@@ -88,6 +97,14 @@ public class Tablero {
       blanco +
       "] 5"
     );
+
+    for(int g =0; g<this.tablero.length;g++){
+      for(int h=0; h<this.tablero.length;h++){
+        if(this.tablero[h][g].getColor()==-1){
+          this.tablero[h][g]= null;
+        }
+      }
+    }
     return "\n";
   }
 
