@@ -2,9 +2,9 @@
 ## Mauricio Rubio Haro
 ## Kevin Isaac Alcantara Estrada
 
-### To compile: 
-#### javac -d . src/Estructuras/*.java
-#### javac -d . src/Encerrado/*.java
+### To compile:
+#### javac -d target -sourcepath . Encerrado/Main.java Encerrado/*.java Estructuras/*.java
 
-### To execute: 
-#### java edd.src.Encerrado.Main
+### To execute:
+#### cd target
+#### java edd/src/Encerrado/Main
