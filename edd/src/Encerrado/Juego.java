@@ -226,33 +226,71 @@ public class Juego {
   public void asignarPermutacion(String string) {
     Ficha[] arrJ = { jugador.getFicha1(), jugador.getFicha2() };
     Ficha[] arrI = new Ficha[2];
-    if(string.charAt(0) == '0'){
-       arrI[0] = IA.getFicha2();
-       arrI[1] = IA.getFicha1();
-    }else {
+    if (string.charAt(0) == '0') {
+      arrI[0] = IA.getFicha2();
+      arrI[1] = IA.getFicha1();
+    } else {
       arrI[1] = IA.getFicha2();
-       arrI[0] = IA.getFicha1();
+      arrI[0] = IA.getFicha1();
     }
     System.out.println("Index " + string.charAt(0));
     this.tablero = new Tablero();
     // 1 maquina 0 jugador
-    if (string.equals("01012")) {
+    /*if (string.equals("01012")) {
       moverFichaRandom(IA);
-    } else {
+      return;
+    } else if (string.equals("00211")) {
+      moverFichaRandom(IA);
+      return;
+    }else {*/ 
       int x = 0;
       int y = 0;
-      char aux = string.charAt(0);
-      for (int i = 1; i < 5; i++) {
+      Tablero Tabaux = new Tablero();
+      for (int i = 0; i < 5; i++) {
+        char aux = string.charAt(i);
+        int [] arrAux = regresarCoordenada(i+1);
+        System.out.println("Inde "+aux);
         if (aux == '1') {
-          this.moverFichaCuadrante(i, IA, arrI[x]);
+          System.out.println("Ficha que se va a mover "+arrI[x]);
+          //this.moverFichaCuadrante(i+1, IA, arrI[x]);
+          Tabaux = IA.asignarFicha(Tabaux, arrAux[0], arrAux[1], x);
           x++;
         } else if (aux == '0') {
-          this.moverFichaCuadrante(i, jugador, arrJ[y]);
+          System.out.println("Ficha que se va a mover "+arrJ[y]);
+          //this.moverFichaCuadrante(i+1, jugador, arrJ[y]);
+          Tabaux =  jugador.asignarFicha(Tabaux, arrAux[0], arrAux[1], y);
           y++;
         }
-        aux = string.charAt(i);
+        this.setTablero(Tabaux);
       }
+    //}
+  }
+
+  public int [] regresarCoordenada(int numero){
+    int [] aux = new int [2];
+    switch (numero) {
+      case 1:
+         aux[0] = 0;
+         aux[1] = 0;
+        break;
+      case 2:
+      aux[0] = 0;
+      aux[1] = 2;
+        break;
+      case 3:
+      aux[0] = 1;
+      aux[1] = 1;
+        break;
+      case 4:
+      aux[0] = 2;
+      aux[1] = 0;
+        break;
+      case 5:
+      aux[0] = 2;
+      aux[1] = 2;
+        break;
     }
+    return aux;
   }
 
   /**
