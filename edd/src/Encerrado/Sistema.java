@@ -2,17 +2,26 @@ package edd.src.Encerrado;
 
 import java.lang.Character;
 import java.util.Scanner;
-
+/**
+ * Clase para reunir todo nuestro codigo en un solo sitio y ejecutar el juego encerrado
+ * @author Alcantara Estrada Kevin Isaac
+ */
 public class Sistema {
-
+//Atributos privados de la clase
   Scanner sc;
   Juego juego = new Juego();
   Jugador turno;
 
+  /**
+   * Constructor sin parametros de la clase que inicial el juego
+   */
   public Sistema() {
     iniciarJuego();
   }
 
+  /**
+   * Metodo para iniciar el juego
+   */
   public void iniciarJuego() {
     System.out.println("BIENVENIDO A ENCERRADOS");
     System.out.println("\n Este es el tablero inicial");
@@ -32,6 +41,9 @@ public class Sistema {
     }
   }
 
+  /**
+   * Metodo para volver a iniciar el juego o, en su caso, terminarlo
+   */
   public void reiniciarJuego() {
     System.out.println("Desea reiniciar el juego? S/N");
     if (validarSioNo()) {
@@ -42,6 +54,9 @@ public class Sistema {
     }
   }
 
+  /**
+   * Metodo para comenzar el juego
+   */
   public void comenzarJuego() {
     Jugador jugadorEnTurno;
     System.out.println("Comenzando juego");
@@ -74,7 +89,11 @@ public class Sistema {
     }
   }
 
-  // public void rondas()
+  /**
+   * Metodo para que cada jugador realice las jugadas en su debido turno
+   * @param jugador Jugador en turno
+   * @return boolean
+   */
   public boolean turno(Jugador jugador) {
     boolean hayPerdedor = false;
     hayPerdedor = juego.hayPerdedor();
@@ -155,6 +174,9 @@ public class Sistema {
     return 0;
   }
 
+  /**
+   * Metodo para asignar fichas al tablero cuando no se desea iniciar con el tablero predeterminado
+   */
   public void asignarTablero() {
     int[] arr;
     juego.setTablero(new Tablero());
@@ -191,8 +213,8 @@ public class Sistema {
    * Valida si una coordenada se puede mover, regresa la coordenada en un arreglo
    * entero
    *
-   * @param mensaje
-   * @return
+   * @param mensaje Mensaje a imprimir
+   * @return int[]
    */
   public int[] validarCoordenada(String mensaje, Jugador jugador) {
     String str;
@@ -252,6 +274,11 @@ public class Sistema {
     return null;
   }
 
+  /**
+   * Metodo que valida la coordenada del tablero a la que se desea mover la ficha
+   * @param mensaje Mensaje para mostrar en pantalla
+   * @return int[]
+   */
   public int[] validarCoordenada(String mensaje) {
     String str;
     boolean condicion = false;
@@ -295,6 +322,10 @@ public class Sistema {
     return null;
   }
 
+  /**
+   * Metodo para validar elecciones del usuario
+   * @return boolean
+   */
   public boolean validarSioNo() {
     char aux;
     boolean condicion = false;
