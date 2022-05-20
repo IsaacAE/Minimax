@@ -1,5 +1,8 @@
 package edd.src.Encerrado;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 /**
  * @author Mauricio Rubio Haro
  * @author Kevin Isaac Alcantara Estrada
@@ -22,6 +25,22 @@ public class Tablero {
     tablero = new Ficha[3][3];
   }
 
+
+  /**
+   * Metodo constructor que clona una instancia de la clase
+   * @param object Tablero a copiar
+   */
+  public Tablero(Tablero object){
+    this.tablero = new Ficha [3][3];
+    for ( int i = 0; i < object.getTablero().length; i++) {
+      for (int j = 0; j < tablero.length; j++) {
+          this.tablero[i][j] = object.tablero[i][j];
+      }
+    }
+   
+
+  }
+
   /**
    * Metodo que devuelve el atributo tablero
    * @return Ficha[][]
@@ -35,6 +54,7 @@ public class Tablero {
 
   /**
    * Metodo para pintar en consola al tablero
+   * @return String
    */
   @Override
   public String toString() {
@@ -42,8 +62,17 @@ public class Tablero {
 
     char linea = (char) asciiValue; // Para poder imprimir en pantalla el simbolo \
     System.out.println();
-    System.out.println(
-      "1 [" +
+    
+
+    for(int g =0; g<this.tablero.length;g++){
+      for(int h=0; h<this.tablero.length;h++){
+        if(this.tablero[h][g]==null){
+          this.tablero[h][g]= new Ficha();
+        }
+      }
+    }
+
+      System.out.println("1 [" +
       this.tablero[0][0] +
       blanco +
       "]------[" +
@@ -52,11 +81,11 @@ public class Tablero {
       blanco +
       "] 2"
     );
-    System.out.println(blanco + " | " + linea + "        /       |" + blanco);
+    System.out.println(blanco + " | " + linea + "      /   |" + blanco);
     System.out.println(
-      " |   3 [" + blanco + this.tablero[1][1] + blanco + "]     |"
+      " |   3[" + blanco + this.tablero[1][1] + blanco + "]     |"
     );
-    System.out.println(blanco + " | /    " + linea + "       |" + blanco);
+    System.out.println(blanco + " | /       " +    linea + "  |" + blanco);
     System.out.println(
       "4 [" +
       blanco +
@@ -68,7 +97,14 @@ public class Tablero {
       blanco +
       "] 5"
     );
-    //System.out.println();
+
+    for(int g =0; g<this.tablero.length;g++){
+      for(int h=0; h<this.tablero.length;h++){
+        if(this.tablero[h][g].getColor()==-1){
+          this.tablero[h][g]= null;
+        }
+      }
+    }
     return "\n";
   }
 
@@ -113,8 +149,8 @@ public class Tablero {
   /**
    * Metodo que verifica si la posicion dada es de las que estan disponibles en el tablero
    * es decir, si la casilla elegida realmente pertenece al tablero del juego
-   * @param fila
-   * @param columna
+   * @param fila FIla dada
+   * @param columna COlumna dada
    * @return boolean
    */
   public boolean validarPos(int fila, int columna) {
@@ -142,16 +178,15 @@ public class Tablero {
     }
 
     //SI la casilla dada no corresponde a ninguna de las anteriores, regresa falso
-    //System.out.println("Error en validarPos");
     return false;
   }
 
   /**
    * Metodo para cambiar las fichas de posicion entre si, se usa principalmente para cambiar una ficha de color por la ficha vacia
-   * @param indice1
-   * @param indice2
-   * @param indice3
-   * @param indice4
+   * @param indice1 Fila de la ficha 1
+   * @param indice2 Columna de la ficha 1
+   * @param indice3 Fila de la ficha 2
+   * @param indice4 Columna de la ficha 2
    */
 
   public void cambiarFichas(
@@ -168,10 +203,10 @@ public class Tablero {
   /**
    * Metodo para validar el movimiento que se quiere hacer, no toma en cuenta si hay fichas en las casillas dadas
    * solo considera los valores de las posiciones dadas y las relaciones entre si
-   * @param filaInicial
-   * @param columInicial
-   * @param filaFinal
-   * @param columFinal
+   * @param filaInicial Fila actual de la ficha
+   * @param columInicial Columna inicial de la ficha
+   * @param filaFinal Fila a la que se pretende mover la ficha
+   * @param columFinal Columna a la que se pretende mover la ficha
    * @return boolean
    */
   public boolean validarMov(
@@ -181,6 +216,12 @@ public class Tablero {
     int columFinal
   ) {
     //SI se quiere mover de entre las esquinas inferiores (de izquierda a derecha o viceversa) devuelve falso
+    if (
+      filaInicial == 0 && columInicial == 2 && filaFinal == 2 && columFinal == 2
+    ) {
+      return true;
+    }
+
     if (
       filaInicial == 2 &&
       filaFinal == 2 &&
@@ -213,10 +254,10 @@ public class Tablero {
 
   /**
    * Metodo para mover una ficha
-   * @param filaInicial
-   * @param columInicial
-   * @param filaFinal
-   * @param columFinal
+   * @param filaInicial FIla donde esta la ficha
+   * @param columInicial Columna en donde esta la fila
+   * @param filaFinal Fila a la que se quiere mover la ficha
+   * @param columFinal Columna a donde se quiere mover la ficha
    * @param turno Para considerar si se puede mover la ficha elegida, el turno debe variar entre 1 y 0
    * @return Ficha[][] Se podria cambiar
    */
@@ -240,92 +281,92 @@ public class Tablero {
   /**
    * Regresa una ficha segun el numero (cuadrante)
    * @param numero
-   * @return
+   * @return Ficha
    */
-  public Ficha buscarPosicion(int numero){
-    Ficha ficha=null;
-    switch(numero){
-      case 1: 
-      ficha= this.tablero[0][0]; //Arriba a la izquierda
-      break;
-
-      case 2: 
-      ficha=this.tablero[0][2]; //Arriba a la derecha
-      break;
-
-      case 3: 
-      ficha= this.tablero[1][1]; //El centro
-      break;
-
-      case 4: 
-      ficha= this.tablero[2][0]; //Abajo a la izquierda
-      break;
-
-      case 5: 
-      ficha= this.tablero[2][2]; //Abajo a la derecha
-      break;
+  public Ficha buscarPosicion(int numero) {
+    Ficha ficha = null;
+    switch (numero) {
+      case 1:
+        ficha = this.tablero[0][0]; //Arriba a la izquierda
+        break;
+      case 2:
+        ficha = this.tablero[0][2]; //Arriba a la derecha
+        break;
+      case 3:
+        ficha = this.tablero[1][1]; //El centro
+        break;
+      case 4:
+        ficha = this.tablero[2][0]; //Abajo a la izquierda
+        break;
+      case 5:
+        ficha = this.tablero[2][2]; //Abajo a la derecha
+        break;
     }
     return ficha;
   }
 
-    /**
-   * Regresa una ficha segun el numero (cuadrante)
+  /**
+   * Regresa las coordenadas del tablero segun un cuadrante
    * @param numero
-   * @return
+   * @return int[]
    */
-  public int[] buscarPosicionCord(int numero){
+  public int[] buscarPosicionCord(int numero) {
     //Ficha ficha=null;
-    int aux [] = new int [2];
-    switch(numero){
-      case 1: 
-      aux[0] = 0;
-      aux[1] = 0;
-      //ficha= this.tablero[0][0]; //Arriba a la izquierda
-      break;
-
-      case 2: 
-      aux[0] = 0;
-      aux[1] = 2;
-      //ficha=this.tablero[0][2]; //Arriba a la derecha
-      break;
-
-      case 3: 
-      aux[0] = 1;
-      aux[1] = 1;
-      //ficha= this.tablero[1][1]; //El centro
-      break;
-
-      case 4: 
-      aux[0] = 2;
-      aux[1] = 0;
-      //ficha= this.tablero[2][0]; //Abajo a la izquierda
-      break;
-
-      case 5: 
-      aux[0] = 2;
-      aux[1] = 2;
-      //ficha= this.tablero[2][2]; //Abajo a la derecha
-      break;
+    int aux[] = new int[2];
+    switch (numero) {
+      case 1:
+        aux[0] = 0;
+        aux[1] = 0;
+        //ficha= this.tablero[0][0]; //Arriba a la izquierda
+        break;
+      case 2:
+        aux[0] = 0;
+        aux[1] = 2;
+        //ficha=this.tablero[0][2]; //Arriba a la derecha
+        break;
+      case 3:
+        aux[0] = 1;
+        aux[1] = 1;
+        //ficha= this.tablero[1][1]; //El centro
+        break;
+      case 4:
+        aux[0] = 2;
+        aux[1] = 0;
+        //ficha= this.tablero[2][0]; //Abajo a la izquierda
+        break;
+      case 5:
+        aux[0] = 2;
+        aux[1] = 2;
+        //ficha= this.tablero[2][2]; //Abajo a la derecha
+        break;
     }
     return aux;
   }
 
+  /**
+   * Metodo que permite colocar una ficha en el tablero
+   * @param fila Fila donde se quiere colocar la ficha
+   * @param columna COlumna donde se quiere colocar la ficha
+   * @param ficha Ficha a colocar
+   * @return Ficha
+   */
   public Ficha asignarFicha(int fila, int columna, Ficha ficha) {
-    //System.out.println("Tablero -->"+this);
-    //System.out.println("Esto es lo que hay "+tablero[fila][columna]);
     if (tablero[fila][columna] == null) {
-      //System.out.println("Entro al if");
       tablero[fila][columna] = ficha;
       ficha.setFila(fila);
       ficha.setColumna(columna);
-      //System.out.println("--> Tablero "+this);
       return ficha;
     }
     return null;
   }
 
- 
-
+  /**
+   * Metodo que simula mover una ficha a un lugar dado para verificar si es posible realizar tal movimiento
+   * @param fila Fila en la que se encuentra la ficha
+   * @param columna Columna en la que se encuentra la ficha
+   * @param ficha Ficha que se simulara mover
+   * @return Ficha
+   */
   public Ficha SimularMoverFicha(int fila, int columna, Ficha ficha) {
     if (
       validarPos(fila, columna) &&
@@ -337,9 +378,13 @@ public class Tablero {
     return null;
   }
 
+  /**
+   * Metodo que devuelve el numero de movimientos disponibles de una ficha
+   * @param ficha Objeto de la clase ficha que sera utilizada para calcular los movimientos posibles
+   * @return int
+   */
   public int movimientosDisponibles(Ficha ficha) {
     int aux = 0;
-    //System.out.println("Calculando opciones de la ficha " + ficha);
     for (int i = 0; i < tablero.length; i++) {
       for (int j = 0; j < tablero[i].length; j++) {
         if (SimularMoverFicha(j, i, ficha) != null) {
@@ -350,92 +395,111 @@ public class Tablero {
     return aux;
   }
 
-  public int[] movimientosDisponiblesCord(Ficha ficha){
+  /**
+   * Metodo que calcula los movimientos disponibles de una ficha y los coloca en un arreglo indicando los los lugares del tablero disponibles
+   * @param ficha Ficha de la cual se calcularan los movimientos disponibles
+   * @return int[]
+   */
+  public int[] movimientosDisponiblesCord(Ficha ficha) {
     int[] coord = new int[2];
-    int k=0;
+    int k = 0;
 
-   
-
-  
-    if(SimularMoverFicha(0, 0, ficha)!=null){
-     coord[k]=1;
+    if (SimularMoverFicha(0, 0, ficha) != null) {
+      coord[k] = 1;
       k++;
     }
 
-    if(SimularMoverFicha(0, 2, ficha)!=null){
-      coord[k]=2;
+    if (SimularMoverFicha(0, 2, ficha) != null) {
+      coord[k] = 2;
       k++;
     }
 
-    if(SimularMoverFicha(1, 1, ficha)!=null){
-      coord[k]=3;
+    if (SimularMoverFicha(1, 1, ficha) != null) {
+      coord[k] = 3;
       k++;
     }
 
-    if(SimularMoverFicha(2, 0, ficha)!=null){
-      coord[k]=4;
+    if (SimularMoverFicha(2, 0, ficha) != null) {
+      coord[k] = 4;
       k++;
     }
 
-    if(SimularMoverFicha(2, 2, ficha)!=null){
-      coord[k]=5;
+    if (SimularMoverFicha(2, 2, ficha) != null) {
+      coord[k] = 5;
       k++;
     }
 
-    return coord;    
-}
-
-
-public String estadoTablero(){
-  String s="";
-//Para la primera
-  if(this.tablero[0][0]==null){
-    s+="2";
-  }else if(this.tablero[0][0].getColor()==0){
-    s+="0";
-  }else{
-    s+="1";
+    return coord;
   }
 
-  //Para la segunda
-  if(this.tablero[0][2]==null){
-    s+="2";
-  }else if(this.tablero[0][2].getColor()==0){
-    s+="0";
-  }else{
-    s+="1";
+  /**
+   * Metodo que toma el estado actual del tablero y lo representa como una cadena de texto
+   * @return String
+   */
+  public String estadoTablero() {
+    String s = "";
+    //Para la primera
+    //0 azul 1 rojo
+    if (this.tablero[0][0] == null) {
+      s += "2";
+    } else if (this.tablero[0][0].getColor() == 0) {
+      s += "0";
+    } else {
+      s += "1";
+    }
+
+    //Para la segunda
+    if (this.tablero[0][2] == null) {
+      s += "2";
+    } else if (this.tablero[0][2].getColor() == 0) {
+      s += "0";
+    } else {
+      s += "1";
+    }
+
+    //Para la tercera
+    if (this.tablero[1][1] == null) {
+      s += "2";
+    } else if (this.tablero[1][1].getColor() == 0) {
+      s += "0";
+    } else {
+      s += "1";
+    }
+
+    //Para la cuarta
+    if (this.tablero[2][0] == null) {
+      s += "2";
+    } else if (this.tablero[2][0].getColor() == 0) {
+      s += "0";
+    } else {
+      s += "1";
+    }
+
+    //Para la quinta
+    if (this.tablero[2][2] == null) {
+      s += "2";
+    } else if (this.tablero[2][2].getColor() == 0) {
+      s += "0";
+    } else {
+      s += "1";
+    }
+
+    return s;
   }
 
-  //Para la tercera
-  if(this.tablero[1][1]==null){
-    s+="2";
-  }else if(this.tablero[1][1].getColor()==0){
-    s+="0";
-  }else{
-    s+="1";
+  /**
+   * Metodo para actualizar las referencias y posiciones de las fichas que estan en el tablero
+   * @return Tablero
+   */
+  public Tablero actualizaRef() {
+    for (int j = 0; j < this.tablero.length; j++) {
+      for (int g = 0; g < this.tablero.length; g++) {
+        if (this.tablero[j][g] != null) {
+          this.tablero[j][g].setFila(j);
+          this.tablero[j][g].setColumna(g);
+        }
+      }
+    }
+    return this;
   }
-
-   //Para la cuarta
-   if(this.tablero[2][0]==null){
-    s+="2";
-  }else if(this.tablero[2][0].getColor()==0){
-    s+="0";
-  }else{
-    s+="1";
-  }
-
-  //Para la quinta
-  if(this.tablero[2][2]==null){
-    s+="2";
-  }else if(this.tablero[2][2].getColor()==0){
-    s+="0";
-  }else{
-    s+="1";
-  }
-
-
-
-  return s;
-}
-
 }

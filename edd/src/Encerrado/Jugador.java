@@ -1,26 +1,79 @@
 package edd.src.Encerrado;
 
+/**
+ * Clase que simula un jugador de encerrado
+ * @author Alcantara Estrada Kevin Isaac
+ * @author Rubio Haro Mauricio
+ */
 public class Jugador {
 
+//Atributos de la clase
   public String nombre;
-
   //De forma predeterminada, todas las fichas comienzan en 0,0.
   public Ficha ficha1;
   public Ficha ficha2;
 
+  /**
+   * Primer constructor con parametros de la clase
+   * @param nombre
+   * @param fichas
+   */
   public Jugador(String nombre, Ficha fichas) {
     this.nombre = nombre;
     this.ficha1 = fichas;
     this.ficha2 = new Ficha(fichas.getColor());
   }
-
+/**
+ * Segundo constructor con parametros de la clase
+ * @param nombre
+ * @param fichas
+ * @param fila
+ */
   public Jugador(String nombre, Ficha fichas, int fila) {
     this.nombre = nombre;
     this.ficha1 = fichas;
     this.ficha2 = new Ficha(fila, fila, fichas.getColor());
   }
+/**
+ * Tercer constructor con parametros (para clonar a un objeto de la misma clase)
+ * @param object Jugador sobre el cual se hace la copia
+ */
+  public Jugador(Jugador object){
+    this.nombre = object.getNombre();
+    this.ficha1 = new Ficha(object.getFicha1());
+    this.ficha2 = new Ficha(object.getFicha2());
+  }
+/**
+ * Metodo que devuelve el valor del atributo nombre
+ * @return String
+ */
+  public String getNombre(){
+    return this.nombre;
+  }
 
+  /**
+ * Metodo que devuelve el valor del atributo ficha1
+ * @return Ficha
+ */
+  public Ficha getFicha1(){
+    return this.ficha1;
+  }
+
+  /**
+ * Metodo que devuelve el valor del atributo ficha2
+ * @return Ficha
+ */
+  public Ficha getFicha2(){
+    return this.ficha2;
+  }
   //Mueve cualquier ficha disponible
+  /**
+   * Metodo que mueve la primer ficha disponible a la primer casilla disponible
+   * @param tablero tablero sobre el cual 
+   * @param fila
+   * @param columna
+   * @return Tablero
+   */
   public Tablero moverFicha(Tablero tablero, int fila, int columna) {
     Ficha aux = tablero.moverFicha(fila, columna, ficha1);
     if (aux == null) {
@@ -40,6 +93,10 @@ public class Jugador {
 
   /**
    * Metodo unicamente usado para mover las fichas
+   * @param tablero
+   * @param fila
+   * @param columna
+   * @param ficha
    */
   public Tablero asignarFicha(
     Tablero tablero,
@@ -69,13 +126,22 @@ public class Jugador {
     return tablero;
   }
 
+  /**
+   * Metodo para saber si una ficha pertenece al jugador o no
+   * @param ficha Ficha sobre la que se hace la verificacion
+   * @return boolean 
+   */
   public boolean fichaPertenece(Ficha ficha) {
     if(ficha.equals(this.ficha1) || ficha.equals(this.ficha2)){
       return true;
     }
     return false;
   }
-
+/**
+ * Metodo que compara una ficha con las dos que posee el juegaodr
+ * @param ficha Ficha que se compara
+ * @return Ficha
+ */
   public Ficha buscarFicha(Ficha ficha){
     if(ficha.equals(this.ficha1)){
       return this.ficha1;
@@ -85,7 +151,11 @@ public class Jugador {
     return null;
   }
 
-
+/**
+ * Metodo que calcula mos cuadrantes disponibles a los que se pueden mover ambas fichas del jugador
+ * @param tablero
+ * @return int[]
+ */
     public int[] movimientosDisponiblesCord(Tablero tablero){
         int[] coordenadas = new int[4];
         int[] ficha1Cord = new int[2];
@@ -97,14 +167,19 @@ public class Jugador {
         coordenadas[1]=ficha1Cord[1];
         coordenadas[2]=ficha2Cord[0];
         coordenadas[3]=ficha2Cord[1];
-       /* for(int pec=0;pec<coordenadas.length;pec++){
-          System.out.println(coordenadas[pec]);
-        }*/
         return coordenadas;
     }
 
     
   //Mover una ficha en especifico
+  /**
+   * Metodo para mover una ficha elegida
+   * @param tablero Tablero sobre el cual se intentará mover la ficha
+   * @param fila fila a la que se quiere mover la ficha
+   * @param columna columna a la que se quiere mover la ficha
+   * @param ficha ficha a mover
+   * @return Tablero
+   */
   public Tablero moverFicha(
     Tablero tablero,
     int fila,
@@ -116,7 +191,7 @@ public class Jugador {
     ) {
       Ficha aux = tablero.moverFicha(fila, columna, ficha);
       if (aux == null) {
-        System.out.println("No se pudo mover");
+        //System.out.println("No se pudo mover");
       } else {
         if (this.ficha1.equals(ficha)) {
           this.ficha1 = ficha;
@@ -131,25 +206,39 @@ public class Jugador {
     return tablero;
   }
 
+  /**
+   * Metodo que calcula el total de movimientos disponibles de las fichas del jugador
+   * @param tablero Tablero sobre el cual se quiere calcular los movimientos disponibles
+   * @return int
+   */
   public int movimientosDisponibles(Tablero tablero) {
-    //System.out.println("Calculando jugadas de " + this.nombre);
     int aux1 = tablero.movimientosDisponibles(ficha1);
     int aux2 = tablero.movimientosDisponibles(ficha2);
-    //System.out.println("Ficha 1 -> " + aux1);
-    //System.out.println("Ficha 2 -> " + aux2);
     return aux1 + aux2;
   }
 
  
-
+  /**
+  * Metodo para modificar la primer ficha del jugador
+  * @param ficha 
+  */
   public void setFicha1(Ficha ficha) {
     this.ficha1 = ficha;
   }
 
+/**
+ * Metodo para modificar la segunda ficha del jugador
+ * @param ficha
+ */
   public void setFicha2(Ficha ficha) {
     this.ficha2 = ficha;
   }
 
+
+  /**
+   * Metodo para saber si dos instancias de la clase son iguales
+   * @return boolean
+   */
   @Override
   public boolean equals(Object object){
     if (object == this) {
@@ -158,6 +247,7 @@ public class Jugador {
     if (!(object instanceof Ficha)) {
       return false;
     }
+
 
     Jugador aux = (Jugador) object;
     if (
@@ -170,6 +260,10 @@ public class Jugador {
     return false;
   }
 
+  /**
+   * Metodo que representa en cadena al jugador
+   * @return String
+   */
   @Override
   public String toString() {
     return this.nombre + " Ficha " + ficha1 + " Ficha " + ficha2;

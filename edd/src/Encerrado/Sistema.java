@@ -3,16 +3,29 @@ package edd.src.Encerrado;
 import java.lang.Character;
 import java.util.Scanner;
 
-public class Sistema {
+import edd.src.Estructuras.*;
 
+/**
+ * Clase para reunir todo nuestro codigo en un solo sitio y ejecutar el juego encerrado
+ * @author Alcantara Estrada Kevin Isaac
+ */
+public class Sistema {
+//Atributos privados de la clase
   Scanner sc;
   Juego juego = new Juego();
   Jugador turno;
+  boolean minimaxActivado = false;
 
+  /**
+   * Constructor sin parametros de la clase que inicial el juego
+   */
   public Sistema() {
     iniciarJuego();
   }
 
+  /**
+   * Metodo para iniciar el juego
+   */
   public void iniciarJuego() {
     System.out.println("BIENVENIDO A ENCERRADOS");
     System.out.println("\n Este es el tablero inicial");
@@ -32,6 +45,9 @@ public class Sistema {
     }
   }
 
+  /**
+   * Metodo para volver a iniciar el juego o, en su caso, terminarlo
+   */
   public void reiniciarJuego() {
     System.out.println("Desea reiniciar el juego? S/N");
     if (validarSioNo()) {
@@ -42,25 +58,28 @@ public class Sistema {
     }
   }
 
+  /**
+   * Metodo para comenzar el juego
+   */
   public void comenzarJuego() {
     Jugador jugadorEnTurno;
     System.out.println("Comenzando juego");
     System.out.println("¿ Desea comenzar el usuario? S/N ");
-    Jugador jugadores[] = { juego.getJugador(), juego.getIA() };
-    // int aux = 0;
     if (validarSioNo()) {
-      // jugadorEnTurno = juego.getJugador();
-      // System.out.println("Va a comenzar " + jugadores[0]);
-      // aux = 0;
       jugadorEnTurno = juego.getJugador();
     } else {
-      // jugadorEnTurno = juego.getIA();
-      // System.out.println("Va a comenzar " + jugadores[1]);
-      // aux = 1;
       jugadorEnTurno = juego.getIA();
     }
     boolean aux = false;
     do {
+      if (jugadorEnTurno.equals(juego.getIA())) {
+        System.out.println("Desea activar el minimax? (S/N)");
+        if (validarSioNo()) {
+          minimaxActivado = true;
+        } else {
+          minimaxActivado = false;
+        }
+      }
       System.out.println("Turno de " + jugadorEnTurno);
       aux = turno(jugadorEnTurno);
       if (jugadorEnTurno.equals(juego.getJugador())) {
@@ -74,7 +93,11 @@ public class Sistema {
     }
   }
 
-  // public void rondas()
+  /**
+   * Metodo para que cada jugador realice las jugadas en su debido turno
+   * @param jugador Jugador en turno
+   * @return boolean
+   */
   public boolean turno(Jugador jugador) {
     boolean hayPerdedor = false;
     hayPerdedor = juego.hayPerdedor();
@@ -86,7 +109,13 @@ public class Sistema {
         } catch (Exception e) {
           System.out.println(e);
         }
-        juego.moverFichaRandom(jugador);
+        if (minimaxActivado) {
+          System.out.println("Minimax activado");
+          movimientoMinimax();
+          this.juego.repararTablero();
+        } else {
+          juego.moverFichaRandom(jugador);
+        }
       } else {
         int posicion = validarNumeros(
           "Ingresa la ficha que quieres mover ",
@@ -98,12 +127,10 @@ public class Sistema {
           "Ingresa a donde la quieres (1-5)",
           jugador
         );
-        for (int i : coordenadas) {
-          System.out.println("Coordenadas " + i);
-        }
         juego.moverFicha(coordenadas[0], coordenadas[1], jugador, fichaMover);
       }
-
+      
+      //this.juego.repararTablero();
       System.out.println(juego);
       jugador.movimientosDisponiblesCord(juego.getTablero());
       return true;
@@ -111,6 +138,29 @@ public class Sistema {
       return false;
     }
     // juego.moverFicha(fila, columna, jugador)
+  }
+
+  /**
+   * Genera un arbol de decisiones segun el estado actual del juego
+   * Evalua entre los nodos hijos de la raiz cual le conviene mas, obtiene una permutacion
+   * del tablero (el tablero le conviene ) y efectua el movimiento en asignar Permutacion
+   */
+  public void movimientoMinimax() {
+    ArbolDecisiones arbol = new ArbolDecisiones();
+    String jugada;
+    arbol.setJuego(this.juego);
+    this.juego = new Juego(this.juego);
+    arbol.construirArbol();
+    if(arbol.hijoDerechoRaiz() != null && arbol.hijoIzquierdoRaiz() != null){
+      if(arbol.getValor(arbol.hijoIzquierdoRaiz()) >= arbol.getValor(arbol.hijoDerechoRaiz())){
+        jugada = arbol.getElemento(arbol.hijoIzquierdoRaiz()).toString();
+      }else{
+        jugada = arbol.getElemento(arbol.hijoDerechoRaiz()).toString();
+      }
+    }else{
+      jugada = arbol.getElemento(arbol.hijoIzquierdoRaiz()).toString();
+    }
+    juego.asignarPermutacion(jugada);
   }
 
   /**
@@ -155,6 +205,9 @@ public class Sistema {
     return 0;
   }
 
+  /**
+   * Metodo para asignar fichas al tablero cuando no se desea iniciar con el tablero predeterminado
+   */
   public void asignarTablero() {
     int[] arr;
     juego.setTablero(new Tablero());
@@ -191,12 +244,10 @@ public class Sistema {
    * Valida si una coordenada se puede mover, regresa la coordenada en un arreglo
    * entero
    *
-   * @param mensaje
-   * @return
+   * @param mensaje Mensaje a imprimir
+   * @return int[]
    */
   public int[] validarCoordenada(String mensaje, Jugador jugador) {
-    String str;
-
     boolean condicion = false;
     do {
       try {
@@ -252,22 +303,19 @@ public class Sistema {
     return null;
   }
 
+  /**
+   * Metodo que valida la coordenada del tablero a la que se desea mover la ficha
+   * @param mensaje Mensaje para mostrar en pantalla
+   * @return int[]
+   */
   public int[] validarCoordenada(String mensaje) {
-    String str;
     boolean condicion = false;
     do {
       try {
         System.out.println(mensaje);
         sc = new Scanner(System.in);
         int elec = sc.nextInt();
-        /*if (str.charAt(1) != ',') {
-          condicion = false;
-          continue;
-        }*/
         int coordenadas[] = juego.getTablero().buscarPosicionCord(elec);
-        //coordenadas[0] = Character.getNumericValue(str.charAt(0));
-        //coordenadas[1] = Character.getNumericValue(str.charAt(2));
-        // System.out.println("Salimos de aqui");
         if (
           coordenadas[0] >= 0 &&
           coordenadas[0] <= 2 &&
@@ -295,6 +343,10 @@ public class Sistema {
     return null;
   }
 
+  /**
+   * Metodo para validar elecciones del usuario
+   * @return boolean
+   */
   public boolean validarSioNo() {
     char aux;
     boolean condicion = false;
