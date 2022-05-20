@@ -8,6 +8,7 @@ public class Sistema {
   Scanner sc;
   Juego juego = new Juego();
   Jugador turno;
+  boolean minimaxActivado = false;
 
   public Sistema() {
     iniciarJuego();
@@ -47,20 +48,21 @@ public class Sistema {
     System.out.println("Comenzando juego");
     System.out.println("¿ Desea comenzar el usuario? S/N ");
     Jugador jugadores[] = { juego.getJugador(), juego.getIA() };
-    // int aux = 0;
     if (validarSioNo()) {
-      // jugadorEnTurno = juego.getJugador();
-      // System.out.println("Va a comenzar " + jugadores[0]);
-      // aux = 0;
       jugadorEnTurno = juego.getJugador();
     } else {
-      // jugadorEnTurno = juego.getIA();
-      // System.out.println("Va a comenzar " + jugadores[1]);
-      // aux = 1;
       jugadorEnTurno = juego.getIA();
     }
     boolean aux = false;
     do {
+      if (jugadorEnTurno.equals(juego.getIA())) {
+        System.out.println("Desea activar el minimax?");
+        if (validarSioNo()) {
+          minimaxActivado = true;
+        } else {
+          minimaxActivado = false;
+        }
+      }
       System.out.println("Turno de " + jugadorEnTurno);
       aux = turno(jugadorEnTurno);
       if (jugadorEnTurno.equals(juego.getJugador())) {
@@ -86,7 +88,11 @@ public class Sistema {
         } catch (Exception e) {
           System.out.println(e);
         }
-        juego.moverFichaRandom(jugador);
+        if (minimaxActivado) {
+          System.out.println("Minimax activado");
+        } else {
+          juego.moverFichaRandom(jugador);
+        }
       } else {
         int posicion = validarNumeros(
           "Ingresa la ficha que quieres mover ",
